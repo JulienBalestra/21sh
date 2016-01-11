@@ -25,7 +25,7 @@ function packages
     for package in valgrind
     do
         echo "Installing package named ${package}"
-        sudo apt-get install ${package} -y > /dev/null || sudo brew install ${package} > /dev/null
+        sudo apt-get install ${package} -qqy > /dev/null || sudo brew install ${package} > /dev/null
         which ${package}
     done
 }
