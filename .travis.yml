@@ -1,0 +1,17 @@
+os:
+  - osx
+  - linux
+
+language: C
+
+sudo: required
+
+before_install:
+  - sudo brew update || sudo apt-get update
+  - sudo brew install valgrind || sudo apt-get install -y valgrind
+
+install:
+  - ./setup.sh
+
+script:
+  - ./run_test.sh
