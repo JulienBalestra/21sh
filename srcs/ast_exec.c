@@ -9,8 +9,6 @@
 #include "../libft/includes/libft.h"
 #include "../includes/ast.h"
 
-void do_ast_exec_recurse(t_ast *ast);
-
 void manage_pipe(t_ast *ast)
 {
 	int		p[2];
@@ -23,17 +21,16 @@ void manage_pipe(t_ast *ast)
 	{
 		dup2(p[1], ast->stdout);
 		close(p[0]);
-		do_ast_exec_recurse(ast->left);
+		exec_with_recurse(ast->left);
 	}
 	else
 	{
 		dup2(p[0], ast->stdin);
 		close(p[1]);
 		waitpid(-1, &status, 0);
-		do_ast_exec_recurse(ast->right);
+		exec_with_recurse(ast->right);
 	}
 }
-
 
 void manage_double_read(t_ast *ast)
 {
@@ -62,7 +59,7 @@ void manage_double_read(t_ast *ast)
 		dup2(p[0], ast->stdin);
 		close(p[1]);
 		waitpid(-1, &status, 0);
-		do_ast_exec_recurse(ast->left);
+		exec_with_recurse(ast->left);
 	}
 }
 
@@ -83,7 +80,7 @@ void manage_write(t_ast *ast)
 	if (pid == 0)
 	{
 		dup2(fd, ast->stdout);
-		do_ast_exec_recurse(ast->left);
+		exec_with_recurse(ast->left);
 	}
 	else
 	{
@@ -103,7 +100,7 @@ void manage_simple_read(t_ast *ast)
 	if (pid == 0)
 	{
 		dup2(fd, ast->stdin);
-		do_ast_exec_recurse(ast->left);
+		exec_with_recurse(ast->left);
 	}
 	else
 	{
@@ -112,7 +109,7 @@ void manage_simple_read(t_ast *ast)
 	}
 }
 
-void do_ast_exec_recurse(t_ast *ast)
+void exec_with_recurse(t_ast *ast)
 {
 	char	**ptr;
 
@@ -151,7 +148,7 @@ int ast_exec(t_ast *ast)
 
 	if (pid == 0)
 	{
-		do_ast_exec_recurse(ast);
+		exec_with_recurse(ast);
 		//ft_putstr_fd("error in execve\n", 2);
 		return (0);
 	}

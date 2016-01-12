@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BIN=./test_minishell
+LIB=libsh.a
+
 set -x
 
 function go_to_dirname
@@ -14,16 +17,20 @@ function go_to_dirname
     echo "-> Current directory is" $(pwd)
 }
 
-function all
+function compilation
 {
-    ./check_makefile.sh
-    ./unittesting.sh
+    if [ -f ${BIN} ]
+    then
+        rm ${BIN}
+    fi
+    make test
 }
 
 function main
 {
     go_to_dirname
-    all
+    compilation
+    ${BIN}
 }
 
 main

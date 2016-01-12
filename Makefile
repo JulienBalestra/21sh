@@ -19,6 +19,7 @@ OBJ_DIR = .objects/
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 TARGET = $(NAME).a
 BIN = minishell
+TEST_BIN = test_$(BIN)
 ENV = $(shell uname -s)
 
 
@@ -31,14 +32,16 @@ CL_WHITE = \033[0m
 SRC =               \
 ast_build.c \
 ast_clean.c \
-ast_read.c \
 ast_exec.c
 
 
 MAIN = srcs/main.c
 
+TEST = srcs/tests/test.c \
+srcs/tests/ast_read.c \
 
-.PHONY: all clean fclean re
+
+.PHONY: all clean fclean re test
 
 default: all
 
@@ -53,7 +56,7 @@ $(TARGET): $(OBJS)
 	@echo " + sh : Creating  $(CL_GREED)$@$(CL_WHITE) $(shell sleep 0.01)"
 	@ar -rcv $(TARGET) $(OBJS) > /dev/null
 	@ranlib $(TARGET)
-	@$(CC) $(CFLAGS) srcs/main.c $(TARGET) libft/libft.a -I $(INC_DIR) -I libft/includes  -o $(BIN)
+	@$(CC) $(CFLAGS) $(MAIN) $(TARGET) libft/libft.a -I $(INC_DIR) -I libft/includes  -o $(BIN)
 
 clean:
 	@echo " $(shell\
@@ -93,6 +96,14 @@ fclean: clean
 					else\
 							echo "# ft : Nothing to fclean";\
 					fi)"
+	@echo " $(shell\
+					if [ -f $(TEST_BIN) ];\
+						then\
+							echo "- sh : Removing  $(CL_RED)$ $(TEST_BIN) $(CL_WHITE)";\
+							rm -f $(TEST_BIN);\
+					else\
+							echo "# ft : Nothing to fclean";\
+					fi)"
 
 re: fclean all
 
@@ -105,3 +116,6 @@ $(OBJ_DIR):
 	@echo " + sh : Creating $(CL_GREED)$(OBJ_DIR)$(CL_WHITE)$(CL_WHITE)"
 	@mkdir -p $(OBJ_DIR)
 
+test: $(NAME)
+	@$(CC) $(CFLAGS) $(TEST) $(TARGET) libft/libft.a -I $(INC_DIR) -I libft/includes -o $(TEST_BIN)
+	@echo " # sh : Job done  $(shell pwd)/$(CL_GREED)$(TEST_BIN)$(CL_WHITE)"

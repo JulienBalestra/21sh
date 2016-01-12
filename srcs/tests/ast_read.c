@@ -1,5 +1,5 @@
-#include "../libft/includes/libft.h"
-#include "../includes/ast.h"
+#include "../../libft/includes/libft.h"
+#include "../../includes/ast.h"
 
 void display_op(int op)
 {
