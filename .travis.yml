@@ -2,9 +2,11 @@ os:
   - osx
   - linux
 
-language: C
+language: c
 
 sudo: required
+
+compiler: gcc
 
 before_install:
   - sudo brew update || sudo apt-get update
