@@ -15,9 +15,6 @@ before_install:
 install:
   - ./setup.sh
 
-before_script:
-  - ./check_makefile.sh
-
 script:
   - ./unittesting.sh
 
