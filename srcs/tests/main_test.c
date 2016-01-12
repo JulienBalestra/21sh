@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "../../libft/includes/libft.h"
 #include "../../includes/ast.h"
-#include "../../includes/test.h"
+#include "test.h"
 
 int main(void)
 {

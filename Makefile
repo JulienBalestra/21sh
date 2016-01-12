@@ -32,12 +32,13 @@ CL_WHITE = \033[0m
 SRC =               \
 ast_build.c \
 ast_clean.c \
-ast_exec.c
+ast_exec.c \
+ast_exec_fn.c
 
 
 MAIN = srcs/main.c
 
-TEST = srcs/tests/test.c \
+TEST = srcs/tests/main_test.c \
 srcs/tests/ast_read.c \
 
 
