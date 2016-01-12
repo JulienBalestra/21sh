@@ -30,7 +30,7 @@ function main
 {
     go_to_dirname
     compilation
-    ${BIN}
+    valgrind ${BIN}
 }
 
 main
