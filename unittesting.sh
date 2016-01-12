@@ -23,7 +23,7 @@ function compilation
     then
         rm ${BIN}
     fi
-    make test
+    make test > /dev/null
 }
 
 function main
