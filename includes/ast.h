@@ -16,8 +16,8 @@ typedef struct	s_ast
 
 }					t_ast;
 
-t_ast *build_ast(char *input);
-void clean_ast(t_ast *ast);
+t_ast *ast_build(char *input);
+void ast_clean(t_ast *ast);
 int ast_exec(t_ast *ast);
 void exec_with_recurse(t_ast *ast);
 

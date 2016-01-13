@@ -2,12 +2,12 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
-void clean_ast(t_ast *ast)
+void ast_clean(t_ast *ast)
 {
 	if (ast->left)
-		clean_ast(ast->left);
+		ast_clean(ast->left);
 	if (ast->right)
-		clean_ast(ast->right);
+		ast_clean(ast->right);
 	if (ast->cmd)
 		ft_str2del(ast->cmd);
 	free(ast);

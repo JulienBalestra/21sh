@@ -1,59 +1,52 @@
 #include <unistd.h>
 #include "../../libft/includes/libft.h"
 #include "../../includes/ast.h"
-#include "test.h"
+#include "../../includes/test.h"
 
-int main(void)
+int ast_testing(char *str)
 {
 	t_ast *ast;
 
-	ft_putstr("\n---\n");
-	char one[] = "/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev | /usr/bin/rev";
-	ast = build_ast(ft_strdup(one));
+	ft_putstr("-> (0) ast_string [ START ]\n\n");
+	ft_putstr(str);
+	ft_putstr("\n\n-> (0) ast_string [ END ]\n\n");
+	ft_putstr("-> (1) ast_build [ START ]\n\n");
+	ast = ast_build(ft_strdup(str));
+	ft_putstr("-> (1) ast_build [ END ]\n\n");
+	ft_putstr("-> (2) ast_read [ START ]\n\n");
 	ast_read(ast);
-	ft_putstr("\n");
-	if (ast_exec(ast))
-	{
-		//do_something;
-	}
-	clean_ast(ast);
+	ft_putstr("\n\n-> (2) ast_read [ END ]\n\n");
+	ft_putstr("-> (3) ast_exec [ START ]\n\n");
+	ast_exec(ast);
+	ft_putstr("\n\n-> (3) ast_exec [ END ]\n\n");
+	ft_putstr("-> (4) ast_clean [ START ]\n\n");
+	ast_clean(ast);
+	ft_putstr("-> (4) ast_clean [ END ]\n\n");
+	return (0);
+}
 
-	ft_putstr("\n---\n");
-	char two[] = "/bin/ls -lr | /bin/cat -e > toto";
-	ast = build_ast(ft_strdup(two));
-	ast_read(ast);
-	ft_putstr("\n");
-	if (ast_exec(ast))
-	{
-		//do_something;
-	}
-	clean_ast(ast);
+int ast_testing_main(void)
+{
+	ft_putstr("AST_TESTING [ START ]\n\n");
 
-	ft_putstr("\n---\n");
-	char three[] = "/bin/cat -e < toto";
-	ast = build_ast(ft_strdup(three));
-	ast_read(ast);
-	ft_putstr("\n");
-	if (ast_exec(ast))
-	{
-		//do_something;
-	}
-	clean_ast(ast);
+	ast_testing("/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev | /usr/bin/rev");
+	ast_testing("/bin/ls -lr | /bin/cat -e > toto");
+	ast_testing("/bin/cat -e < toto");
+	ast_testing("/usr/bin/wc -w << hello");
 
-	ft_putstr("\n---\n");
-	char four[] = "/usr/bin/wc -w << hello";
-	ast = build_ast(ft_strdup(four));
-	ast_read(ast);
-	ft_putstr("\n");
-	if (ast_exec(ast))
-	{
-		//do_something;
-	}
-	clean_ast(ast);
+	ft_putstr("AST_TESTING [ END ]\n\n");
+	return (0);
+}
 
 
-	ft_putstr("\n\none_process: ");
+int main(void)
+{
+	int ret;
+
+	ret = 0;
+	ret = ret + ast_testing_main();
+	ft_putstr("\nProcess id ");
 	ft_putnbr(getpid());
 	ft_putstr("\n");
-	return (0);
+	return (2 ? ret : 0);
 }

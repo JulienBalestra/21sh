@@ -51,7 +51,7 @@ void manage_double_read(t_ast *ast)
 			ft_putstr_fd(*cmd, ast->stdout);
 			cmd++;
 		}
-		clean_ast(ast);
+		ast_clean(ast);
 		exit(0);
 	}
 	else

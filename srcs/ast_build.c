@@ -65,7 +65,7 @@ char **cut_input(char *input, int *tuple)
 	return (cut);
 }
 
-t_ast *build_ast(char *input)
+t_ast *ast_build(char *input)
 {
 	t_ast	*ast;
 	int 	tuple[2];
@@ -90,8 +90,8 @@ t_ast *build_ast(char *input)
 		{
 			ast->cmd = NULL;
 			cut = cut_input(input, tuple);
-			ast->left = build_ast(cut[0]);
-			ast->right = build_ast(cut[1]);
+			ast->left = ast_build(cut[0]);
+			ast->right = ast_build(cut[1]);
 			free(cut);
 		}
 	}
