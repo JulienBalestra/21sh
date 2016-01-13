@@ -29,9 +29,13 @@ int ast_testing_main(void)
 {
 	ft_putstr("AST_TESTING [ START ]\n\n");
 
+	//ast_testing("/bin/echo simple"); TODO
 	ast_testing("/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev | /usr/bin/rev");
-	ast_testing("/bin/ls -lr | /bin/cat -e > toto");
-	ast_testing("/bin/cat -e < toto");
+	ast_testing("/bin/ls -lr | /bin/cat -e > test_ls");
+	ast_testing("/bin/echo test_string | /bin/cat -e > test_echo");
+	ast_testing("/bin/echo test_string | /bin/cat -e >> test_echo");
+	ast_testing("/bin/cat -e < test_echo");
+	ast_testing("     /bin/cat      -e      <      test_echo");
 	ast_testing("/usr/bin/wc -w << hello");
 
 	ft_putstr("AST_TESTING [ END ]\n\n");
@@ -45,6 +49,7 @@ int main(void)
 
 	ret = 0;
 	ret = ret + ast_testing_main();
+	ft_putstr("\nEnd of testing");
 	ft_putstr("\nProcess id ");
 	ft_putnbr(getpid());
 	ft_putstr("\n");
