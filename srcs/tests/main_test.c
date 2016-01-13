@@ -42,16 +42,44 @@ int ast_testing_main(void)
 	return (0);
 }
 
-
-int main(void)
+int all(void)
 {
 	int ret;
 
 	ret = 0;
 	ret = ret + ast_testing_main();
+	return (ret);
+}
+
+int main(int ac, char **av)
+{
+	int ret;
+
+	ret = 0;
+	if (ac == 1)
+		all();
+	else if (ac > 2)
+	{
+		ft_putstr_fd("too much args\n", 2);
+		return (2);
+	}
+	else if (ft_strcmp(av[1], "all") == 0)
+	{
+		ret = all();
+	}
+	else if (ft_strcmp(av[1], "ast") == 0)
+		ret = ast_testing_main();
+	else
+	{
+		ft_putstr_fd("unknown args [", 2);
+		ft_putstr_fd(av[1], 2);
+		ft_putstr_fd("]\n", 2);
+		return (2);
+	}
+
 	ft_putstr("\nEnd of testing");
 	ft_putstr("\nProcess id ");
 	ft_putnbr(getpid());
 	ft_putstr("\n");
-	return (2 ? ret : 0);
+	return (ret);
 }
