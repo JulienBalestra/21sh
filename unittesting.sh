@@ -30,7 +30,7 @@ function main
 {
     go_to_dirname
     compilation
-    valgrind ${BIN}
+    valgrind --leak-check=full ${BIN}
 }
 
 main
