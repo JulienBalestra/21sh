@@ -45,7 +45,7 @@ int ast_exec(t_ast *ast)
 	int		status;
 
 	pid = 0;
-	if (ast->op == 1 || ast->op == 4)
+	if (ast->op == 1 || ast->op == 4 || ast->op == -1)
 		pid = fork();
 
 	if (pid == 0)

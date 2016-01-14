@@ -3,42 +3,53 @@
 #include "../../includes/ast.h"
 #include "../../includes/test.h"
 
-int ast_testing(char *str)
+int ast_testing(char *str, int debug)
 {
 	t_ast *ast;
 
-	ft_putstr("-> (0) ast_string [ START ]\n\n");
+	ft_putstr("\n\n [START] \"");
 	ft_putstr(str);
-	ft_putstr("\n\n-> (0) ast_string [ END ]\n\n");
-	ft_putstr("-> (1) ast_build [ START ]\n\n");
+	ft_putstr("\" [START] \n\n");
+	if (debug)
+		ft_putstr(" [ START ] ast_build [ START ]\n");
 	ast = ast_build(ft_strdup(str));
-	ft_putstr("-> (1) ast_build [ END ]\n\n");
-	ft_putstr("-> (2) ast_read [ START ]\n\n");
-	ast_read(ast);
-	ft_putstr("\n\n-> (2) ast_read [ END ]\n\n");
-	ft_putstr("-> (3) ast_exec [ START ]\n\n");
+	if (debug)
+	{
+		ft_putstr(" [ ENDED ] ast_build [ ENDED ]\n");
+		ft_putstr("rrrrrrr [ START ] ast_read [ START ] rrrrrrr\n");
+		ast_read(ast);
+	}
+	if (debug)
+		ft_putstr("\nrrrrrrr [ END ] ast_read [ END ] rrrrrrr\n");
+	ft_putstr("xxxxxxxx [ START ] ast_exec [ START ] xxxxxxxx\n");
 	ast_exec(ast);
-	ft_putstr("\n\n-> (3) ast_exec [ END ]\n\n");
-	ft_putstr("-> (4) ast_clean [ START ]\n\n");
+	ft_putstr("xxxxxxxx [ ENDED ] ast_exec [ ENDED ] xxxxxxxx\n\n");
+	if (debug)
+		ft_putstr(" [ START ] ast_clean [ START ]\n");
 	ast_clean(ast);
-	ft_putstr("-> (4) ast_clean [ END ]\n\n");
+	if (debug)
+		ft_putstr(" [ ENDED ] ast_clean [ ENDED ]\n");
+	ft_putstr(" [ENDED] \"");
+	ft_putstr(str);
+	ft_putstr("\" [ENDED]\n\n");
 	return (0);
 }
 
 int ast_testing_main(void)
 {
-	ft_putstr("AST_TESTING [ START ]\n\n");
+	int debug = 0;
+	ft_putstr("----- [ START ] AST_TESTING [ START ] -----");
 
-	//ast_testing("/bin/echo simple"); TODO
-	ast_testing("/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev | /usr/bin/rev");
-	ast_testing("/bin/ls -lr | /bin/cat -e > test_ls");
-	ast_testing("/bin/echo test_string | /bin/cat -e > test_echo");
-	ast_testing("/bin/echo test_string | /bin/cat -e >> test_echo");
-	ast_testing("/bin/cat -e < test_echo");
-	ast_testing("     /bin/cat      -e      <      test_echo");
-	ast_testing("/usr/bin/wc -w << hello");
+	ast_testing("/bin/echo simple", debug);
+	ast_testing("/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev | /usr/bin/rev", debug);
+	ast_testing("/bin/ls -lr | /bin/cat -e > test_ls", debug);
+	ast_testing("/bin/echo test_string | /bin/cat -e > test_echo", debug);
+	ast_testing("/bin/echo test_string | /bin/cat -e >> test_echo", debug);
+	ast_testing("/bin/cat -e < test_echo", debug);
+	ast_testing("     /bin/cat      -e      <      test_echo", debug);
+	ast_testing("/usr/bin/wc -w << hello", debug);
 
-	ft_putstr("AST_TESTING [ END ]\n\n");
+	ft_putstr("----- [ END ] AST_TESTING [ END ] -----\n\n");
 	return (0);
 }
 
