@@ -7,6 +7,6 @@ set(SOURCE_FILES
         includes
         libft
         srcs
-        srcs/main.c
+        tests/21sh_mains
         )
 add_executable(21sh ${SOURCE_FILES})

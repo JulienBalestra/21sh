@@ -26,4 +26,7 @@ void manage_write(t_ast *ast);
 void manage_pipe(t_ast *ast);
 void manage_double_read(t_ast *ast);
 
+
+void ast_read(t_ast *ast);
+
 #endif //INC_21SH_AST_H
