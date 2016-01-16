@@ -1,15 +1,17 @@
 #include <unistd.h>
 #include <stdlib.h>
-#include "../../includes/ast.h"
+#include "../../includes/minishell.h"
 #include "../../libft/includes/libft.h"
 
 #include "libft.h"
-#include "ast.h"
+#include "minishell.h"
 
 int ast_testing(char *str, int debug)
 {
 	t_ast *ast;
+	t_sh *shell;
 
+	shell = create_shell_props();
 	if (debug)
 		ft_putstr("[ast_build]");
 	ast = ast_build(ft_strdup(str));
@@ -21,7 +23,7 @@ int ast_testing(char *str, int debug)
 		ft_putstr("[/ast_read]\n");
 		ft_putstr("[ast_exec]");
 	}
-	ast_exec(ast);
+	ast_exec(ast, shell);
 
 	if (debug)
 	{

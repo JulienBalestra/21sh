@@ -29,7 +29,7 @@ class TestAST(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(cls):
-		os.chdir("%s/test_resources" % cls.testing)
+		os.chdir("%s/test_ast" % cls.testing)
 		assert subprocess.call(["make", "-C", cls.context], stdout=cls.devnull) == 0
 		cls.bin = TestAST.compilation(TestAST, "main_ast.c")
 
