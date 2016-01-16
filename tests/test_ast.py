@@ -138,3 +138,39 @@ class TestAST(unittest.TestCase):
 		# safety below
 		with open("file0", 'r') as f:
 			self.assertEqual("ok", f.read())
+
+	def test_left_pipe_00(self):
+		out = subprocess.check_output([self.bin, "/bin/cat < file0 | /usr/bin/rev"])
+		self.assertEqual("ko\n", out)
+		# safety below
+		with open("file0", 'r') as f:
+			self.assertEqual("ok", f.read())
+
+	def test_left_pipe_01(self):
+		out = subprocess.check_output(
+				[self.bin, "/bin/cat < file0 | /usr/bin/rev > %s" % self.test_left_pipe_01.__name__])
+		self.assertEqual("", out)
+		# safety below
+		with open("file0", 'r') as f:
+			self.assertEqual("ok", f.read())
+		try:
+			with open(self.test_left_pipe_01.__name__, 'r') as f:
+				self.assertEqual("ko\n", f.read())
+		finally:
+			os.remove(self.test_left_pipe_01.__name__)
+
+	def test_left_pipe_02(self):
+		out1 = subprocess.check_output(
+				[self.bin, "/bin/cat < file0 | /usr/bin/rev >> %s" % self.test_left_pipe_02.__name__])
+		self.assertEqual("", out1)
+		out2 = subprocess.check_output(
+				[self.bin, "/bin/cat < file0 | /usr/bin/rev >> %s" % self.test_left_pipe_02.__name__])
+		self.assertEqual("", out2)
+		# safety below
+		with open("file0", 'r') as f:
+			self.assertEqual("ok", f.read())
+		try:
+			with open(self.test_left_pipe_02.__name__, 'r') as f:
+				self.assertEqual("ko\nko\n", f.read())
+		finally:
+			os.remove(self.test_left_pipe_02.__name__)
