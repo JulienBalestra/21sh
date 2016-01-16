@@ -1,7 +1,3 @@
-//
-// Created by jynlee on 12/01/16.
-//
-
 #ifndef INC_21SH_AST_H
 #define INC_21SH_AST_H
 
