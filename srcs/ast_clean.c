@@ -1,5 +1,5 @@
-#include "../includes/ast.h"
 #include "../libft/includes/libft.h"
+#include "../includes/minishell.h"
 #include <stdlib.h>
 
 void ast_clean(t_ast *ast)

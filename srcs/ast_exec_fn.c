@@ -7,9 +7,9 @@
 #include <fcntl.h>
 
 #include "../libft/includes/libft.h"
-#include "../includes/ast.h"
+#include "../includes/minishell.h"
 
-void manage_pipe(t_ast *ast)
+void manage_pipe(t_ast *ast, t_sh *shell)
 {
 	int		p[2];
 	pid_t	pid;
@@ -21,18 +21,18 @@ void manage_pipe(t_ast *ast)
 	{
 		dup2(p[1], ast->stdout);
 		close(p[0]);
-		exec_with_recurse(ast->left);
+		exec_with_recurse(ast->left, shell);
 	}
 	else
 	{
 		dup2(p[0], ast->stdin);
 		close(p[1]);
 		waitpid(-1, &status, 0);
-		exec_with_recurse(ast->right);
+		exec_with_recurse(ast->right, shell);
 	}
 }
 
-void manage_double_read(t_ast *ast)
+void manage_double_read(t_ast *ast, t_sh *shell)
 {
 	int		p[2];
 	pid_t	pid;
@@ -59,11 +59,11 @@ void manage_double_read(t_ast *ast)
 		dup2(p[0], ast->stdin);
 		close(p[1]);
 		waitpid(-1, &status, 0);
-		exec_with_recurse(ast->left);
+		exec_with_recurse(ast->left, shell);
 	}
 }
 
-void manage_write(t_ast *ast)
+void manage_write(t_ast *ast, t_sh *shell)
 {
 	int		fd;
 	pid_t	pid;
@@ -80,7 +80,7 @@ void manage_write(t_ast *ast)
 	if (pid == 0)
 	{
 		dup2(fd, ast->stdout);
-		exec_with_recurse(ast->left);
+		exec_with_recurse(ast->left, shell);
 	}
 	else
 	{
@@ -89,7 +89,7 @@ void manage_write(t_ast *ast)
 	}
 }
 
-void manage_simple_read(t_ast *ast)
+void manage_simple_read(t_ast *ast, t_sh *shell)
 {
 	int		fd;
 	pid_t	pid;
@@ -100,7 +100,7 @@ void manage_simple_read(t_ast *ast)
 	if (pid == 0)
 	{
 		dup2(fd, ast->stdin);
-		exec_with_recurse(ast->left);
+		exec_with_recurse(ast->left, shell);
 	}
 	else
 	{

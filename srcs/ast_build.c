@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "../libft/includes/libft.h"
-#include "../includes/ast.h"
+#include "../includes/minishell.h"
 
 int is_std_redirect(char *s, int i)
 {

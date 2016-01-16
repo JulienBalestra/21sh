@@ -15,37 +15,34 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-char	***command_from_cli(char **cli)
+t_ast	**command_from_cli(char **cli)
 {
 	int		i;
-	char	***cmd;
-	char	*no_space;
+	t_ast	**ast2;
 
 	i = 0;
-	if ((cmd = (char ***)malloc(sizeof(char **) * (ft_str2len(cli) + 1))))
+	if ((ast2 = (t_ast **)malloc(sizeof(t_ast *) * (ft_str2len(cli) + 1))))
 	{
 		while (cli[i])
 		{
-			no_space = ft_remove_useless(cli[i], ' ');
-			cmd[i] = ft_lz_strsplit(no_space, ' ');
-			ft_strdel(&no_space);
+			ast2[i] = ast_build(cli[i]);
 			i++;
 		}
-		cmd[i] = NULL;
+		ast2[i] = NULL;
 	}
-	return (cmd);
+	return (ast2);
 }
 
-char	***build_command(t_sh *shell)
+t_ast	**build_command(t_sh *shell)
 {
-	char	***command;
+	t_ast	**command;
 	char	**multi_cli;
 
 	command = NULL;
 	if ((multi_cli = ft_lz_strsplit(shell->buf, ';')))
 	{
 		command = command_from_cli(multi_cli);
-		ft_str2del(multi_cli);
+		//ft_str2del(multi_cli); TODO
 		free(shell->buf);
 		shell->buf = NULL;
 	}

@@ -45,6 +45,17 @@ typedef struct		s_be
 	int				null;
 	int				cmd;
 }					t_be;
+
+typedef struct	s_ast
+{
+	int 			op;
+	int 			stdin;
+	int 			stdout;
+	char 			**cmd;
+	struct s_ast	*left;
+	struct s_ast	*right;
+
+}					t_ast;
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
 int					is_only_endline(char *buf);
@@ -108,7 +119,7 @@ char				*replace_dollar_dollar(char *dollar_question);
 char				*replace_dollar_question(char *dollar_question,
 												t_sh *shell);
 int					is_real_line(char *buf);
-char				***build_command(t_sh *shell);
+t_ast				**build_command(t_sh *shell);
 char				*get_line(t_sh *shell);
 int					existing_line(t_sh *shell);
 void				go_to_old_pwd(t_sh *shell, int p);
@@ -137,4 +148,19 @@ char				*create_cwd(t_sh *shell);
 char				*create_chdir_path(char *path, t_sh *shell);
 void				display_cd_permission(char *path);
 void				cd_symblink(char *path, t_sh *shell);
+
+
+
+t_ast *ast_build(char *input);
+void ast_clean(t_ast *ast);
+int ast_exec(t_ast *ast, t_sh *shell);
+void exec_with_recurse(t_ast *ast, t_sh *shell);
+
+void manage_simple_read(t_ast *ast, t_sh *shell);
+void manage_write(t_ast *ast, t_sh *shell);
+void manage_pipe(t_ast *ast, t_sh *shell);
+void manage_double_read(t_ast *ast, t_sh *shell);
+
+
+void ast_read(t_ast *ast);
 #endif

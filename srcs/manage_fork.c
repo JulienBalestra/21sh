@@ -43,30 +43,15 @@ int		is_exec(const char *command)
 	return (0);
 }
 
-int		do_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
+void		do_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
 {
-	int		status;
 	char	**ptr;
-	int		pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		ptr = (char **)str;
-		if (mock == 0)
-			mock_environ = shell->l_env;
-		execve(str[0], ptr, mock_environ);
-		return (1);
-	}
-	else if (pid > 0)
-	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status))
-			shell->l_ret = WEXITSTATUS(status);
-		return (0);
-	}
-	write(2, "error", 5);
-	return (-1);
+	ptr = (char **)str;
+	if (mock == 0)
+		mock_environ = shell->l_env;
+	execve(str[0], ptr, mock_environ);
+	exit(2);
 }
 
 int		do_fork(const char **str, t_sh *shell, char **mock_environ, int mock)
@@ -74,5 +59,6 @@ int		do_fork(const char **str, t_sh *shell, char **mock_environ, int mock)
 	if (is_exec(str[0]) == 0)
 		return (0);
 	ft_str2del(shell->l_cmd);
-	return (do_exec(str, shell, mock_environ, mock));
+	do_exec(str, shell, mock_environ, mock);
+	return (1);
 }

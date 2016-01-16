@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../includes/minishell.h"
 
 void	do_nothing(void)
@@ -17,14 +18,14 @@ void	do_nothing(void)
 	;
 }
 
-int		run_each_cli(char ***command, t_sh *shell)
+int		run_each_cli(t_ast **command, t_sh *shell)
 {
 	int	i;
 
 	i = 0;
 	while (shell->exit == 0 && command && command[i])
 	{
-		manage_interpretor(command[i], shell);
+		/*manage_interpretor(command[i], shell); TODO in build AST
 		if (manage_builtins(command[i], shell))
 			do_nothing();
 		else if (make_exploitable(command[i], shell->l_env))
@@ -33,7 +34,9 @@ int		run_each_cli(char ***command, t_sh *shell)
 				return (1);
 		}
 		else
-			display_command_not_found(command[i][0]);
+			display_command_not_found(command[i][0]);*/
+		ast_exec(command[i], shell);
+		ast_clean(command[i]);
 		i++;
 	}
 	return (0);
@@ -41,14 +44,14 @@ int		run_each_cli(char ***command, t_sh *shell)
 
 int		process_cli(t_sh *shell)
 {
-	char	***command;
+	t_ast	**command;
 
 	if (existing_line(shell) && correct_syntax(shell))
 	{
 		command = build_command(shell);
 		if (run_each_cli(command, shell) == 1)
 			return (1);
-		ft_str3del(command);
+		free(command);
 	}
 	return (0);
 }

@@ -33,7 +33,45 @@ ast_build.c \
 ast_clean.c \
 ast_exec.c \
 ast_exec_fn.c \
-ast_read.c
+ast_read.c \
+\
+input_format.c  \
+misc_string.c	\
+manage_path.c \
+build_props.c \
+cleaner.c \
+misc_prompt.c \
+builtin_env.c \
+builtin_unsetenv.c \
+manage_builtins.c\
+manage_interpretor.c\
+update_last_environ.c \
+builtin_exit.c \
+builtin_setenv.c \
+builtin_getenv.c \
+builtin_cd.c \
+empty_extern_environ.c \
+misc_parse_env.c \
+parse_env.c \
+env_errors.c \
+display_env.c \
+run_under_env.c \
+manage_link.c \
+merge_environ.c \
+misc_interpretor.c \
+misc_read.c \
+reader.c \
+cd_goto.c \
+syntax.c \
+misc_cd.c \
+manage_fork.c \
+format_path.c \
+cd_opt.c \
+misc_prompt2.c \
+cd_is_valid.c \
+misc_cd2.c \
+chdir_var.c \
+cd_symbolic.c
 
 
 MAIN = srcs/main.c
