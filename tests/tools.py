@@ -16,5 +16,4 @@ def valgrind_wrapper(command, test, binary):
 
 	root = ET.parse(xml_output).getroot()
 	if root.find("error") is not None:
-		pass
-	# raise AssertionError("[%s] -> %s" % (test, args)) TODO leaks
+		raise AssertionError("[%s] -> %s" % (test, args))

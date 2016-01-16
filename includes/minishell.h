@@ -58,7 +58,6 @@ typedef struct	s_ast
 }					t_ast;
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
-int					is_only_endline(char *buf);
 int					is_only_spaces(char *buf);
 void				display_prompt(t_sh *shell);
 void				display_command_not_found(char *command);
@@ -128,7 +127,6 @@ void				change_dir(char *path, t_sh *shell, int p);
 int					is_enter(char *buf);
 int					cust_atoi(const char *nptr);
 int					correct_syntax(t_sh *shell);
-void				ft_str3del(char ***str);
 void				display_permission_denied(const char *command);
 int					is_goto_home(char **command);
 void				ensure_pwd(t_sh *shell);

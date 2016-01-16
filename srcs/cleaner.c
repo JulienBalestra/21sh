@@ -40,19 +40,6 @@ void	delete_list(t_env **env)
 	}
 }
 
-void	ft_str3del(char ***str)
-{
-	int i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		ft_str2del(str[i]);
-		i++;
-	}
-	free(str);
-}
-
 void	clean_program(t_sh *shell)
 {
 	delete_list(&(shell->env));

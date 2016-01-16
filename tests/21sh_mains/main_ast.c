@@ -31,6 +31,7 @@ int ast_testing(char *str, int debug)
 	    ft_putstr("[ast_clean]");
     }
 	ast_clean(ast);
+	clean_program(shell);
 	if (debug)
 	{
 	    ft_putstr("[/ast_clean]\n");
