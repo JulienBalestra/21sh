@@ -17,20 +17,15 @@ function go_to_dirname
     echo "-> Current directory is" $(pwd)
 }
 
-function compilation
+function launch_test
 {
-    if [ -f ${BIN} ]
-    then
-        rm ${BIN}
-    fi
-    make test > /dev/null
+    python -m unittest discover $(pwd)/tests/
 }
 
 function main
 {
     go_to_dirname
-    compilation
-    valgrind --leak-check=full ${BIN}
+    launch_test
 }
 
 main

@@ -1,5 +1,7 @@
 *.o
+*.bin
 *.a
 /.objects
 minishell
 /.idea
+*.xml

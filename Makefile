@@ -19,7 +19,6 @@ OBJ_DIR = .objects/
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 TARGET = $(NAME).a
 BIN = minishell
-TEST_BIN = test_$(BIN)
 ENV = $(shell uname -s)
 
 
@@ -33,13 +32,11 @@ SRC =               \
 ast_build.c \
 ast_clean.c \
 ast_exec.c \
-ast_exec_fn.c
+ast_exec_fn.c \
+ast_read.c
 
 
 MAIN = srcs/main.c
-
-TEST = srcs/tests/main_test.c \
-srcs/tests/ast_read.c \
 
 
 .PHONY: all clean fclean re test
@@ -116,7 +113,3 @@ $(OBJ_DIR):
 	@echo " # sh : $(ENV) kernel"
 	@echo " + sh : Creating $(CL_GREED)$(OBJ_DIR)$(CL_WHITE)$(CL_WHITE)"
 	@mkdir -p $(OBJ_DIR)
-
-test: $(NAME)
-	@$(CC) $(CFLAGS) $(TEST) $(TARGET) libft/libft.a -I $(INC_DIR) -I libft/includes -o $(TEST_BIN)
-	@echo " # sh : Job done  $(shell pwd)/$(CL_GREED)$(TEST_BIN)$(CL_WHITE)"
