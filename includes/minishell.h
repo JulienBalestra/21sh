@@ -45,8 +45,7 @@ typedef struct		s_be
 	int				null;
 	int				cmd;
 }					t_be;
-
-typedef struct	s_ast
+typedef struct      s_ast
 {
 	int 			op;
 	int 			stdin;
@@ -147,18 +146,14 @@ char				*create_chdir_path(char *path, t_sh *shell);
 void				display_cd_permission(char *path);
 void				cd_symblink(char *path, t_sh *shell);
 
+t_ast               *ast_build(char *input);
+void                ast_clean(t_ast *ast);
+int                 ast_exec(t_ast *ast, t_sh *shell);
+void                exec_with_recurse(t_ast *ast, t_sh *shell);
+void                manage_simple_read(t_ast *ast, t_sh *shell);
+void                manage_write(t_ast *ast, t_sh *shell);
+void                manage_pipe(t_ast *ast, t_sh *shell);
+void                manage_double_read(t_ast *ast, t_sh *shell);
+void                ast_read(t_ast *ast);
 
-
-t_ast *ast_build(char *input);
-void ast_clean(t_ast *ast);
-int ast_exec(t_ast *ast, t_sh *shell);
-void exec_with_recurse(t_ast *ast, t_sh *shell);
-
-void manage_simple_read(t_ast *ast, t_sh *shell);
-void manage_write(t_ast *ast, t_sh *shell);
-void manage_pipe(t_ast *ast, t_sh *shell);
-void manage_double_read(t_ast *ast, t_sh *shell);
-
-
-void ast_read(t_ast *ast);
 #endif
