@@ -86,6 +86,7 @@ int		correct_syntax(t_sh *shell)
 	char	*ready;
 	int		ret;
 
+	//TODO analyse | < > >> << ...
 	ready = get_string_ready(shell->buf);
 	ret = is_exploitable(ready);
 	ft_strdel(&shell->buf);
