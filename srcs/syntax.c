@@ -15,16 +15,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void	ft_remove_endchar(char *str, char c)
-{
-	size_t	len;
-
-	len = ft_strlen(str);
-	if (str[len - 1] == c)
-		str[len - 1] = '\0';
-}
-
-char	*get_string_ready(char *buf)
+char	*pre_format(char *buf)
 {
 	char	*str1;
 	char	*str2;
@@ -38,63 +29,42 @@ char	*get_string_ready(char *buf)
 	return (str2);
 }
 
-int		next_char_is_semi(char *str)
+int		find_exploitable(char *str)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ')
-			i++;
-		else if (str[i] == ';')
-		{
-			return (1);
-		}
-		else
-			return (0);
-	}
-	return (0);
-}
-
-int		is_exploitable(char *str)
-{
-	int	i;
-
-	i = 0;
 	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (i == 0 && str[i] == ';')
-		{
-			return (0);
-		}
-		if (i != 0 && str[i] == ';' && next_char_is_semi(&str[i + 1]))
-		{
-			return (0);
-		}
-		if (str[ft_strlen(str) - 1] == ';')
-			return (0);
-		i++;
-	}
-	return (1);
+		return (1);
+	if (syn_semi_col(str) == 0)
+		return (1);
+	if (syn_right(str) == 0)
+		return (2);
+	if (syn_pipe(str) == 0)
+		return (3);
+	if (syn_left(str) == 0)
+		return (4);
+	return (0);
 }
 
 int		correct_syntax(t_sh *shell)
 {
-	char	*ready;
+	char	*formatted;
 	int		ret;
 
-	//TODO analyse | < > >> << ...
-	ready = get_string_ready(shell->buf);
-	ret = is_exploitable(ready);
+	formatted = pre_format(shell->buf);
+	ret = find_exploitable(formatted);
 	ft_strdel(&shell->buf);
-	shell->buf = ready;
-	if (ret == 0)
-	{
+	if (ret == 1)
 		ft_putendl_fd("syntax error near unexpected token `;'", 2);
-		ft_strdel(&shell->buf);
+	else if (ret == 2)
+		ft_putendl_fd("syntax error near unexpected token `>'", 2);
+	else if (ret == 3)
+		ft_putendl_fd("syntax error near unexpected token `|'", 2);
+	else if (ret == 4)
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
+	else
+		shell->buf = formatted;
+	if (ret)
+	{
+		ft_strdel(&formatted);
 		shell->l_ret = 2;
 	}
 	return (ret);

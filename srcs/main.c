@@ -36,7 +36,7 @@ int		process_cli(t_sh *shell)
 	t_ast	**command;
 	int 	ret;
 
-	if (existing_line(shell) && correct_syntax(shell))
+	if (existing_line(shell) && correct_syntax(shell) == 0)
 	{
 		command = build_command(shell);
 		ret = run_each_cli(command, shell);

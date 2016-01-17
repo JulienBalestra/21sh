@@ -156,4 +156,11 @@ void                manage_pipe(t_ast *ast, t_sh *shell);
 void                manage_double_read(t_ast *ast, t_sh *shell);
 void                ast_read(t_ast *ast);
 
+int					next_char_is(char *str, char c);
+
+int 				syn_semi_col(char *str);
+int syn_right(char *str);
+int syn_pipe(char *str);
+int syn_left(char *str);
+
 #endif

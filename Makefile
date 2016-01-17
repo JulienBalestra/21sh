@@ -63,6 +63,8 @@ misc_read.c \
 reader.c \
 cd_goto.c \
 syntax.c \
+syntax_fn.c \
+syntax_token.c \
 misc_cd.c \
 manage_exec.c \
 format_path.c \

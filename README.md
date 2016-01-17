@@ -26,4 +26,4 @@ Recode of a /bin/bash like
 
 The following command will install valgrind for leaks and errors utilities (and gdb).
 
-	./setup.sh && ./run_test.sh # include make rules testing
+	./setup.sh && ./run_test.sh # include make rules testingœ
