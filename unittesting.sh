@@ -19,6 +19,7 @@ function go_to_dirname
 
 function launch_test
 {
+    export LC_ALL=C
     python -m unittest discover $(pwd)/tests/
 }
 
