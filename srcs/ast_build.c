@@ -92,6 +92,10 @@ t_ast *ast_build(char *input)
 			cut = cut_input(input, tuple);
 			ast->left = ast_build(cut[0]);
 			ast->right = ast_build(cut[1]);
+			/*if (ast->op == 4)
+				ft_putstr("build eof\n");
+			else
+				ast->right = ast_build(cut[1]);*/
 			free(cut);
 		}
 	}
