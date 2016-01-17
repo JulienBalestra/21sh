@@ -64,7 +64,7 @@ reader.c \
 cd_goto.c \
 syntax.c \
 misc_cd.c \
-manage_fork.c \
+manage_exec.c \
 format_path.c \
 cd_opt.c \
 misc_prompt2.c \

@@ -10,7 +10,6 @@ def valgrind_wrapper(program, command, full_leaks=False):
 	:param command: the command to run into the minishell like ["ls", "-l"]
 	:return: False if no issue was found else return the summary of issues by raising
 	"""
-	return False
 	valgrind = ["valgrind"]
 	if full_leaks is True:
 		valgrind = ["valgrind", "--leak-check=full"]

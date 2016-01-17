@@ -51,10 +51,11 @@ void		do_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
 	if (mock == 0)
 		mock_environ = shell->l_env;
 	execve(str[0], ptr, mock_environ);
+	ft_putstr_fd("error execve\n", 2);
 	exit(2);
 }
 
-int		do_fork(const char **str, t_sh *shell, char **mock_environ, int mock)
+int		start_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
 {
 	if (is_exec(str[0]) == 0)
 		return (0);

@@ -15,7 +15,7 @@ void exec_with_recurse(t_ast *ast, t_sh *shell)
 			exit(0);
 		else if (make_exploitable(ast->cmd, shell->l_env))
 		{
-			if (do_fork((const char **)ast->cmd, shell, NULL, 0) == 0)
+			if (start_exec((const char **)ast->cmd, shell, NULL, 0) == 0)
 				exit(1);
 		}
 		else
@@ -72,7 +72,11 @@ int ast_exec(t_ast *ast, t_sh *shell)
 
 	pid = 0;
 	if (ast->op == -1 && dont_fork(ast->cmd, shell))
+	{
+		if (shell->exit == 1)
+			return (0);
 		return (1);
+	}
 	else if (ast->op == 1 || ast->op == 4 || ast->op == -1)
 		pid = fork();
 
@@ -84,7 +88,8 @@ int ast_exec(t_ast *ast, t_sh *shell)
 	else
 	{
 		waitpid(-1, &status, 0);
-		// TODO manage exit code
+		if (WIFEXITED(status))
+			shell->l_ret = WEXITSTATUS(status);
 		return (1);
 	}
 }

@@ -42,7 +42,7 @@ t_ast	**build_command(t_sh *shell)
 	if ((multi_cli = ft_lz_strsplit(shell->buf, ';')))
 	{
 		command = command_from_cli(multi_cli);
-		//ft_str2del(multi_cli); TODO
+		free(multi_cli);
 		free(shell->buf);
 		shell->buf = NULL;
 	}

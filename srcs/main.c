@@ -12,46 +12,36 @@
 
 #include <stdlib.h>
 #include "../includes/minishell.h"
-
-void	do_nothing(void)
-{
-	;
-}
+#include "../libft/includes/libft.h"
 
 int		run_each_cli(t_ast **command, t_sh *shell)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
-	while (shell->exit == 0 && command && command[i])
+	ret = 1;
+	while (command && command[i])
 	{
-		/*manage_interpretor(command[i], shell); TODO in build AST
-		if (manage_builtins(command[i], shell))
-			do_nothing();
-		else if (make_exploitable(command[i], shell->l_env))
-		{
-			if (do_fork((const char **)command[i], shell, NULL, 0) == 1)
-				return (1);
-		}
-		else
-			display_command_not_found(command[i][0]);*/
-		ast_exec(command[i], shell);
+		if (ret == 1)
+			ret = ast_exec(command[i], shell);
 		ast_clean(command[i]);
 		i++;
 	}
-	return (0);
+	return (ret ? 0 : 1);
 }
 
 int		process_cli(t_sh *shell)
 {
 	t_ast	**command;
+	int 	ret;
 
 	if (existing_line(shell) && correct_syntax(shell))
 	{
 		command = build_command(shell);
-		if (run_each_cli(command, shell) == 1)
-			return (1);
+		ret = run_each_cli(command, shell);
 		free(command);
+		return (ret);
 	}
 	return (0);
 }
@@ -81,6 +71,7 @@ int		main(void)
 			clean_program(shell);
 			return (ret);
 		}
+		clean_program(shell);
 		return (2);
 	}
 	return (3);

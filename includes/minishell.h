@@ -66,7 +66,7 @@ int					len_to_char(char *str, char c);
 char				**override_last_environ(t_sh *shell);
 char				**build_tab_environ(t_env *env);
 void				clean_program(t_sh *shell);
-int					do_fork(const char **str, t_sh *shell,
+int					start_exec(const char **str, t_sh *shell,
 								char **mock_environ, int mock);
 int					manage_builtins(char **command, t_sh *shell);
 void				builtin_env(char **command, t_sh *shell);
