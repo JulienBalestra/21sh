@@ -15,7 +15,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-int 		syn_semi_col(char *str)
+int			syn_semi_col(char *str)
 {
 	int		i;
 
@@ -50,7 +50,8 @@ int			syn_right(char *str)
 		{
 			return (0);
 		}
-		if ( i < len - 2 && str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '>')
+		if (i < len - 2 && str[i] == '>' &&
+				str[i + 1] == '>' && str[i + 2] == '>')
 		{
 			return (0);
 		}
@@ -98,7 +99,8 @@ int			syn_left(char *str)
 		{
 			return (0);
 		}
-		if ( i < len - 2 && str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '<')
+		if (i < len - 2 && str[i] == '<' &&
+				str[i + 1] == '<' && str[i + 2] == '<')
 		{
 			return (0);
 		}

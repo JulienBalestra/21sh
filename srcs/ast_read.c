@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_read.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/01/21 18:18:53 by jubalest          #+#    #+#             */
+/*   Updated: 2016/01/21 18:18:54 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-void display_op(int op)
+void	display_op(int op)
 {
 	if (op == 1)
 		ft_putstr("|");
@@ -16,7 +28,7 @@ void display_op(int op)
 	ft_putstr(" ");
 }
 
-void display_command(char **cmd)
+void	display_command(char **cmd)
 {
 	while (*cmd)
 	{
@@ -26,7 +38,7 @@ void display_command(char **cmd)
 	}
 }
 
-void ast_read(t_ast *ast)
+void	ast_read(t_ast *ast)
 {
 	if (ast->op == -1)
 	{
@@ -39,5 +51,3 @@ void ast_read(t_ast *ast)
 		ast_read(ast->left);
 	}
 }
-
-

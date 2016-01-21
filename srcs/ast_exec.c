@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_exec.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/01/21 18:11:07 by jubalest          #+#    #+#             */
+/*   Updated: 2016/01/21 18:11:10 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -5,7 +17,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void exec_with_recurse(t_ast *ast, t_sh *shell)
+void		exec_with_recurse(t_ast *ast, t_sh *shell)
 {
 	if (ast->op == -1)
 	{
@@ -22,24 +34,16 @@ void exec_with_recurse(t_ast *ast, t_sh *shell)
 		exit(2);
 	}
 	else if (ast->op == 1)
-	{
 		manage_pipe(ast, shell);
-	}
 	else if (ast->op == 2 || ast->op == 3)
-	{
 		manage_write(ast, shell);
-	}
 	else if (ast->op == 4)
-	{
 		manage_double_read(ast, shell);
-	}
 	else if (ast->op == 5)
-	{
 		manage_simple_read(ast, shell);
-	}
 }
 
-int dont_fork(char **command, t_sh *shell)
+int			dont_fork(char **command, t_sh *shell)
 {
 	if (ft_strcmp(command[0], "unsetenv") == 0)
 	{
@@ -64,7 +68,7 @@ int dont_fork(char **command, t_sh *shell)
 	return (0);
 }
 
-int ast_exec(t_ast *ast, t_sh *shell)
+int			ast_exec(t_ast *ast, t_sh *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -89,4 +93,3 @@ int ast_exec(t_ast *ast, t_sh *shell)
 		return (1);
 	}
 }
-

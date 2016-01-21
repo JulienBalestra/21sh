@@ -18,7 +18,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-int		is_exec(const char *command)
+int			is_exec(const char *command)
 {
 	struct stat	*st;
 
@@ -43,7 +43,8 @@ int		is_exec(const char *command)
 	return (0);
 }
 
-void		do_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
+void		do_exec(const char **str, t_sh *shell,
+				char **mock_environ, int mock)
 {
 	char	**ptr;
 
@@ -55,7 +56,8 @@ void		do_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
 	exit(2);
 }
 
-int		start_exec(const char **str, t_sh *shell, char **mock_environ, int mock)
+int			start_exec(const char **str, t_sh *shell,
+						char **mock_environ, int mock)
 {
 	if (is_exec(str[0]) == 0)
 		return (0);

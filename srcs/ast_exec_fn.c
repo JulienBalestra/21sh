@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_exec_fn.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/01/21 18:12:59 by jubalest          #+#    #+#             */
+/*   Updated: 2016/01/21 18:13:01 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -9,7 +21,7 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-void manage_pipe(t_ast *ast, t_sh *shell)
+void		manage_pipe(t_ast *ast, t_sh *shell)
 {
 	int		p[2];
 	pid_t	pid;
@@ -32,7 +44,7 @@ void manage_pipe(t_ast *ast, t_sh *shell)
 	}
 }
 
-void manage_double_read(t_ast *ast, t_sh *shell)
+void		manage_double_read(t_ast *ast, t_sh *shell)
 {
 	int		p[2];
 	pid_t	pid;
@@ -63,19 +75,18 @@ void manage_double_read(t_ast *ast, t_sh *shell)
 	}
 }
 
-void manage_write(t_ast *ast, t_sh *shell)
+void		manage_write(t_ast *ast, t_sh *shell)
 {
 	int		fd;
 	pid_t	pid;
 	int		status;
 
 	if (ast->op == 2)
-		fd = open(ast->right->cmd[0], O_WRONLY | O_APPEND |O_CREAT,
-				  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		fd = open(ast->right->cmd[0], O_WRONLY | O_APPEND | O_CREAT,
+	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else
 		fd = open(ast->right->cmd[0], O_WRONLY | O_TRUNC | O_CREAT,
-				  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -89,7 +100,7 @@ void manage_write(t_ast *ast, t_sh *shell)
 	}
 }
 
-void manage_simple_read(t_ast *ast, t_sh *shell)
+void		manage_simple_read(t_ast *ast, t_sh *shell)
 {
 	int		fd;
 	pid_t	pid;
