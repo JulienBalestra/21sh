@@ -11,6 +11,7 @@ class TestAST(unittest.TestCase):
 	libsh = "%s/libsh.a" % context
 	devnull = open("/dev/null", "w")
 	bin = None
+	valgrind_bin = False
 
 	@staticmethod
 	def compilation(cl, main_test):
@@ -32,12 +33,20 @@ class TestAST(unittest.TestCase):
 		os.chdir("%s/test_ast" % cls.testing)
 		assert subprocess.call(["make", "-C", cls.context], stdout=cls.devnull) == 0
 		cls.bin = TestAST.compilation(TestAST, "main_ast.c")
+		if subprocess.call(["which", "valgrind"]) == 0:
+			cls.valgrind_bin = True
+		else:
+			os.write(2, "\nVALGRIND NOT AVAILABLE\n")
+
+	def valgrind(self, command, method_name, binary):
+		if self.valgrind_bin:
+			valgrind_wrapper(command, method_name, binary)
 
 	def test_pipe_00(self):
 		cmd = [self.bin, "/bin/ls -1 | /bin/cat -e"]
 		out = subprocess.check_output(cmd)
 		self.assertEqual("file0$\nfile1$\n", out)
-		valgrind_wrapper(cmd, self.test_pipe_00.__name__, self.bin)
+		self.valgrind(cmd, self.test_pipe_00.__name__, self.bin)
 
 	def test_pipe_01(self):
 		out = subprocess.check_output(["env", "DEBUG21=TRUE", self.bin, "/bin/ls -1 | /bin/cat -e"])
@@ -56,13 +65,13 @@ class TestAST(unittest.TestCase):
 		cmd = [self.bin, "/bin/ls -1r | /bin/cat -e | /usr/bin/sort"]
 		out = subprocess.check_output(cmd)
 		self.assertEqual("file0$\nfile1$\n", out)
-		valgrind_wrapper(cmd, self.test_pipe_03.__name__, self.bin)
+		self.valgrind(cmd, self.test_pipe_03.__name__, self.bin)
 
 	def test_pipe_04(self):
 		cmd = [self.bin, "/bin/ls -1r | /bin/cat -e | /usr/bin/sort | /usr/bin/rev"]
 		out = subprocess.check_output(cmd)
 		self.assertEqual("$0elif\n$1elif\n", out)
-		valgrind_wrapper(cmd, self.test_pipe_04.__name__, self.bin)
+		self.valgrind(cmd, self.test_pipe_04.__name__, self.bin)
 
 	def test_solo_00(self):
 		out = subprocess.check_output([self.bin, "/bin/ls -1"])
@@ -75,7 +84,7 @@ class TestAST(unittest.TestCase):
 			self.assertEqual("", out)
 			with open("%s" % self.test_right_00.__name__, 'r') as f:
 				self.assertEqual("file0\nfile1\n%s\n" % self.test_right_00.__name__, f.read())
-				valgrind_wrapper(cmd, self.test_right_00.__name__, self.bin)
+				self.valgrind(cmd, self.test_right_00.__name__, self.bin)
 		finally:
 			os.remove("%s" % self.test_right_00.__name__)
 
@@ -86,7 +95,7 @@ class TestAST(unittest.TestCase):
 			self.assertEqual("", out)
 			with open("%s" % self.test_right_01.__name__, 'r') as f:
 				self.assertEqual("test0\n", f.read())
-				valgrind_wrapper(cmd, self.test_right_01.__name__, self.bin)
+				self.valgrind(cmd, self.test_right_01.__name__, self.bin)
 		finally:
 			os.remove("%s" % self.test_right_01.__name__)
 
@@ -121,7 +130,7 @@ class TestAST(unittest.TestCase):
 			self.assertTrue(out0 == out1 == "")
 			with open("%s" % self.test_double_right_pipe_00.__name__, 'r') as f:
 				self.assertEqual("base0$\nbase1\n", f.read())
-			valgrind_wrapper(cmd, self.test_double_right_pipe_00.__name__, self.bin)
+			self.valgrind(cmd, self.test_double_right_pipe_00.__name__, self.bin)
 		finally:
 			os.remove("%s" % self.test_double_right_pipe_00.__name__)
 
@@ -147,7 +156,7 @@ class TestAST(unittest.TestCase):
 		# safety below
 		with open("file0", 'r') as f:
 			self.assertEqual("ok", f.read())
-		valgrind_wrapper(cmd, self.test_left_00.__name__, self.bin)
+		self.valgrind(cmd, self.test_left_00.__name__, self.bin)
 
 	def test_left_pipe_00(self):
 		cmd = [self.bin, "/bin/cat < file0 | /usr/bin/rev"]
@@ -156,7 +165,7 @@ class TestAST(unittest.TestCase):
 		# safety below
 		with open("file0", 'r') as f:
 			self.assertEqual("ok", f.read())
-		valgrind_wrapper(cmd, self.test_left_pipe_00.__name__, self.bin)
+		self.valgrind(cmd, self.test_left_pipe_00.__name__, self.bin)
 
 	def test_left_pipe_01(self):
 		out = subprocess.check_output(
@@ -186,4 +195,4 @@ class TestAST(unittest.TestCase):
 				self.assertEqual("ko\nko\n", f.read())
 		finally:
 			os.remove(self.test_left_pipe_02.__name__)
-		valgrind_wrapper(cmd, self.test_left_pipe_02.__name__, self.bin)
+		self.valgrind(cmd, self.test_left_pipe_02.__name__, self.bin)

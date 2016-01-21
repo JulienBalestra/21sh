@@ -29,7 +29,7 @@ class TestMinishell(unittest.TestCase):
 			if subprocess.call(["valgrind", "--version"]) == 0:
 				cls.valgrind_binary = True
 		except OSError:
-			os.write(2, "VALGRIND NOT AVAILABLE")
+			os.write(2, "\nVALGRIND NOT AVAILABLE\n")
 		os.chmod("%s/norights" % cls.testing_dir, 000)
 
 	@classmethod
