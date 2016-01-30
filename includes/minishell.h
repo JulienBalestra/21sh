@@ -146,7 +146,7 @@ char				*create_chdir_path(char *path, t_sh *shell);
 void				display_cd_permission(char *path);
 void				cd_symblink(char *path, t_sh *shell);
 
-t_ast               *ast_build(char *input);
+t_ast               *ast_build(char *input, int eof);
 void                ast_clean(t_ast *ast);
 int                 ast_exec(t_ast *ast, t_sh *shell);
 void                exec_with_recurse(t_ast *ast, t_sh *shell);
@@ -162,5 +162,11 @@ int 				syn_semi_col(char *str);
 int syn_right(char *str);
 int syn_pipe(char *str);
 int syn_left(char *str);
+char *get_eof(char *s);
+char *build_eof_entry(char *eof);
+int skip_eof(char *s);
+
+t_ast		*ast_printf_with_eof(char *input);
+char **build_eof_tab(char *entry);
 
 #endif

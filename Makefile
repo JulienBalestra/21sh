@@ -30,6 +30,7 @@ CL_WHITE = \033[0m
 
 SRC =               \
 ast_build.c \
+ast_build_fn.c \
 ast_clean.c \
 ast_exec.c \
 ast_exec_fn.c \

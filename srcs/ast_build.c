@@ -77,12 +77,13 @@ char		**cut_input(char *input, int *tuple)
 	return (cut);
 }
 
-t_ast		*ast_build(char *input)
+t_ast		*ast_build(char *input, int eof)
 {
 	t_ast	*ast;
 	int		tuple[2];
 	char	**cut;
-	char	*clean;
+	char	*tmp;
+	char	*eof_entry;
 
 	if ((ast = (t_ast *)malloc(sizeof(t_ast))))
 	{
@@ -92,9 +93,14 @@ t_ast		*ast_build(char *input)
 		ast->stdout = 1;
 		if (ast->op == -1)
 		{
-			clean = ft_remove_useless(input, ' ');
-			ast->cmd = ft_lz_strsplit(clean, ' ');
-			free(clean);
+			if (eof)
+				ast->cmd = build_eof_tab(input);
+			else
+			{
+				tmp = ft_remove_useless(input, ' ');
+				ast->cmd = ft_lz_strsplit(tmp, ' ');
+				free(tmp);
+			}
 			ast->left = NULL;
 			ast->right = NULL;
 		}
@@ -102,12 +108,20 @@ t_ast		*ast_build(char *input)
 		{
 			ast->cmd = NULL;
 			cut = cut_input(input, tuple);
-			ast->left = ast_build(cut[0]);
-			ast->right = ast_build(cut[1]);
-			/*if (ast->op == 4)
-				ft_putstr("build eof\n");
+			if (ast->op == 4)
+			{
+				tmp = get_eof(cut[1]);
+				eof_entry = build_eof_entry(tmp);
+				ast->left = ast_build(eof_entry, 1);
+				ast->right = ast_build(ft_strjoin(cut[0], &cut[1][skip_eof(cut[1])]), 0);
+				free(cut[0]);
+				free(cut[1]);
+			}
 			else
-				ast->right = ast_build(cut[1]);*/
+			{
+				ast->left = ast_build(cut[0], 0);
+				ast->right = ast_build(cut[1], 0);
+			}
 			free(cut);
 		}
 	}

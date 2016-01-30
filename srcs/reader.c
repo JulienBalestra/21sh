@@ -31,8 +31,10 @@ char	*compile(char *left, char *buf)
 
 void	again(char *buf, t_sh *shell)
 {
-	if (isatty(0))
+	if (isatty(0) && shell)
 		display_prompt(shell);
+	else if (isatty(0))
+		ft_putstr("> ");
 	ft_strclr(buf);
 }
 
@@ -67,7 +69,7 @@ char	*get_line(t_sh *shell)
 	char	*left;
 	ssize_t	ret;
 
-	if (isatty(0))
+	if (isatty(0) && shell)
 		display_prompt(shell);
 	buf = ft_strnew(READ);
 	left = NULL;
@@ -87,6 +89,7 @@ char	*get_line(t_sh *shell)
 	if (left)
 		free(left);
 	free(buf);
-	shell->exit = 1;
+	if (shell)
+		shell->exit = 1;
 	return (NULL);
 }

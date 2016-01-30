@@ -55,7 +55,7 @@ void		manage_double_read(t_ast *ast, t_sh *shell)
 	pid = fork();
 	if (pid == 0)
 	{
-		cmd = ast->right->cmd;
+		cmd = ast->left->cmd;
 		dup2(p[1], ast->stdout);
 		close(p[0]);
 		while (*cmd)
@@ -71,7 +71,7 @@ void		manage_double_read(t_ast *ast, t_sh *shell)
 		dup2(p[0], ast->stdin);
 		close(p[1]);
 		waitpid(-1, &status, 0);
-		exec_with_recurse(ast->left, shell);
+		exec_with_recurse(ast->right, shell);
 	}
 }
 

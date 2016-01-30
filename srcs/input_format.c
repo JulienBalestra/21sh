@@ -25,7 +25,7 @@ t_ast	**command_from_cli(char **cli)
 	{
 		while (cli[i])
 		{
-			ast2[i] = ast_build(cli[i]);
+			ast2[i] = ast_build(cli[i], 0);
 			i++;
 		}
 		ast2[i] = NULL;
