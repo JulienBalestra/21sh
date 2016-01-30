@@ -14,7 +14,6 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-// cat << eof
 char *get_eof(char *s)
 {
 	char *eof;
@@ -46,6 +45,21 @@ int skip_eof(char *s)
 	return (i);
 }
 
+int is_warning_eof(char *line, char *entry, char *eof)
+{
+	if (! line)
+	{
+		ft_putstr_fd("warning: here-document at line 7 delimited by end-of-file ", 2);
+		ft_putstr_fd("(wanted `", 2);
+		eof[ft_strlen(eof) - 1] = '\0';
+		ft_putstr_fd(eof, 2);
+		ft_putstr_fd("')\n", 2);
+		ft_strdel(&entry);
+		return (1);
+	}
+	return (0);
+}
+
 char *build_eof_entry(char *eof)
 {
 	char *line;
@@ -67,6 +81,8 @@ char *build_eof_entry(char *eof)
 		else
 			entry = line;
 		line = get_line(NULL);
+		if (is_warning_eof(line, entry, eof))
+			break;
 	}
 	ft_strdel(&line);
 	ft_strdel(&eof);

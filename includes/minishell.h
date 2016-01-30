@@ -168,5 +168,8 @@ int skip_eof(char *s);
 
 t_ast		*ast_printf_with_eof(char *input);
 char **build_eof_tab(char *entry);
+char		**cut_input(char *input, int *tuple);
+void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple);
+void trigger_command(t_ast *ast, char *input, int eof);
 
 #endif
