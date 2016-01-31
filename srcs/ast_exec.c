@@ -22,6 +22,7 @@ void		exec_with_recurse(t_ast *ast, t_sh *shell)
 	if (ast->op == -1)
 	{
 		manage_interpretor(ast->cmd, shell);
+		change_fd(ast);
 		if (manage_builtins(ast->cmd, shell))
 			exit(0);
 		else if (make_exploitable(ast->cmd, shell->l_env))

@@ -29,7 +29,8 @@ int			is_operand(char *s, int i)
 	{
 		if (s[i - 1] == '>')
 			return (2);
-		return (3);
+		if (s[i + 1] && s[i + 1] != '&')
+			return (3);
 	}
 	if (s[i] == '<')
 	{
@@ -90,6 +91,9 @@ t_ast		*ast_build(char *input, int eof)
 		ast->op = tuple[0];
 		ast->stdin = 0;
 		ast->stdout = 1;
+		ast->stderr = 2;
+		ast->from = -2;
+		ast->to = -2;
 		if (ast->op == -1)
 			trigger_command(ast, input, eof);
 		else

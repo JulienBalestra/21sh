@@ -50,6 +50,9 @@ typedef struct      s_ast
 	int 			op;
 	int 			stdin;
 	int 			stdout;
+	int 			stderr;
+	int 			from;
+	int 			to;
 	char 			**cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
@@ -171,5 +174,7 @@ char **build_eof_tab(char *entry);
 char		**cut_input(char *input, int *tuple);
 void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple);
 void trigger_command(t_ast *ast, char *input, int eof);
+
+void change_fd(t_ast *ast);
 
 #endif

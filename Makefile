@@ -75,7 +75,9 @@ misc_prompt2.c \
 cd_is_valid.c \
 misc_cd2.c \
 chdir_var.c \
-cd_symbolic.c
+cd_symbolic.c \
+ast_build_fn2.c \
+ast_exec_fn2.c
 
 
 MAIN = srcs/main.c
