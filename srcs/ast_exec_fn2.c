@@ -21,11 +21,6 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-// if ast->from && ast->to
-// dup2(to, from)
-// else if ast->from && ast->to == -1
-// close(from)
-
 void change_fd(t_ast *ast)
 {
 	if (ast->from != -2 && ast->to != -2)
