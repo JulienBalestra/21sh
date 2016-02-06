@@ -16,7 +16,7 @@ class TestAST(unittest.TestCase):
 	@staticmethod
 	def compilation(cl, main_test):
 		bin_name = "%s" % main_test.replace(".c", ".bin")
-		cmd = "gcc -Wall -Werror -Wextra {main} {libsha} -I {includessh} -I {includesft} {libfta} -o {output}".format(
+		cmd = "gcc -Wall -Werror -Wextra {main} {libsha} -l termcap -I {includessh} -I {includesft} {libfta} -o {output}".format(
 				main="%s/%s" % (cl.mains, main_test),
 				libsha="%s/libsh.a" % cl.context,
 				includessh="%s/includes/" % cl.context,
@@ -31,7 +31,7 @@ class TestAST(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
 		os.chdir("%s/test_ast" % cls.testing)
-		assert subprocess.call(["make", "-C", cls.context], stdout=cls.devnull) == 0
+		assert subprocess.call(["make", "re", "-C", cls.context], stdout=cls.devnull) == 0
 		cls.bin = TestAST.compilation(TestAST, "main_ast.c")
 		if subprocess.call(["which", "valgrind"]) == 0:
 			cls.valgrind_bin = True

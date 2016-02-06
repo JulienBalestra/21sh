@@ -58,6 +58,14 @@ typedef struct      s_ast
 	struct s_ast	*right;
 
 }					t_ast;
+typedef struct		s_term
+{
+	long			c;
+	int				cursor;
+	struct s_term	*next;
+	struct s_term	*prev;
+}					t_term;
+
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
 int					is_only_spaces(char *buf);
@@ -176,5 +184,12 @@ void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple);
 void trigger_command(t_ast *ast, char *input, int eof);
 
 void change_fd(t_ast *ast);
+
+/*
+ * tc_init.c
+ */
+void raw_terminal_mode(void);
+void default_terminal_mode(void);
+
 
 #endif

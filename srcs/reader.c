@@ -63,7 +63,88 @@ void	signal_callback_handler(int sig_num)
 		ft_putstr(PROMPT);
 }
 
-char	*get_line(t_sh *shell)
+t_term *create_link(t_term *prev)
+{
+	t_term *term;
+
+	if ((term = (t_term *)malloc(sizeof(t_term))))
+	{
+		term->next = NULL;
+		term->prev = prev;
+		term->c = 0;
+		term->cursor = 0;
+	}
+	return (term);
+}
+
+char *tterm_to_str(t_term *term)
+{
+	size_t len;
+	char *str;
+	int i;
+
+	len = 0;
+	while (term->next)
+		term = term->next;
+	while (term->prev)
+	{
+		term = term->prev;
+		len++;
+	}
+	if ((str = ft_strnew((len))))
+	{
+		i = 0;
+		while (term->next)
+		{
+
+			str[i] = (char)term->c;
+			i++;
+			term = term->next;
+		}
+	}
+	return (str);
+}
+
+void free_term(t_term *term)
+{
+	t_term *tmp;
+
+	while (term->next)
+		term = term->next;
+	while (term->prev)
+	{
+		tmp = term->prev;
+		free(term);
+		term = tmp;
+	}
+}
+
+char 	*get_line_from_user(t_sh *shell)
+{
+	char *buf;
+	t_term *term;
+
+	buf = NULL;
+	if ((term = create_link(NULL)))
+	{
+		display_prompt(shell);
+		raw_terminal_mode();
+		while (read(0, &term->c, 1))
+		{
+			ft_putchar((char)term->c);
+			term->next = create_link(term);
+			term = term->next;
+			if (term->prev->c == '\n')
+				break;
+		}
+		default_terminal_mode();
+		buf = tterm_to_str(term);
+		free_term(term);
+	}
+	return (buf);
+}
+
+char	*get_line_from_pipe(t_sh *shell)
 {
 	char	*buf;
 	char	*left;
@@ -92,4 +173,12 @@ char	*get_line(t_sh *shell)
 	if (shell)
 		shell->exit = 1;
 	return (NULL);
+}
+
+char	*get_line(t_sh *shell)
+{
+	if (isatty(0))
+		return get_line_from_user(shell);
+	else
+		return get_line_from_pipe(shell);
 }

@@ -77,7 +77,10 @@ misc_cd2.c \
 chdir_var.c \
 cd_symbolic.c \
 ast_build_fn2.c \
-ast_exec_fn2.c
+ast_exec_fn2.c \
+tc_init.c
+#tc_declare.c \
+
 
 
 MAIN = srcs/main.c
@@ -98,7 +101,7 @@ $(TARGET): $(OBJS)
 	@echo " + sh : Creating  $(CL_GREED)$@$(CL_WHITE) $(shell sleep 0.01)"
 	@ar -rcv $(TARGET) $(OBJS) > /dev/null
 	@ranlib $(TARGET)
-	@$(CC) $(CFLAGS) $(MAIN) $(TARGET) libft/libft.a -I $(INC_DIR) -I libft/includes  -o $(BIN)
+	@$(CC) $(CFLAGS) $(MAIN) $(TARGET) libft/libft.a -l termcap -I $(INC_DIR) -I libft/includes  -o $(BIN)
 
 clean:
 	@echo " $(shell\

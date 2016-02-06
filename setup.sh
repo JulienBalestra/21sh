@@ -22,7 +22,7 @@ function packages
     fi
     echo "Updating package source..."
     sudo apt-get update -qq || sudo brew update > /dev/null
-    for package in valgrind
+    for package in valgrind libncurses5-dev
     do
         echo "Installing package named ${package}"
         sudo apt-get install ${package} -qqy > /dev/null || sudo brew install ${package} > /dev/null
