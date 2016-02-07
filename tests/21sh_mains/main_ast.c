@@ -14,7 +14,7 @@ int ast_testing(char *str, int debug)
 	shell = create_shell_props();
 	if (debug)
 		ft_putstr("[ast_build]");
-	ast = ast_build(ft_strdup(str), 0);
+	ast = ast_build(ft_strdup(str), 0, shell);
 	if (debug)
 	{
 	    ft_putstr("[/ast_build]\n");

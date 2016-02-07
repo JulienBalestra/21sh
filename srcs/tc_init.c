@@ -1,13 +1,14 @@
-#include <curses.h>
 #include <term.h>
 #include "../includes/minishell.h"
+#include "../libft/includes/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 
-void 	raw_terminal_mode(void)
+void 	raw_terminal_mode(t_sh *shell)
 {
 	struct termios tattr;
 
+	tcgetattr(STDIN_FILENO, &shell->default_term);
 	tcgetattr(STDIN_FILENO, &tattr);
 	tattr.c_lflag &= ~(ECHO | ICANON);
 	tattr.c_oflag &= (OPOST);
@@ -19,15 +20,7 @@ void 	raw_terminal_mode(void)
 	return;
 }
 
-void 	default_terminal_mode(void)
+void 	default_terminal_mode(t_sh *shell)
 {
-
-	struct termios tattr;
-
-	tcgetattr(STDIN_FILENO, &tattr);
-	tattr.c_lflag |= (ECHO | ICANON);
-	tattr.c_oflag |= (OPOST);
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &tattr);
-
-	return;
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->default_term);
 }

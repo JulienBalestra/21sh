@@ -80,7 +80,7 @@ char		**cut_input(char *input, int *tuple)
 	return (cut);
 }
 
-t_ast		*ast_build(char *input, int eof)
+t_ast		*ast_build(char *input, int eof, t_sh *shell)
 {
 	t_ast	*ast;
 	int		tuple[2];
@@ -97,7 +97,7 @@ t_ast		*ast_build(char *input, int eof)
 		if (ast->op == -1)
 			trigger_command(ast, input, eof);
 		else
-			trigger_operator_with_recurse(ast, input, tuple);
+			trigger_operator_with_recurse(ast, input, tuple, shell);
 	}
 	free(input);
 	return (ast);

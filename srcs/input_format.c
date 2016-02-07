@@ -15,7 +15,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-t_ast	**command_from_cli(char **cli)
+t_ast	**command_from_cli(char **cli, t_sh *shell)
 {
 	int		i;
 	t_ast	**ast2;
@@ -25,7 +25,7 @@ t_ast	**command_from_cli(char **cli)
 	{
 		while (cli[i])
 		{
-			ast2[i] = ast_build(cli[i], 0);
+			ast2[i] = ast_build(cli[i], 0, shell);
 			i++;
 		}
 		ast2[i] = NULL;
@@ -41,7 +41,7 @@ t_ast	**build_command(t_sh *shell)
 	command = NULL;
 	if ((multi_cli = ft_lz_strsplit(shell->buf, ';')))
 	{
-		command = command_from_cli(multi_cli);
+		command = command_from_cli(multi_cli, shell);
 		free(multi_cli);
 		free(shell->buf);
 		shell->buf = NULL;

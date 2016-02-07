@@ -60,7 +60,7 @@ int is_warning_eof(char *line, char *entry, char *eof)
 	return (0);
 }
 
-char *build_eof_entry(char *eof)
+char *build_eof_entry(char *eof, t_sh *shell)
 {
 	char *line;
 	char *entry;
@@ -80,7 +80,7 @@ char *build_eof_entry(char *eof)
 		}
 		else
 			entry = line;
-		line = get_line(NULL);
+		line = get_line(shell, 1);
 		if (is_warning_eof(line, entry, eof))
 			break;
 	}

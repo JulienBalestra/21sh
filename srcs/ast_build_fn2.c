@@ -14,7 +14,7 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple)
+void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *shell)
 {
 	char **cut;
 	char *tmp;
@@ -25,16 +25,16 @@ void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple)
 	if (ast->op == 4)
 	{
 		tmp = get_eof(cut[1]);
-		eof_entry = build_eof_entry(tmp);
-		ast->left = ast_build(eof_entry, 1);
-		ast->right = ast_build(ft_strjoin(cut[0], &cut[1][skip_eof(cut[1])]), 0);
+		eof_entry = build_eof_entry(tmp, shell);
+		ast->left = ast_build(eof_entry, 1, shell);
+		ast->right = ast_build(ft_strjoin(cut[0], &cut[1][skip_eof(cut[1])]), 0, shell);
 		free(cut[0]);
 		free(cut[1]);
 	}
 	else
 	{
-		ast->left = ast_build(cut[0], 0);
-		ast->right = ast_build(cut[1], 0);
+		ast->left = ast_build(cut[0], 0, shell);
+		ast->right = ast_build(cut[1], 0, shell);
 	}
 	free(cut);
 }

@@ -50,7 +50,7 @@ int		start_engine(t_sh *shell)
 {
 	while (42)
 	{
-		shell->buf = get_line(shell);
+		shell->buf = get_line(shell, 0);
 		if (process_cli(shell) == 1)
 			return (1);
 		if (shell->exit == 1)

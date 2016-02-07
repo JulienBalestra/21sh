@@ -13,13 +13,13 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-t_env	*upsert_from_tab(t_env *uenv, char **tab)
+t_env	*upsert_from_table(t_env *uenv, char **table)
 {
-	while (*tab)
+	while (*table)
 	{
-		if (ft_strchr(*tab, '='))
-			uenv = upsert_link(uenv, *tab);
-		tab++;
+		if (ft_strchr(*table, '='))
+			uenv = upsert_link(uenv, *table);
+		table++;
 	}
 	return (uenv);
 }
@@ -93,11 +93,11 @@ char	**merge_both_environ(char **first, char **unset, char **second)
 	t_env	*menv;
 
 	menv = NULL;
-	menv = upsert_from_tab(menv, first);
+	menv = upsert_from_table(menv, first);
 	menv = get_start(menv);
 	menv = unset_elem(menv, unset);
 	menv = get_end(menv);
-	menv = upsert_from_tab(menv, second);
+	menv = upsert_from_table(menv, second);
 	menv = get_start(menv);
 	merge = build_tab_environ(menv);
 	delete_list(&menv);

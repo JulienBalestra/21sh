@@ -17,6 +17,7 @@
 # define PROMPT "minishell> "
 # define USE_CWD	1
 # include <string.h>
+# include <term.h>
 
 typedef struct		s_env
 {
@@ -36,6 +37,7 @@ typedef struct		s_sh
 	char			**l_cmd;
 	char			*buf;
 	int				exit;
+	struct termios	default_term;
 }					t_sh;
 typedef struct		s_be
 {
@@ -69,7 +71,7 @@ typedef struct		s_term
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
 int					is_only_spaces(char *buf);
-void				display_prompt(t_sh *shell);
+void		display_prompt(t_sh *shell, int ps2);
 void				display_command_not_found(char *command);
 int					make_exploitable(char **command, char **last_environ);
 int					len_to_char(char *str, char c);
@@ -129,7 +131,7 @@ char				*replace_dollar_question(char *dollar_question,
 												t_sh *shell);
 int					is_real_line(char *buf);
 t_ast				**build_command(t_sh *shell);
-char				*get_line(t_sh *shell);
+char				*get_line(t_sh *shell, int ps2);
 int					existing_line(t_sh *shell);
 void				go_to_old_pwd(t_sh *shell, int p);
 void				go_to_home_directory(t_sh *shell);
@@ -157,7 +159,7 @@ char				*create_chdir_path(char *path, t_sh *shell);
 void				display_cd_permission(char *path);
 void				cd_symblink(char *path, t_sh *shell);
 
-t_ast               *ast_build(char *input, int eof);
+t_ast				*ast_build(char *input, int eof, t_sh *shell);
 void                ast_clean(t_ast *ast);
 int                 ast_exec(t_ast *ast, t_sh *shell);
 void                exec_with_recurse(t_ast *ast, t_sh *shell);
@@ -174,13 +176,13 @@ int syn_right(char *str);
 int syn_pipe(char *str);
 int syn_left(char *str);
 char *get_eof(char *s);
-char *build_eof_entry(char *eof);
+char *build_eof_entry(char *eof, t_sh *shell);
 int skip_eof(char *s);
 
 t_ast		*ast_printf_with_eof(char *input);
 char **build_eof_tab(char *entry);
 char		**cut_input(char *input, int *tuple);
-void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple);
+void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *shell);
 void trigger_command(t_ast *ast, char *input, int eof);
 
 void change_fd(t_ast *ast);
@@ -188,8 +190,10 @@ void change_fd(t_ast *ast);
 /*
  * tc_init.c
  */
-void raw_terminal_mode(void);
-void default_terminal_mode(void);
+void raw_terminal_mode(t_sh *shell);
+void 	default_terminal_mode(t_sh *shell);
 
+
+size_t		len_prompt(t_sh *shell);
 
 #endif
