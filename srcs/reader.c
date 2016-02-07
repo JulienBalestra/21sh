@@ -12,8 +12,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "libft.h"
-#include "minishell.h"
 #include <signal.h>
 #include <term.h>
 #include <sys/ioctl.h>
@@ -61,20 +59,18 @@ void	signal_callback_handler(int sig_num)
 		ft_putstr(PROMPT);
 }
 
-t_term *create_link(t_term *prev)
+t_term *create_link(void)
 {
-	t_term *term;
+	t_term *link;
 
-	if ((term = (t_term *)malloc(sizeof(t_term))))
+	if ((link = (t_term *)malloc(sizeof(t_term))))
 	{
-		term->next = NULL;
-		term->prev = prev;
-		if (prev)
-			prev->cursor = 0;
-		term->cursor = 1;
-		term->c = 0;
+		link->next = NULL;
+		link->prev = NULL;
+		link->cursor = 0;
+		link->c = 0;
 	}
-	return (term);
+	return (link);
 }
 
 char *tterm_to_str(t_term *term)
@@ -189,27 +185,30 @@ size_t			get_columns(void)
 
 char 	*get_line_from_user(t_sh *shell, int ps2)
 {
-	char *buf;
-	t_term *term;
+	char 	*buf;
+	long	key;
+	t_term *end;
 
 	buf = NULL;
-	if ((term = create_link(NULL)))
+	key = 0;
+	if ((end = create_link()))
 	{
 		cpy_reset_cursor(get_columns());
 		display_prompt(shell, ps2);
 		raw_terminal_mode(shell);
-		while (read(0, &term->c, sizeof(long)))
+		end->cursor = 1;
+		end->c = '\n';
+		while (read(0, &key, sizeof(long)))
 		{
-			ft_putchar((char)term->c);
-			term->next = create_link(term);
-			term = term->next;
-			if (term->prev->c == '\n')
+			if (tc_process_key(shell, end, key))
 				break;
 		}
-		buf = tterm_to_str(term);
+		buf = tterm_to_str(end);
 		cpy_reset_cursor(ft_strlen(buf) + len_prompt(shell));
-		free_term(term);
+		free_term(end); //TODO
 		default_terminal_mode(shell);
+		display_prompt(shell, ps2);
+		ft_putendl(buf);
 	}
 	return (buf);
 }
