@@ -209,6 +209,8 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);
 		ft_putendl(buf);
+		if (! buf)
+			return get_line_from_user(shell, ps2);
 	}
 	return (buf);
 }

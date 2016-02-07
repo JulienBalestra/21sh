@@ -78,7 +78,9 @@ chdir_var.c \
 cd_symbolic.c \
 ast_build_fn2.c \
 ast_exec_fn2.c \
-tc_init.c
+tc_init.c \
+tc_keys.c
+
 
 MAIN = srcs/main.c
 

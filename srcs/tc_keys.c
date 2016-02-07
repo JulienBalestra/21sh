@@ -36,6 +36,7 @@ void exec_move_cursor_right(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->next->cursor = 1;
+		ft_putstr(tgetstr("nd", NULL));
 	}
 }
 
@@ -47,6 +48,7 @@ void exec_move_cursor_left(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->prev->cursor = 1;
+		ft_putstr(tgetstr("le", NULL));
 	}
 }
 
@@ -155,10 +157,10 @@ void 	display_term_line(t_sh *shell, t_term *term)
 	int left;
 	int len;
 
+	(void)shell;
 	left = get_left_len(term);
 	len = get_total_len(term);
 	clear_line(left - 1, len);
-	(void)shell;
 	while (term->prev)
 		term = term->prev;
 	while (term->next)
@@ -166,12 +168,17 @@ void 	display_term_line(t_sh *shell, t_term *term)
 		ft_putchar((char)term->c);
 		term = term->next;
 	}
+	while (term->cursor == 0)
+	{
+		ft_putstr(tgetstr("le", NULL));
+		term = term->prev;
+	}
 }
 
 int 	tc_process_key(t_sh *shell, t_term *term, long key)
 {
 	(void)shell;
-	if ((int)key == MYKEY_ENTER)
+	if (key == '\n' || (char)key == '\n')
 		return (1);
 	else if (tc_exec_key(shell, term, key) == 0)
 	{

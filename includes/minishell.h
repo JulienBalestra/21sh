@@ -193,7 +193,14 @@ void change_fd(t_ast *ast);
 void raw_terminal_mode(t_sh *shell);
 void 	default_terminal_mode(t_sh *shell);
 
+typedef struct  s_key
+{
+	long        value;
+	void        (*f)(t_sh *shell, t_term *term);
+}               t_key;
 
 size_t		len_prompt(t_sh *shell);
+int 	tc_process_key(t_sh *shell, t_term *term, long key);
+t_term *create_link(void);
 
 #endif
