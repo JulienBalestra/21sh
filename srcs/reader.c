@@ -106,59 +106,17 @@ void free_term(t_term *term)
 
 	while (term->next)
 		term = term->next;
-	while (term->prev)
+	while (term)
 	{
 		tmp = term->prev;
+		term->cursor = 0;
+		term->c = 0;
 		free(term);
 		term = tmp;
 	}
 }
 
-/*void reset_cursor(t_cline *line)
-{
-	int i;
-
-	i = line->length + ft_strlen(PROMPT);
-	while (i--)
-	{
-		ft_putstr_fd(tgetstr("le", NULL), 1);
-		ft_putstr_fd(tgetstr("dc", NULL), 1);
-	}
-}*/
-
-/*void restor_cursor(t_cline *cline)
-{
-	t_term *begin;
-
-	if (!cline || !(begin = cline->last))
-		return ;
-	while (begin->next)
-		begin = begin->next;
-	while (begin)
-	{
-		if (begin->cursor)
-			break ;
-		ft_putstr_fd(tgetstr("le", NULL), 1);
-		begin = begin->prev;
-	}
-}*/
-
-void cpy_restor_cursor(t_term *term)
-{
-	/*if (!cline || !(term))
-		return ;*/
-	while (term->next)
-		term = term->next;
-	while (term)
-	{
-		if (term->cursor == 1)
-			break ;
-		ft_putstr_fd(tgetstr("le", NULL), 1);
-		term = term->prev;
-	}
-}
-
-void 	cpy_reset_cursor(size_t len)
+void 	reset_cursor(size_t len)
 {
 	char *le;
 	char *dc;
@@ -193,18 +151,18 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	key = 0;
 	if ((end = create_link()))
 	{
-		cpy_reset_cursor(get_columns());
+		reset_cursor(get_columns());
 		display_prompt(shell, ps2);
 		raw_terminal_mode(shell);
 		end->cursor = 1;
 		end->c = '\n';
 		while (read(0, &key, sizeof(long)))
 		{
-			if (tc_process_key(shell, end, key))
+			if (tc_continue_process_key(shell, end, key) == 0)
 				break;
 		}
 		buf = tterm_to_str(end);
-		cpy_reset_cursor(ft_strlen(buf) + len_prompt(shell));
+		reset_cursor(ft_strlen(buf) + len_prompt(shell));
 		free_term(end); //TODO
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);

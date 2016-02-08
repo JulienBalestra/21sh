@@ -200,7 +200,7 @@ typedef struct  s_key
 }               t_key;
 
 size_t		len_prompt(t_sh *shell);
-int 	tc_process_key(t_sh *shell, t_term *term, long key);
+int 	tc_continue_process_key(t_sh *shell, t_term *term, long key);
 t_term *create_link(void);
 
 #endif

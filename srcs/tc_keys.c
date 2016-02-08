@@ -175,11 +175,11 @@ void 	display_term_line(t_sh *shell, t_term *term)
 	}
 }
 
-int 	tc_process_key(t_sh *shell, t_term *term, long key)
+int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 {
 	(void)shell;
 	if (key == '\n' || (char)key == '\n')
-		return (1);
+		return (0);
 	else if (tc_exec_key(shell, term, key) == 0)
 	{
 		while (term->cursor == 0)
@@ -189,5 +189,5 @@ int 	tc_process_key(t_sh *shell, t_term *term, long key)
 		term->prev->c = key;
 		display_term_line(shell, term);
 	}
-	return (0);
+	return (1);
 }
