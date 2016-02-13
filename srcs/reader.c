@@ -87,7 +87,7 @@ char *tterm_to_str(t_term *term)
 		term = term->prev;
 		len++;
 	}
-	if ((str = ft_strnew((len))))
+	if ((str = ft_strnew((len + 1))))
 	{
 		i = 0;
 		while (term->next)
@@ -160,6 +160,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		{
 			if (tc_continue_process_key(shell, end, key) == 0)
 				break;
+			key = 0;
 		}
 		buf = tterm_to_str(end);
 		reset_cursor(ft_strlen(buf) + len_prompt(shell));
@@ -167,8 +168,11 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);
 		ft_putendl(buf);
-		if (! buf)
+		if (! buf || buf[0] == '\0')
+		{
+			ft_strdel(&buf);
 			return get_line_from_user(shell, ps2);
+		}
 	}
 	return (buf);
 }
