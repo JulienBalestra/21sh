@@ -1,6 +1,5 @@
 #include <term.h>
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 

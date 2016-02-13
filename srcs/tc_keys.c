@@ -206,7 +206,7 @@ void	ft_putlong(long n)
 
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
-	//ft_putchar('*'); ft_putlong(key);ft_putchar('*'); // TODO DEBUG
+	ft_putchar('*'); ft_putlong(key);ft_putchar('*'); // TODO DEBUG
 
 	if (del_keys(shell, term, key))
 		return (1);
@@ -317,15 +317,24 @@ void 	display_term_line(t_sh *shell, t_term *term)
 	}
 }
 
-int 	end_of_transmission(t_term *term)
+int 	end_of_transmission(t_sh *shell, t_term *term)
 {
+	char *exit;
+	char *ptr;
+
 	while (term->next)
 		term = term->next;
 	if (term->prev)
-	{
 		return (1);
+	exit = ft_strdup("exit");
+	ptr = exit;
+	while (*exit)
+	{
+		tc_continue_process_key(shell, term, (long)*exit);
+		exit++;
 	}
-	return (-1);
+	ft_strdel(&ptr);
+	return (0);
 }
 
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
@@ -344,7 +353,7 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 	}
 	else if (key == KEY_CTRL_D)
 	{
-		return (end_of_transmission(term));
+		return (end_of_transmission(shell, term));
 	}
 	return (1);
 }
