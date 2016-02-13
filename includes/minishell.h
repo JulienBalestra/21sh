@@ -19,6 +19,15 @@
 # include <string.h>
 # include <term.h>
 
+typedef struct		s_term
+{
+	long			c;
+	int				cursor;
+	struct s_term	*next;
+	struct s_term	*prev;
+}					t_term;
+
+
 typedef struct		s_env
 {
 	struct s_env	*next;
@@ -38,6 +47,7 @@ typedef struct		s_sh
 	char			*buf;
 	int				exit;
 	struct termios	default_term;
+	t_term			*yank;
 }					t_sh;
 typedef struct		s_be
 {
@@ -60,13 +70,6 @@ typedef struct      s_ast
 	struct s_ast	*right;
 
 }					t_ast;
-typedef struct		s_term
-{
-	long			c;
-	int				cursor;
-	struct s_term	*next;
-	struct s_term	*prev;
-}					t_term;
 
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
@@ -202,5 +205,8 @@ typedef struct  s_key
 size_t		len_prompt(t_sh *shell);
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key);
 t_term *create_link(void);
+void safe_free_term(t_term *term);
+void 	display_term_line(t_sh *shell, t_term *term);
+int get_total_len(t_term *term);
 
 #endif
