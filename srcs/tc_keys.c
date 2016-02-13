@@ -206,7 +206,7 @@ void	ft_putlong(long n)
 
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
-	ft_putchar('*'); ft_putlong(key);ft_putchar('*'); // TODO DEBUG
+	//ft_putchar('*'); ft_putlong(key);ft_putchar('*'); // TODO DEBUG
 
 	if (del_keys(shell, term, key))
 		return (1);
