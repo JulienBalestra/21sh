@@ -79,6 +79,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->buf = NULL;
 		shell->exit = 0;
 		shell->yank = NULL;
+		shell->last = NULL;
 		return (shell);
 	}
 	return (NULL);

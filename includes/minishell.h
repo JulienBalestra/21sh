@@ -36,6 +36,9 @@
 # define KEY_CTRL_U				21
 # define KEY_CTRL_K				11
 
+# define KEY_CTRL_Y				25
+# define KEY_CTRL__				31
+
 # include <string.h>
 # include <term.h>
 
@@ -68,6 +71,7 @@ typedef struct		s_sh
 	int				exit;
 	struct termios	default_term;
 	t_term			*yank;
+	t_term			*last;
 }					t_sh;
 typedef struct		s_be
 {
@@ -271,5 +275,16 @@ int  tc_action_keys(t_sh *shell, t_term *term, long key);
 int get_left_len(t_term *term);
 void 	insert_link_before(t_term *term);
 void 	clear_line(int left, int len);
+
+/*
+ * tc_yank.c
+ */
+void insert_yank(t_sh *shell, t_term *term);
+
+/*
+ * tc_last.c
+ */
+void term_dup(t_sh *shell, t_term *term);
+void restore_last(t_sh *shell, t_term *term);
 
 #endif

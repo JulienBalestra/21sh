@@ -51,5 +51,7 @@ void	clean_program(t_sh *shell)
 		free(shell->buf);
 	if (shell->yank)
 		safe_free_term(shell->yank);
+	if (shell->last)
+		safe_free_term(shell->last);
 	free(shell);
 }

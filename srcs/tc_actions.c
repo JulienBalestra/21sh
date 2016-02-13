@@ -23,6 +23,17 @@ int	cut_keys(t_sh *shell, t_term *term, long key)
 	return (1);
 }
 
+int last_yank_key(t_sh *shell, t_term *term, long key)
+{
+	if (key == KEY_CTRL_Y && shell->yank)
+		insert_yank(shell, term);
+	/*else if (key == KEY_CTRL__ && shell->last)
+		restore_last(shell, term);*/
+	else
+		return (0);
+	return (1);
+}
+
 int	move_keys(t_sh *shell, t_term *term, long key)
 {
 	if (key == KEY_LEFT)
@@ -68,6 +79,8 @@ int  tc_action_keys(t_sh *shell, t_term *term, long key)
 		return (2);
 	else if (cut_keys(shell, term, key))
 		return (3);
+	else if (last_yank_key(shell, term, key))
+		return (4);
 	else
 		return (0);
 }

@@ -85,6 +85,8 @@ tc_move_home_end.c \
 tc_move_letter.c \
 tc_move_words.c \
 tc_remove_letter.c \
+tc_yank.c \
+tc_last.c \
 update_last_environ.c
 
 

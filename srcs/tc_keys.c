@@ -5,6 +5,7 @@
 /*
  *  Erase all characters from CLI (based on len(term) - 1)
  *  and redisplay all char in term (after prompt that hasn't been erased)
+ *  term should point to cursor == 1
  */
 void 	display_term_line(t_sh *shell, t_term *term)
 {
@@ -58,7 +59,6 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 	{
 		while (term->cursor == 0)
 			term = term->prev;
-
 		insert_link_before(term);
 		term->prev->c = key;
 		display_term_line(shell, term);
@@ -67,5 +67,6 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 	{
 		return (end_of_transmission(shell, term));
 	}
+	term_dup(shell, term);
 	return (1);
 }
