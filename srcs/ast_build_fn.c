@@ -81,6 +81,9 @@ char *build_eof_entry(char *eof, t_sh *shell)
 		else
 			entry = line;
 		line = get_line(shell, 1);
+		tmp = line;
+		line = ft_strjoin(line, "\n");
+		ft_strdel(&tmp);
 		if (is_warning_eof(line, entry, eof))
 			break;
 	}
