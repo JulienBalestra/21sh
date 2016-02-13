@@ -78,6 +78,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->l_cmd = NULL;
 		shell->buf = NULL;
 		shell->exit = 0;
+		shell->yank = NULL;
 		return (shell);
 	}
 	return (NULL);

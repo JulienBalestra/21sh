@@ -100,19 +100,22 @@ char *tterm_to_str(t_term *term)
 	return (str);
 }
 
-void free_term(t_term *term)
+void safe_free_term(t_term *term)
 {
 	t_term *tmp;
 
-	while (term->next)
-		term = term->next;
-	while (term)
+	if (term)
 	{
-		tmp = term->prev;
-		term->cursor = 0;
-		term->c = 0;
-		free(term);
-		term = tmp;
+		while (term->next)
+			term = term->next;
+		while (term)
+		{
+			tmp = term->prev;
+			term->cursor = 0;
+			term->c = 0;
+			free(term);
+			term = tmp;
+		}
 	}
 }
 
@@ -164,7 +167,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		}
 		buf = tterm_to_str(end);
 		reset_cursor(ft_strlen(buf) + len_prompt(shell));
-		free_term(end); //TODO
+		safe_free_term(end); //TODO
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);
 		ft_putendl(buf);
