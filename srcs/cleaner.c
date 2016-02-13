@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "minishell.h"
-#include "libft.h"
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
@@ -47,13 +45,11 @@ void	clean_program(t_sh *shell)
 	free(shell->env);
 	free(shell->ps1);
 	if (shell->mock)
-	{
 		clean_program(shell->mock);
-	}
 	ft_str2del(shell->l_cmd);
 	if (shell->buf)
-	{
 		free(shell->buf);
-	}
+	if (shell->yank)
+		safe_free_term(shell->yank);
 	free(shell);
 }
