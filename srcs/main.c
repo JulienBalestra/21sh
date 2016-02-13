@@ -71,8 +71,9 @@ int		main(void)
 			clean_program(shell);
 			return (ret);
 		}
+		ret = shell->l_ret;
 		clean_program(shell);
-		return (2);
+		return (ret);
 	}
 	return (3);
 }
