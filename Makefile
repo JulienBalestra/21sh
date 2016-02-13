@@ -35,51 +35,57 @@ ast_build_fn2.c \
 ast_clean.c \
 ast_exec.c \
 ast_exec_fn.c \
+ast_exec_fn2.c \
 ast_read.c \
-\
-input_format.c  \
-misc_string.c	\
-manage_path.c \
 build_props.c \
-cleaner.c \
-misc_prompt.c \
-builtin_env.c \
-builtin_unsetenv.c \
-manage_builtins.c\
-manage_interpretor.c\
-update_last_environ.c \
-builtin_exit.c \
-builtin_setenv.c \
-builtin_getenv.c \
 builtin_cd.c \
-empty_extern_environ.c \
-misc_parse_env.c \
-parse_env.c \
-env_errors.c \
-display_env.c \
-run_under_env.c \
-manage_link.c \
-merge_environ.c \
-misc_interpretor.c \
-misc_read.c \
-reader.c \
+builtin_env.c \
+builtin_exit.c \
+builtin_getenv.c \
+builtin_setenv.c \
+builtin_unsetenv.c \
 cd_goto.c \
+cd_is_valid.c \
+cd_opt.c \
+cd_symbolic.c \
+chdir_var.c \
+cleaner.c \
+display_env.c \
+empty_extern_environ.c \
+env_errors.c \
+format_path.c \
+input_format.c \
+main.c \
+manage_builtins.c \
+manage_exec.c \
+manage_interpretor.c \
+manage_link.c \
+manage_path.c \
+merge_environ.c \
+misc_cd.c \
+misc_cd2.c \
+misc_interpretor.c \
+misc_parse_env.c \
+misc_prompt.c \
+misc_prompt2.c \
+misc_read.c \
+misc_string.c \
+parse_env.c \
+reader.c \
+run_under_env.c \
 syntax.c \
 syntax_fn.c \
 syntax_token.c \
-misc_cd.c \
-manage_exec.c \
-format_path.c \
-cd_opt.c \
-misc_prompt2.c \
-cd_is_valid.c \
-misc_cd2.c \
-chdir_var.c \
-cd_symbolic.c \
-ast_build_fn2.c \
-ast_exec_fn2.c \
+tc_actions.c \
+tc_cut_line.c \
 tc_init.c \
-tc_keys.c
+tc_keys.c \
+tc_keys_misc.c \
+tc_move_home_end.c \
+tc_move_letter.c \
+tc_move_words.c \
+tc_remove_letter.c \
+update_last_environ.c
 
 
 MAIN = srcs/main.c

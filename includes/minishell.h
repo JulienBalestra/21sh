@@ -16,6 +16,26 @@
 # define CWD       2048
 # define PROMPT "minishell> "
 # define USE_CWD	1
+
+# define KEY_BACK        	127
+# define KEY_DEL       		2117294875
+
+# define KEY_RIGHT           4414235
+# define KEY_LEFT            4479771
+
+# define KEY_HOME            4738843
+# define KEY_CTRL_A            1
+# define KEY_END				4607771
+# define KEY_CTRL_E            5
+
+# define KEY_CTRL_LEFT		74995417045787
+# define KEY_CTRL_RIGHT		73895905418011
+
+# define KEY_CTRL_D				4
+
+# define KEY_CTRL_U				21
+# define KEY_CTRL_K				11
+
 # include <string.h>
 # include <term.h>
 
@@ -208,5 +228,48 @@ t_term *create_link(void);
 void safe_free_term(t_term *term);
 void 	display_term_line(t_sh *shell, t_term *term);
 int get_total_len(t_term *term);
+t_term *get_current_cursor(t_term *term);
+
+/*
+ * tc_.move_home_end.c
+ */
+void exec_move_cursor_home(t_sh *shell, t_term *term);
+void exec_move_cursor_end(t_sh *shell, t_term *term);
+
+/*
+ * tc_move_words.c
+ */
+void exec_move_cursor_left_word(t_sh *shell, t_term *term);
+void exec_move_cursor_right_word(t_sh *shell, t_term *term);
+
+/*
+ * tc_move_letter.c
+ */
+void exec_move_cursor_right(t_sh *shell, t_term *term);
+void exec_move_cursor_left(t_sh *shell, t_term *term);
+
+/*
+ * tc_remove_letter.c
+ */
+void exec_del_right(t_sh *shell, t_term *term);
+void exec_del_and_move_left(t_sh *shell, t_term *term);
+
+/*
+ * tc_cut_line.c
+ */
+void exec_cut_line_left(t_sh *shell, t_term *term);
+void exec_cut_line_right(t_sh *shell, t_term *term);
+
+/*
+ * tc_actions.c
+ */
+int  tc_action_keys(t_sh *shell, t_term *term, long key);
+
+/*
+ * tc_keys_misc.c
+ */
+int get_left_len(t_term *term);
+void 	insert_link_before(t_term *term);
+void 	clear_line(int left, int len);
 
 #endif
