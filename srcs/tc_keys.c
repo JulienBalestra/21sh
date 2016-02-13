@@ -9,7 +9,9 @@
 #define KEY_LEFT            4479771
 
 #define KEY_HOME            4738843
+#define KEY_CTRL_A            1
 #define KEY_END				4607771
+#define KEY_CTRL_E            5
 
 #define KEY_CTRL_LEFT		74995417045787
 #define KEY_CTRL_RIGHT		73895905418011
@@ -251,9 +253,9 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 		exec_move_cursor_left(shell, term);
 	else if (key == KEY_RIGHT)
 		exec_move_cursor_right(shell, term);
-	else if (key == KEY_HOME)
+	else if (key == KEY_HOME || key == KEY_CTRL_A)
 		exec_move_cursor_home(shell, term);
-	else if (key == KEY_END)
+	else if (key == KEY_END || key == KEY_CTRL_E)
 		exec_move_cursor_end(shell, term);
 	else if (key == KEY_CTRL_LEFT)
 		exec_move_cursor_left_word(shell, term);
