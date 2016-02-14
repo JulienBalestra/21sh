@@ -32,6 +32,11 @@ void 	display_term_line(t_sh *shell, t_term *term)
 	}
 }
 
+/*void 	erase_replay(t_sh *shell, t_term *term)
+{
+
+}*/
+
 int 	end_of_transmission(t_sh *shell, t_term *term)
 {
 	char *exit;

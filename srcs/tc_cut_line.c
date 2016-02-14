@@ -20,11 +20,11 @@ void exec_cut_line_left(t_sh *shell, t_term *term)
 	term = get_current_cursor(term);
 	if (term->prev)
 	{
-		safe_free_term(shell->yank);
-		shell->yank = term->prev;
-		shell->yank->next = NULL;
+		safe_free_term(CONSOLE->yank);
+		CONSOLE->yank = term->prev;
+		CONSOLE->yank->next = NULL;
 		term->prev = NULL;
-		erase_cut_chars_left(shell->yank);
+		erase_cut_chars_left(CONSOLE->yank);
 	}
 }
 
@@ -45,21 +45,21 @@ void exec_cut_line_right(t_sh *shell, t_term *term)
 	term = get_current_cursor(term);
 	if (term->next && term->next->next)
 	{
-		safe_free_term(shell->yank);
+		safe_free_term(CONSOLE->yank);
 		term->cursor = 0;
-		shell->yank = term;
+		CONSOLE->yank = term;
 		while (term->next)
 			term = term->next;
 		term->prev->next = NULL;
-		if (shell->yank->prev)
+		if (CONSOLE->yank->prev)
 		{
-			term->prev = shell->yank->prev;
+			term->prev = CONSOLE->yank->prev;
 			term->prev->next = term;
-			shell->yank->prev = NULL;
+			CONSOLE->yank->prev = NULL;
 		}
 		else
 			term->prev = NULL;
 		term->cursor = 1;
-		erase_cut_chars_right(shell->yank);
+		erase_cut_chars_right(CONSOLE->yank);
 	}
 }

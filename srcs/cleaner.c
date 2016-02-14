@@ -39,6 +39,14 @@ void	delete_list(t_env **env)
 	}
 }
 
+void 	delete_console(t_sh *shell)
+{
+	safe_free_term(shell->console->yank);
+	safe_free_term(shell->console->undo);
+	close(shell->console->debug_fd);
+	free(shell->console);
+}
+
 void	clean_program(t_sh *shell)
 {
 	delete_list(&(shell->env));
@@ -50,11 +58,7 @@ void	clean_program(t_sh *shell)
 	ft_str2del(shell->l_cmd);
 	if (shell->buf)
 		free(shell->buf);
-	if (shell->yank)
-		safe_free_term(shell->yank);
-	if (shell->last)
-		safe_free_term(shell->last);
-	if (shell->debug_fd)
-		close(shell->debug_fd);
+	if (shell->console)
+		delete_console(shell);
 	free(shell);
 }

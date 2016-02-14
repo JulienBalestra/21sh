@@ -25,7 +25,7 @@ int	cut_keys(t_sh *shell, t_term *term, long key)
 
 int last_yank_key(t_sh *shell, t_term *term, long key)
 {
-	if (key == KEY_CTRL_Y && shell->yank)
+	if (key == KEY_CTRL_Y && CONSOLE->yank)
 		insert_yank(shell, term);
 	/*else if (key == KEY_CTRL__ && shell->last)
 		restore_last(shell, term);*/

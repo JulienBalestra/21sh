@@ -68,6 +68,7 @@ t_term *create_link(void)
 		link->next = NULL;
 		link->prev = NULL;
 		link->cursor = 0;
+		link->endline = 0;
 		link->c = 0;
 	}
 	return (link);

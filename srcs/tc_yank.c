@@ -5,7 +5,7 @@ void insert_yank(t_sh *shell, t_term *term)
 {
 	t_term *yank;
 
-	yank = shell->yank;
+	yank = CONSOLE->yank;
 	while (term->cursor == 0)
 		term = term->prev;
 

@@ -61,6 +61,20 @@ t_env		*build_env_list(char **environ)
 	return (get_start(env));
 }
 
+t_con		*create_console(void)
+{
+	t_con *console;
+
+	if ((console = (t_con *)malloc(sizeof(t_con))))
+	{
+		console->debug_fd = create_debug_file();
+		console->yank = NULL;
+		console->undo = NULL;
+		console->nb_lines = 1;
+	}
+	return (console);
+}
+
 t_sh		*create_shell_from(char **environ_tab)
 {
 	t_sh	*shell;
@@ -78,9 +92,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->l_cmd = NULL;
 		shell->buf = NULL;
 		shell->exit = 0;
-		shell->yank = NULL;
-		shell->last = NULL;
-		shell->debug_fd = create_debug_file();
+		shell->console = create_console();
 		return (shell);
 	}
 	return (NULL);

@@ -45,8 +45,8 @@ void term_dup(t_sh *shell, t_term *term)
 
 	if (term == NULL)
 		return ;
-	if (shell->last)
-		safe_free_term(shell->last);
+	if (CONSOLE->undo)
+		safe_free_term(CONSOLE->undo);
 	while (term->next)
 		term = term->next;
 	prev = NULL;
@@ -65,5 +65,5 @@ void term_dup(t_sh *shell, t_term *term)
 		term = term->prev;
 		prev = link;
 	}
-	shell->last = link;
+	CONSOLE->undo = link;
 }

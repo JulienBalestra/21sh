@@ -46,6 +46,7 @@ typedef struct		s_term
 {
 	long			c;
 	int				cursor;
+	int				endline;
 	struct s_term	*next;
 	struct s_term	*prev;
 }					t_term;
@@ -58,6 +59,14 @@ typedef struct		s_env
 	char			*name;
 	char			*value;
 }					t_env;
+typedef struct		s_con
+{
+	int 			debug_fd;
+	t_term			*yank;
+	t_term			*undo;
+	int 			nb_lines;
+
+}					t_con;
 typedef struct		s_sh
 {
 	t_env			*env;
@@ -70,9 +79,7 @@ typedef struct		s_sh
 	char			*buf;
 	int				exit;
 	struct termios	default_term;
-	t_term			*yank;
-	t_term			*last;
-	int 			debug_fd;
+	t_con			*console;
 }					t_sh;
 typedef struct		s_be
 {
@@ -234,6 +241,7 @@ void safe_free_term(t_term *term);
 void 	display_term_line(t_sh *shell, t_term *term);
 int get_total_len(t_term *term);
 t_term *get_current_cursor(t_term *term);
+size_t			get_columns(void);
 
 /*
  * tc_.move_home_end.c
@@ -291,7 +299,8 @@ void restore_last(t_sh *shell, t_term *term);
 /*
  * tc_debug.c
  */
-# define D_FD	shell->debug_fd
+# define D_FD		shell->console->debug_fd
+# define CONSOLE	shell->console
 int create_debug_file(void);
 
 #endif
