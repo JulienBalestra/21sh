@@ -72,6 +72,7 @@ typedef struct		s_sh
 	struct termios	default_term;
 	t_term			*yank;
 	t_term			*last;
+	int 			debug_fd;
 }					t_sh;
 typedef struct		s_be
 {
@@ -286,5 +287,11 @@ void insert_yank(t_sh *shell, t_term *term);
  */
 void term_dup(t_sh *shell, t_term *term);
 void restore_last(t_sh *shell, t_term *term);
+
+/*
+ * tc_debug.c
+ */
+# define D_FD	shell->debug_fd
+int create_debug_file(void);
 
 #endif

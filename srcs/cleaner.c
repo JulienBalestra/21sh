@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
@@ -53,5 +54,7 @@ void	clean_program(t_sh *shell)
 		safe_free_term(shell->yank);
 	if (shell->last)
 		safe_free_term(shell->last);
+	if (shell->debug_fd)
+		close(shell->debug_fd);
 	free(shell);
 }

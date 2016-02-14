@@ -80,6 +80,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->exit = 0;
 		shell->yank = NULL;
 		shell->last = NULL;
+		shell->debug_fd = create_debug_file();
 		return (shell);
 	}
 	return (NULL);

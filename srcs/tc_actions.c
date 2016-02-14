@@ -53,25 +53,25 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 	return (1);
 }
 
-void	ft_putlong(long n)
+void	ft_putlong(long n, int fd)
 {
 	if (n < 0)
 	{
-		ft_putchar('-');
+		ft_putchar_fd('-', fd);
 		n = -n;
 	}
 	if (n > 9)
 	{
-		ft_putlong(n / 10);
-		ft_putlong(n % 10);
+		ft_putlong(n / 10, fd);
+		ft_putlong(n % 10, fd);
 	}
 	else
-		ft_putchar((char)(48 + n));
+		ft_putchar_fd((char)(48 + n), fd);
 }
 
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
-	//ft_putchar('*'); ft_putlong(key);ft_putchar('*'); // TODO DEBUG
+	//ft_putlong(key, D_FD); ft_putchar_fd('\n', D_FD); // TODO DEBUG
 
 	if (del_keys(shell, term, key))
 		return (1);
