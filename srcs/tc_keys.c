@@ -21,8 +21,10 @@ void 	display_term_line(t_sh *shell, t_term *term)
 	while (term->next)
 	{
 		ft_putchar((char)term->c);
+		ft_putchar_fd((char)term->c, D_FD); // TODO DEBUG
 		term = term->next;
 	}
+	ft_putchar_fd('\n', D_FD); // TODO DEBUG
 	while (term->cursor == 0)
 	{
 		ft_putstr(tgetstr("le", NULL));
