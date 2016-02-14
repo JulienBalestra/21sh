@@ -65,6 +65,7 @@ typedef struct		s_con
 	t_term			*yank;
 	t_term			*undo;
 	int 			nb_lines;
+	int 			cur_line;
 
 }					t_con;
 typedef struct		s_sh
@@ -277,6 +278,7 @@ void exec_cut_line_right(t_sh *shell, t_term *term);
  * tc_actions.c
  */
 int  tc_action_keys(t_sh *shell, t_term *term, long key);
+void	ft_putlong(long n, int fd);
 
 /*
  * tc_keys_misc.c
@@ -299,8 +301,10 @@ void restore_last(t_sh *shell, t_term *term);
 /*
  * tc_debug.c
  */
-# define D_FD		shell->console->debug_fd
+# define DEBUG_FD        shell->console->debug_fd
 # define CONSOLE	shell->console
 int create_debug_file(void);
+
+void 	erase_line(size_t len);
 
 #endif

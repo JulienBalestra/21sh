@@ -71,6 +71,7 @@ t_con		*create_console(void)
 		console->yank = NULL;
 		console->undo = NULL;
 		console->nb_lines = 1;
+		console->cur_line = 1;
 	}
 	return (console);
 }

@@ -120,7 +120,7 @@ void safe_free_term(t_term *term)
 	}
 }
 
-void 	reset_cursor(size_t len)
+void 	erase_line(size_t len)
 {
 	char *le;
 	char *dc;
@@ -155,7 +155,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	key = 0;
 	if ((end = create_link()))
 	{
-		reset_cursor(get_columns());
+		erase_line(get_columns());
 		display_prompt(shell, ps2);
 		raw_terminal_mode(shell);
 		end->cursor = 1;
@@ -167,7 +167,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 			key = 0;
 		}
 		buf = tterm_to_str(end);
-		reset_cursor(ft_strlen(buf) + len_prompt(shell));
+		erase_line(ft_strlen(buf) + len_prompt(shell));
 		safe_free_term(end); //TODO
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);

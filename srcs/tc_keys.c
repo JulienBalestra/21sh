@@ -2,40 +2,96 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
-/*
- *  Erase all characters from CLI (based on len(term) - 1)
- *  and redisplay all char in term (after prompt that hasn't been erased)
- *  term should point to cursor == 1
- */
-void 	display_term_line(t_sh *shell, t_term *term)
-{
-	int left;
-	int len;
 
-	(void)shell;
-	left = get_left_len(term);
-	len = get_total_len(term);
-	clear_line(left - 1, len);
-	while (term->prev)
-		term = term->prev;
-	while (term->next)
+void 	erase_all_lines(t_sh *shell)
+{
+	//DEBUG
+	ft_putstr_fd("CONSOLE->cur_line=", DEBUG_FD);
+	ft_putlong((long)CONSOLE->cur_line, DEBUG_FD);
+	ft_putstr_fd("\nCONSOLE->nb_lines=", DEBUG_FD);
+	ft_putlong((long)CONSOLE->nb_lines, DEBUG_FD);
+	ft_putchar_fd('\n', DEBUG_FD);
+	//DEBUG
+
+	// go to the last line
+	while (CONSOLE->cur_line < CONSOLE->nb_lines)
 	{
-		ft_putchar((char)term->c);
-		ft_putchar_fd((char)term->c, D_FD); // TODO DEBUG
-		term = term->next;
+		//DEBUG
+		ft_putstr_fd("CONSOLE->cur_line=", DEBUG_FD);
+		ft_putlong((long)CONSOLE->cur_line, DEBUG_FD);
+		ft_putstr_fd("\nCONSOLE->nb_lines=", DEBUG_FD);
+		ft_putlong((long)CONSOLE->nb_lines, DEBUG_FD);
+		ft_putchar_fd('\n', DEBUG_FD);
+		//DEBUG
+
+		ft_putstr(tgetstr("do", NULL));
+		CONSOLE->cur_line++;
 	}
-	ft_putchar_fd('\n', D_FD); // TODO DEBUG
-	while (term->cursor == 0)
+
+	// erase all lines from the last to the second line
+	while (CONSOLE->nb_lines > 1)
 	{
-		ft_putstr(tgetstr("le", NULL));
-		term = term->prev;
+		erase_line(get_columns());
+		ft_putstr(tgetstr("up", NULL));
+		CONSOLE->nb_lines--;
 	}
+	// erase first line
+	erase_line(get_columns());
 }
 
-/*void 	erase_replay(t_sh *shell, t_term *term)
+void 	display_term_characters(t_sh *shell, t_term *term, size_t cur_line_len)
 {
+	CONSOLE->nb_lines = 1;
+	/*//DEBUG
+		ft_putstr_fd("csize=", DEBUG_FD);
+		ft_putlong((long)get_columns() - 1, DEBUG_FD);
+		ft_putstr_fd("\n", DEBUG_FD);
+	//DEBUG*/
+	while (term->next)
+	{
+		//DEBUG
+			ft_putstr_fd("cur_line_len=", DEBUG_FD);
+			ft_putlong((long)cur_line_len, DEBUG_FD);
+			ft_putstr_fd("\n", DEBUG_FD);
+		//DEBUG
 
-}*/
+		if (cur_line_len == get_columns())
+		{
+			/*//DEBUG
+				ft_putstr_fd("ENDLINE\n", DEBUG_FD);
+			//DEBUG*/
+
+			ft_putchar('\n');
+			erase_line(get_columns());
+			cur_line_len = 0;
+			CONSOLE->nb_lines++;
+			CONSOLE->cur_line++;
+		}
+		//DEBUG
+			ft_putchar_fd('[', DEBUG_FD);
+			ft_putchar_fd((char)term->c, DEBUG_FD);
+			ft_putchar_fd(']', DEBUG_FD);
+		//DEBUG
+
+		ft_putchar((char)term->c);
+		term = term->next;
+		cur_line_len++;
+	}
+	//DEBUG
+		ft_putstr_fd("CONSOLE->nb_lines=", DEBUG_FD);
+		ft_putlong((long)CONSOLE->nb_lines, DEBUG_FD);
+		ft_putchar_fd('\n', DEBUG_FD);
+	//DEBUG
+}
+
+void 	display_term_line(t_sh *shell, t_term *term)
+{
+	erase_all_lines(shell);
+	display_prompt(shell, 0);
+	while (term->prev)
+		term = term->prev;
+	display_term_characters(shell, term, shell->len_ps1 + 2);
+}
 
 int 	end_of_transmission(t_sh *shell, t_term *term)
 {
@@ -59,7 +115,6 @@ int 	end_of_transmission(t_sh *shell, t_term *term)
 
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 {
-	(void)shell;
 	if (key == '\n' || (char)key == '\n')
 		return (0);
 	else if (tc_action_keys(shell, term, key) == 0 && ft_isprint((char)key))
