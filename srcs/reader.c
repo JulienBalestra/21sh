@@ -56,7 +56,7 @@ void	signal_callback_handler(int sig_num)
 		write(1, "> ", 2);
 	}
 	else
-		ft_putstr(PROMPT);
+		ft_putstr(DEFAULT_PS1);
 }
 
 t_term *create_link(void)
@@ -68,7 +68,6 @@ t_term *create_link(void)
 		link->next = NULL;
 		link->prev = NULL;
 		link->cursor = 0;
-		link->endline = 0;
 		link->c = 0;
 	}
 	return (link);
@@ -160,6 +159,8 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		raw_terminal_mode(shell);
 		end->cursor = 1;
 		end->c = '\n';
+		CONSOLE->line_position = 1;
+		CONSOLE->total_lines = 1;
 		while (read(0, &key, sizeof(long)))
 		{
 			if (tc_continue_process_key(shell, end, key) == 0)

@@ -14,7 +14,10 @@
 # define MINISHELL_H
 # define READ      128
 # define CWD       2048
-# define PROMPT "minishell> "
+# define DEFAULT_PS1 "21sh> "
+# define DEFAULT_PS2 "> "
+# define LEN_PS2 3
+# define END_PROMPT "> "
 # define USE_CWD	1
 
 # define KEY_BACK        	127
@@ -46,11 +49,9 @@ typedef struct		s_term
 {
 	long			c;
 	int				cursor;
-	int				endline;
 	struct s_term	*next;
 	struct s_term	*prev;
 }					t_term;
-
 
 typedef struct		s_env
 {
@@ -59,15 +60,18 @@ typedef struct		s_env
 	char			*name;
 	char			*value;
 }					t_env;
+
 typedef struct		s_con
 {
 	int 			debug_fd;
 	t_term			*yank;
 	t_term			*undo;
-	int 			nb_lines;
-	int 			cur_line;
+	size_t			total_lines;
+	size_t			line_position;
+	size_t 			char_position;
 
 }					t_con;
+
 typedef struct		s_sh
 {
 	t_env			*env;
@@ -82,6 +86,7 @@ typedef struct		s_sh
 	struct termios	default_term;
 	t_con			*console;
 }					t_sh;
+
 typedef struct		s_be
 {
 	int				ignore;
@@ -90,6 +95,7 @@ typedef struct		s_be
 	int				null;
 	int				cmd;
 }					t_be;
+
 typedef struct      s_ast
 {
 	int 			op;
@@ -101,7 +107,6 @@ typedef struct      s_ast
 	char 			**cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
-
 }					t_ast;
 
 char				*triple_join(char *s1, char *s2, char *s3);
@@ -229,12 +234,6 @@ void change_fd(t_ast *ast);
 void raw_terminal_mode(t_sh *shell);
 void 	default_terminal_mode(t_sh *shell);
 
-typedef struct  s_key
-{
-	long        value;
-	void        (*f)(t_sh *shell, t_term *term);
-}               t_key;
-
 size_t		len_prompt(t_sh *shell);
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key);
 t_term *create_link(void);
@@ -277,20 +276,18 @@ void exec_cut_line_right(t_sh *shell, t_term *term);
 /*
  * tc_actions.c
  */
-int  tc_action_keys(t_sh *shell, t_term *term, long key);
-void	ft_putlong(long n, int fd);
+int		tc_action_keys(t_sh *shell, t_term *term, long key);
+void	ft_putlong_fd(long n, int fd);
 
 /*
  * tc_keys_misc.c
  */
-int get_left_len(t_term *term);
-void 	insert_link_before(t_term *term);
-void 	clear_line(int left, int len);
+void	insert_link_before(t_term *term);
 
 /*
  * tc_yank.c
  */
-void insert_yank(t_sh *shell, t_term *term);
+void	insert_yank(t_sh *shell, t_term *term);
 
 /*
  * tc_last.c
@@ -306,5 +303,6 @@ void restore_last(t_sh *shell, t_term *term);
 int create_debug_file(void);
 
 void 	erase_line(size_t len);
+void 		update_ps1(t_sh *shell);
 
 #endif

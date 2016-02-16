@@ -34,22 +34,10 @@ size_t		len_prompt(t_sh *shell)
 
 void		display_prompt(t_sh *shell, int ps2)
 {
-	char	*pwd;
-
-	if (USE_CWD && (pwd = create_cwd(shell)) && ps2 == 0)
-	{
-		ft_putstr(pwd);
-		shell->len_ps1 = ft_strlen(pwd);
-		ft_strdel(&pwd);
-		write(1, "> ", 2);
-	}
-	else if (ps2 == 0)
-	{
-		shell->len_ps1 = ft_strlen(shell->ps1);
-		write(1, shell->ps1, shell->len_ps1);
-	}
-	else if (ps2 == 1)
-		write(1, "> ", 2);
+	if (ps2 == 0)
+		ft_putstr(shell->ps1);
+	else
+		write(1, DEFAULT_PS2, LEN_PS2);
 }
 
 void		display_command_not_found(char *command)

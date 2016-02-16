@@ -39,24 +39,6 @@ void		cd_physical(char *path, t_sh *shell)
 	}
 }
 
-int			is_diff_cwd(t_sh *shell)
-{
-	char	*sys;
-	char	*var;
-	int		ret;
-
-	ret = 1;
-	if ((sys = malloc(sizeof(char) * CWD)))
-	{
-		sys = getcwd(sys, CWD);
-		var = get_env_value("PWD", shell->env);
-		if (sys && var && ft_strcmp(sys, var) == 0)
-			ret = 0;
-		ft_strdel(&sys);
-	}
-	return (ret);
-}
-
 void		change_dir(char *path, t_sh *shell, int p)
 {
 	struct stat	*st;
@@ -100,6 +82,22 @@ void		ensure_pwd(t_sh *shell)
 	}
 }
 
+void 		update_ps1(t_sh *shell)
+{
+	char	*pwd;
+	char	*tmp;
+
+	if (USE_CWD && (pwd = create_cwd(shell)) )
+	{
+		ft_strdel(&shell->ps1);
+		tmp = pwd;
+		pwd = ft_strjoin(tmp, END_PROMPT);
+		ft_strdel(&tmp);
+		shell->len_ps1 = ft_strlen(pwd);
+		shell->ps1 = pwd;
+	}
+}
+
 void		builtin_cd(char **command, t_sh *shell)
 {
 	ensure_pwd(shell);
@@ -118,4 +116,5 @@ void		builtin_cd(char **command, t_sh *shell)
 		change_dir(command[2], shell, 0);
 	else
 		change_dir(command[1], shell, 0);
+	update_ps1(shell);
 }

@@ -12,7 +12,7 @@ void exec_move_cursor_left_word(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->prev->cursor = 1;
-		ft_putstr(tgetstr("le", NULL));
+		//ft_putstr(tgetstr("le", NULL));
 		term = term->prev;
 		if (! term)
 			break;
@@ -34,7 +34,7 @@ void exec_move_cursor_right_word(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->next->cursor = 1;
-		ft_putstr(tgetstr("nd", NULL));
+		//ft_putstr(tgetstr("nd", NULL));
 		term = term->next;
 		if (! term)
 			break;

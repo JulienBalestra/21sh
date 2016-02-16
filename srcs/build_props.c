@@ -70,8 +70,8 @@ t_con		*create_console(void)
 		console->debug_fd = create_debug_file();
 		console->yank = NULL;
 		console->undo = NULL;
-		console->nb_lines = 1;
-		console->cur_line = 1;
+		console->total_lines = 1;
+		console->line_position = 1;
 	}
 	return (console);
 }
@@ -87,8 +87,9 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->mock = NULL;
 		shell->l_env = NULL;
 		shell->l_env = override_last_environ(shell);
-		shell->ps1 = ft_strdup(PROMPT);
-		shell->len_ps1 = ft_strlen(PROMPT);
+		shell->ps1 = ft_strdup(DEFAULT_PS1);
+		shell->len_ps1 = ft_strlen(DEFAULT_PS1);
+		update_ps1(shell);
 		shell->l_ret = 0;
 		shell->l_cmd = NULL;
 		shell->buf = NULL;

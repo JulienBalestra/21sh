@@ -27,20 +27,26 @@ void		manage_pipe(t_ast *ast, t_sh *shell)
 	pid_t	pid;
 	int		status;
 
-	pipe(p);
-	pid = fork();
-	if (pid == 0)
+	if (pipe(p) == 0)
 	{
-		dup2(p[1], ast->stdout);
-		close(p[0]);
-		exec_with_recurse(ast->left, shell);
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(p[1], ast->stdout);
+			close(p[0]);
+			exec_with_recurse(ast->left, shell);
+		}
+		else
+		{
+			dup2(p[0], ast->stdin);
+			close(p[1]);
+			waitpid(-1, &status, 0);
+			exec_with_recurse(ast->right, shell);
+		}
 	}
 	else
 	{
-		dup2(p[0], ast->stdin);
-		close(p[1]);
-		waitpid(-1, &status, 0);
-		exec_with_recurse(ast->right, shell);
+		exit(2);
 	}
 }
 
@@ -51,27 +57,33 @@ void		manage_double_read(t_ast *ast, t_sh *shell)
 	int		status;
 	char	**cmd;
 
-	pipe(p);
-	pid = fork();
-	if (pid == 0)
+	if (pipe(p) == 0)
 	{
-		cmd = ast->left->cmd;
-		dup2(p[1], ast->stdout);
-		close(p[0]);
-		while (*cmd)
+		pid = fork();
+		if (pid == 0)
 		{
-			ft_putstr_fd(*cmd, ast->stdout);
-			cmd++;
+			cmd = ast->left->cmd;
+			dup2(p[1], ast->stdout);
+			close(p[0]);
+			while (*cmd)
+			{
+				ft_putstr_fd(*cmd, ast->stdout);
+				cmd++;
+			}
+			ast_clean(ast);
+			exit(0);
 		}
-		ast_clean(ast);
-		exit(0);
+		else
+		{
+			dup2(p[0], ast->stdin);
+			close(p[1]);
+			waitpid(-1, &status, 0);
+			exec_with_recurse(ast->right, shell);
+		}
 	}
 	else
 	{
-		dup2(p[0], ast->stdin);
-		close(p[1]);
-		waitpid(-1, &status, 0);
-		exec_with_recurse(ast->right, shell);
+		exit(2);
 	}
 }
 
