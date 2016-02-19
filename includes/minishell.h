@@ -305,4 +305,12 @@ int create_debug_file(void);
 void 	erase_line(size_t len);
 void 		update_ps1(t_sh *shell);
 
+/*
+ * ast_build_fn3.c
+ */
+void mock_ps1_by_ps2(t_sh *shell);
+char *join_free_start(char *start, char *end);
+int skip_eof(char *s);
+
+
 #endif

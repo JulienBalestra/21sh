@@ -33,18 +33,6 @@ char *get_eof(char *s)
 	return (eof);
 }
 
-int skip_eof(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] == ' ')
-		i++;
-	while (s[i] && s[i] != ' ')
-		i++;
-	return (i);
-}
-
 int is_warning_eof(char *line, char *entry, char *eof)
 {
 	if (! line)
@@ -64,31 +52,27 @@ char *build_eof_entry(char *eof, t_sh *shell)
 {
 	char *line;
 	char *entry;
-	char *tmp;
 
 	line = NULL;
 	entry = NULL;
+	mock_ps1_by_ps2(shell);
 	while (! line || ft_strcmp(line, eof) != 0)
 	{
-		ft_putstr("> ");
 		if (entry)
 		{
-			tmp = entry;
-			entry = ft_strjoin(tmp, line);
-			ft_strdel(&tmp);
+			entry = join_free_start(entry, line);
 			ft_strdel(&line);
 		}
 		else
 			entry = line;
-		line = get_line(shell, 1);
-		tmp = line;
-		line = ft_strjoin(line, "\n");
-		ft_strdel(&tmp);
+		line = get_line(shell, 0);
+		line = join_free_start(line, "\n");
 		if (is_warning_eof(line, entry, eof))
 			break;
 	}
 	ft_strdel(&line);
 	ft_strdel(&eof);
+	update_ps1(shell);
 	return (entry);
 }
 

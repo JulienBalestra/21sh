@@ -32,6 +32,7 @@ SRC =               \
 ast_build.c \
 ast_build_fn.c \
 ast_build_fn2.c \
+ast_build_fn3.c \
 ast_clean.c \
 ast_exec.c \
 ast_exec_fn.c \

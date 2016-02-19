@@ -182,7 +182,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	return (buf);
 }
 
-char	*get_line_from_pipe(t_sh *shell)
+char	*get_line_from_pipe(t_sh *shell, int ps2)
 {
 	char	*buf;
 	char	*left;
@@ -191,6 +191,8 @@ char	*get_line_from_pipe(t_sh *shell)
 	buf = ft_strnew(READ);
 	left = NULL;
 	signal(SIGINT, signal_callback_handler);
+	if (isatty(0))
+		display_prompt(shell, ps2);
 	while ((ret = read(0, buf, READ)))
 	{
 		buf[ret] = '\0';
@@ -213,8 +215,8 @@ char	*get_line_from_pipe(t_sh *shell)
 
 char	*get_line(t_sh *shell, int ps2)
 {
-	if (isatty(0))
+	if (isatty(0) && get_env_value("TERM", shell->env))
 		return get_line_from_user(shell, ps2);
 	else
-		return get_line_from_pipe(shell);
+		return get_line_from_pipe(shell, ps2);
 }
