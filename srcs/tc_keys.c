@@ -100,11 +100,15 @@ void 	cursor_position(t_sh *shell, t_term *term)
 		{
 			//DEBUG
 				ft_putstr_fd("U", DEBUG_FD);
+				ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
+				ft_putstr_fd("[", DEBUG_FD);
+				ft_putchar_fd((char)term->c, DEBUG_FD);
+				ft_putstr_fd("]\n", DEBUG_FD);
 			//DEBUG
 
 			ft_putstr(tgetstr("up", NULL));
 			CONSOLE->line_position--;
-			CONSOLE->char_position = get_columns();
+			CONSOLE->char_position = get_columns() - 1;
 			end = CONSOLE->char_position;
 			while (end)
 			{
@@ -116,6 +120,10 @@ void 	cursor_position(t_sh *shell, t_term *term)
 		}
 		//DEBUG
 			ft_putstr_fd("<", DEBUG_FD);
+			ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
+			ft_putstr_fd("[", DEBUG_FD);
+			ft_putchar_fd((char)term->c, DEBUG_FD);
+			ft_putstr_fd("]\n", DEBUG_FD);
 		//DEBUG
 
 		ft_putstr(tgetstr("le", NULL));
