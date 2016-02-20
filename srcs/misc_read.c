@@ -24,9 +24,13 @@ int		is_enter(char *buf)
 int		is_only_spaces(char *buf)
 {
 	size_t i;
+	size_t len;
 
 	i = 0;
-	while (i < ft_strlen(buf) - 1)
+	len = ft_strlen(buf);
+	if (len == 1 && ! ft_isblank(buf[i]))
+		return (1);
+	while (i < len - 1)
 	{
 		if (ft_isblank(buf[i]))
 			i++;
@@ -45,6 +49,9 @@ int		existing_line(t_sh *shell)
 	}
 	else if (is_only_spaces(shell->buf))
 	{
+		//DEBUG
+		ft_putstr_fd("only_spaces", CONSOLE->debug_fd);
+		//DEBUG
 		free(shell->buf);
 		shell->buf = NULL;
 		return (0);
