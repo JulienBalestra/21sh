@@ -190,7 +190,6 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 			term = term->prev;
 		insert_link_before(term);
 		term->prev->c = key;
-		//display_term_line(shell, term);
 	}
 	else if (key == KEY_CTRL_D)
 	{

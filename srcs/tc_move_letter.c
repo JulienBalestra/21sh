@@ -9,7 +9,6 @@ void exec_move_cursor_right(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->next->cursor = 1;
-		//ft_putstr(tgetstr("nd", NULL));
 	}
 }
 
@@ -21,6 +20,5 @@ void exec_move_cursor_left(t_sh *shell, t_term *term)
 	{
 		term->cursor = 0;
 		term->prev->cursor = 1;
-		//ft_putstr(tgetstr("le", NULL));
 	}
 }

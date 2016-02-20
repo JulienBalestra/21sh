@@ -1,5 +1,4 @@
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
 t_term *get_current_cursor(t_term *term)
 {
