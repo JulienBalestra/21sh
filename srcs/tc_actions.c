@@ -48,6 +48,10 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 		exec_move_cursor_left_word(shell, term);
 	else if (key == KEY_CTRL_RIGHT)
 		exec_move_cursor_right_word(shell, term);
+	else if (key == KEY_CTRL_UP)
+		exec_move_cursor_upline(shell, term);
+	else if (key == KEY_CTRL_DOWN)
+		exec_move_cursor_downline(shell, term);
 	else
 		return (0);
 	return (1);

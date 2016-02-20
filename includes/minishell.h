@@ -40,7 +40,8 @@
 # define KEY_CTRL_K				11
 
 # define KEY_CTRL_Y				25
-# define KEY_CTRL__				31
+# define KEY_CTRL_UP			71696882162459
+# define KEY_CTRL_DOWN			72796393790235
 
 # include <string.h>
 # include <term.h>
@@ -312,5 +313,11 @@ void mock_ps1_by_ps2(t_sh *shell);
 char *join_free_start(char *start, char *end);
 int skip_eof(char *s);
 
+
+/*
+ * tc_move_up_down.c
+ */
+void exec_move_cursor_upline(t_sh *shell, t_term *term);
+void exec_move_cursor_downline(t_sh *shell, t_term *term);
 
 #endif
