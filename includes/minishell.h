@@ -38,6 +38,8 @@
 
 # define KEY_CTRL_U				21
 # define KEY_CTRL_K				11
+# define KEY_ALT_U				29979
+# define KEY_ALT_K				27419
 
 # define KEY_CTRL_Y				25
 # define KEY_CTRL_UP			71696882162459
@@ -319,5 +321,11 @@ int skip_eof(char *s);
  */
 void exec_move_cursor_upline(t_sh *shell, t_term *term);
 void exec_move_cursor_downline(t_sh *shell, t_term *term);
+
+/*
+ * tc_copy_line.c
+ */
+void term_dup_left(t_sh *shell, t_term *term);
+void term_dup_right(t_sh *shell, t_term *term);
 
 #endif

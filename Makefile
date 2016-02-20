@@ -90,6 +90,7 @@ tc_yank.c \
 tc_last.c \
 tc_debug.c \
 tc_move_up_down.c \
+tc_cpy_line.c \
 update_last_environ.c
 
 

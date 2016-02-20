@@ -12,12 +12,16 @@ int	del_keys(t_sh *shell, t_term *term, long key)
 	return (1);
 }
 
-int	cut_keys(t_sh *shell, t_term *term, long key)
+int	cpycut_keys(t_sh *shell, t_term *term, long key)
 {
 	if (key == KEY_CTRL_U)
 		exec_cut_line_left(shell, term);
 	else if (key == KEY_CTRL_K)
 		exec_cut_line_right(shell, term);
+	else if (key == KEY_ALT_U)
+		term_dup_left(shell, term);
+	else if (key == KEY_ALT_K)
+		term_dup_right(shell, term);
 	else
 		return (0);
 	return (1);
@@ -62,7 +66,7 @@ void	ft_putlong_fd(long n, int fd)
 	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		n = -n;
+		n = - n;
 	}
 	if (n > 9)
 	{
@@ -81,7 +85,7 @@ int  tc_action_keys(t_sh *shell, t_term *term, long key)
 		return (1);
 	else if (move_keys(shell, term, key))
 		return (2);
-	else if (cut_keys(shell, term, key))
+	else if (cpycut_keys(shell, term, key))
 		return (3);
 	else if (last_yank_key(shell, term, key))
 		return (4);

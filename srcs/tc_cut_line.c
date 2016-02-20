@@ -2,7 +2,7 @@
 #include "../libft/includes/libft.h"
 
 
-void erase_cut_chars_left(t_term *yank)
+/*void erase_cut_chars_left(t_term *yank)
 {
 	int len_y;
 
@@ -13,7 +13,7 @@ void erase_cut_chars_left(t_term *yank)
 		ft_putstr(tgetstr("dc", NULL));
 		len_y--;
 	}
-}
+}*/
 
 void exec_cut_line_left(t_sh *shell, t_term *term)
 {
@@ -24,11 +24,11 @@ void exec_cut_line_left(t_sh *shell, t_term *term)
 		CONSOLE->yank = term->prev;
 		CONSOLE->yank->next = NULL;
 		term->prev = NULL;
-		erase_cut_chars_left(CONSOLE->yank);
+		//erase_cut_chars_left(CONSOLE->yank);
 	}
 }
 
-void erase_cut_chars_right(t_term *yank)
+/*void erase_cut_chars_right(t_term *yank)
 {
 	int len_y;
 
@@ -38,7 +38,7 @@ void erase_cut_chars_right(t_term *yank)
 		ft_putstr(tgetstr("dc", NULL));
 		len_y--;
 	}
-}
+}*/
 
 void exec_cut_line_right(t_sh *shell, t_term *term)
 {
@@ -60,6 +60,6 @@ void exec_cut_line_right(t_sh *shell, t_term *term)
 		else
 			term->prev = NULL;
 		term->cursor = 1;
-		erase_cut_chars_right(CONSOLE->yank);
+		//erase_cut_chars_right(CONSOLE->yank);
 	}
 }
