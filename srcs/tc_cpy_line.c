@@ -40,7 +40,7 @@ void term_dup_right(t_sh *shell, t_term *term)
 	prev = NULL;
 	link = NULL;
 	term = get_current_cursor(term);
-	//term = term->prev;
+	//term = term->up;
 	while (term->next)
 	{
 		link = create_link();

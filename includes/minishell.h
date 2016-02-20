@@ -31,6 +31,9 @@
 # define KEY_END				4607771
 # define KEY_CTRL_E            5
 
+# define KEY_UP            		4283163
+# define KEY_DOWN            4348699
+
 # define KEY_CTRL_LEFT		74995417045787
 # define KEY_CTRL_RIGHT		73895905418011
 
@@ -75,6 +78,13 @@ typedef struct		s_con
 
 }					t_con;
 
+typedef struct		s_hist
+{
+	struct s_hist			*up;
+	struct s_hist			*down;
+	t_term			*line;
+}					t_hist;
+
 typedef struct		s_sh
 {
 	t_env			*env;
@@ -88,6 +98,7 @@ typedef struct		s_sh
 	int				exit;
 	struct termios	default_term;
 	t_con			*console;
+	t_hist			*hist;
 }					t_sh;
 
 typedef struct		s_be
@@ -327,5 +338,14 @@ void exec_move_cursor_downline(t_sh *shell, t_term *term);
  */
 void term_dup_left(t_sh *shell, t_term *term);
 void term_dup_right(t_sh *shell, t_term *term);
+
+/*
+ * tc_history.c
+ */
+t_hist		*create_history(void);
+void	add_to_history(t_sh *shell, t_term *term);
+
+
+char *tterm_to_str(t_term *term);
 
 #endif

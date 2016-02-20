@@ -47,6 +47,30 @@ void 	delete_console(t_sh *shell)
 	free(shell->console);
 }
 
+void 	delete_hist(t_sh *shell)
+{
+	t_hist *tmp;
+	t_hist *down;
+	t_hist *up;
+
+	down = shell->hist->down;
+	while (down)
+	{
+		safe_free_term(down->line);
+		tmp = down;
+		down = down->down;
+		free(tmp);
+	}
+	up = shell->hist;
+	while (up)
+	{
+		safe_free_term(up->line);
+		tmp = up;
+		up = up->up;
+		free(tmp);
+	}
+}
+
 void	clean_program(t_sh *shell)
 {
 	delete_list(&(shell->env));
@@ -60,5 +84,7 @@ void	clean_program(t_sh *shell)
 		free(shell->buf);
 	if (shell->console)
 		delete_console(shell);
+	if (shell->hist)
+		delete_hist(shell);
 	free(shell);
 }

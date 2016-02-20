@@ -91,6 +91,7 @@ tc_last.c \
 tc_debug.c \
 tc_move_up_down.c \
 tc_cpy_line.c \
+tc_history.c \
 update_last_environ.c
 
 

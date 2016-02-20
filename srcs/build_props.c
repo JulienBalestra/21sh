@@ -95,6 +95,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->buf = NULL;
 		shell->exit = 0;
 		shell->console = create_console();
+		shell->hist = NULL;
 		return (shell);
 	}
 	return (NULL);

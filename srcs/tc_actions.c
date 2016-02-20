@@ -56,6 +56,10 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 		exec_move_cursor_upline(shell, term);
 	else if (key == KEY_CTRL_DOWN)
 		exec_move_cursor_downline(shell, term);
+	/*else if (key == KEY_UP)
+		exec_move_cursor_downline(shell, term);
+	else if (key == KEY_DOWN) TODO
+		exec_move_cursor_downline(shell, term);*/
 	else
 		return (0);
 	return (1);
@@ -79,7 +83,7 @@ void	ft_putlong_fd(long n, int fd)
 
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
-	//ft_putlong_fd(key, DEBUG_FD); ft_putchar_fd('\n', DEBUG_FD); // TODO DEBUG
+	ft_putlong_fd(key, DEBUG_FD); ft_putchar_fd('\n', DEBUG_FD); // TODO DEBUG
 
 	if (del_keys(shell, term, key))
 		return (1);

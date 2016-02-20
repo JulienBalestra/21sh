@@ -84,6 +84,16 @@ class TestMinishell(unittest.TestCase):
 		self.compare_shells(command)
 		self.valgrind(command)
 
+	def test_00_only_letter(self):
+		command = ["l"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_01_only_letter(self):
+		command = ["     l"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
 	def test_01_full_bin_ls_opt(self):
 		command = ["/bin/ls", "-l"]
 		self.compare_shells(command)

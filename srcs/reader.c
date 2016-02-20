@@ -97,6 +97,11 @@ char *tterm_to_str(t_term *term)
 			term = term->next;
 		}
 	}
+	//DEBUG
+		ft_putstr_fd("[", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("]", 2);
+	//DEBUG
 	return (str);
 }
 
@@ -169,7 +174,8 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		}
 		buf = tterm_to_str(end);
 		erase_line(ft_strlen(buf) + len_prompt(shell));
-		safe_free_term(end); //TODO
+		add_to_history(shell, end);
+		//safe_free_term(end); //TODO
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);
 		ft_putendl(buf);
