@@ -83,7 +83,7 @@ void	ft_putlong_fd(long n, int fd)
 
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
-	ft_putlong_fd(key, DEBUG_FD); ft_putchar_fd('\n', DEBUG_FD); // TODO DEBUG
+	//ft_putstr_fd("keypressed:", DEBUG_FD); ft_putlong_fd(key, DEBUG_FD); ft_putchar_fd('\n', DEBUG_FD); // TODO DEBUG
 
 	if (del_keys(shell, term, key))
 		return (1);

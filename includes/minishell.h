@@ -315,8 +315,6 @@ void restore_last(t_sh *shell, t_term *term);
 # define DEBUG_FD        shell->console->debug_fd
 # define CONSOLE	shell->console
 int create_debug_file(void);
-
-void 	erase_line(size_t len);
 void 		update_ps1(t_sh *shell);
 
 /*
@@ -345,7 +343,7 @@ void term_dup_right(t_sh *shell, t_term *term);
 t_hist		*create_history(void);
 void	add_to_history(t_sh *shell, t_term *term);
 
-
+void 	erase_all_lines(t_sh *shell);
 char *tterm_to_str(t_term *term);
 
 #endif

@@ -2,6 +2,24 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
+
+void 	erase_line(size_t len)
+{
+	char *le;
+	char *dc;
+
+	while(len)
+	{
+		le = tgetstr("le", NULL);
+		dc = tgetstr("dc", NULL);
+		if (! le || ! dc)
+			return;
+		ft_putstr_fd(le, 1);
+		ft_putstr_fd(dc, 1);
+		len--;
+	}
+}
+
 void 	erase_all_lines(t_sh *shell)
 {
 	//DEBUG
@@ -184,6 +202,10 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 		get_top_and_left(shell);
 		return (0);
 	}
+	else if (key == KEY_CTRL_D)
+	{
+		return (end_of_transmission(shell, term));
+	}
 	else if (tc_action_keys(shell, term, key) == 0 && ft_isprint((char)key))
 	{
 		while (term->cursor == 0)
@@ -191,11 +213,7 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 		insert_link_before(term);
 		term->prev->c = key;
 	}
-	else if (key == KEY_CTRL_D)
-	{
-		return (end_of_transmission(shell, term));
-	}
 	display_term_line(shell, term);
-	term_dup(shell, term);
+	//term_dup(shell, term); TODO undo
 	return (1);
 }

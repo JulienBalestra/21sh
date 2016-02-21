@@ -97,11 +97,11 @@ char *tterm_to_str(t_term *term)
 			term = term->next;
 		}
 	}
-	//DEBUG
+	/*//DEBUG
 		ft_putstr_fd("[", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("]", 2);
-	//DEBUG
+	//DEBUG*/
 	return (str);
 }
 
@@ -124,23 +124,6 @@ void safe_free_term(t_term *term)
 	}
 }
 
-void 	erase_line(size_t len)
-{
-	char *le;
-	char *dc;
-
-	while(len)
-	{
-		le = tgetstr("le", NULL);
-		dc = tgetstr("dc", NULL);
-		if (! le || ! dc)
-			return;
-		ft_putstr_fd(le, 1);
-		ft_putstr_fd(dc, 1);
-		len--;
-	}
-}
-
 size_t			get_columns(void)
 {
 	struct winsize	w;
@@ -159,7 +142,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	key = 0;
 	if ((end = create_link()))
 	{
-		erase_line(get_columns());
+		erase_all_lines(shell);
 		display_prompt(shell, ps2);
 		raw_terminal_mode(shell);
 		end->cursor = 1;
@@ -173,9 +156,8 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 			key = 0;
 		}
 		buf = tterm_to_str(end);
-		erase_line(ft_strlen(buf) + len_prompt(shell));
+		erase_all_lines(shell);
 		add_to_history(shell, end);
-		//safe_free_term(end); //TODO
 		default_terminal_mode(shell);
 		display_prompt(shell, ps2);
 		ft_putendl(buf);

@@ -34,11 +34,20 @@ void	add_to_history(t_sh *shell, t_term *term)
 		else
 			shell->hist = new_line;
 	}
-	/*//DEBUG
-		char *buf = tterm_to_str(shell->hist->line);
-		ft_putstr_fd(buf, CONSOLE->debug_fd);
-		ft_strdel(&buf);
-	//DEBUG*/
+	//DEBUG
+		ft_putstr_fd("history:\n", CONSOLE->debug_fd);
+		while (shell->hist->up)
+			shell->hist = shell->hist->up;
+		while (shell->hist->down)
+		{
+			char *buf = tterm_to_str(shell->hist->line);
+			ft_putstr_fd(buf, CONSOLE->debug_fd);
+			ft_strdel(&buf);
+			ft_putstr_fd("\n", CONSOLE->debug_fd);
+			shell->hist = shell->hist->down;
+		}
+		ft_putstr_fd("history_end\n", CONSOLE->debug_fd);
+	//DEBUG
 }
 
 /*void 	exec_history_up(t_sh *shell, t_term *term)
