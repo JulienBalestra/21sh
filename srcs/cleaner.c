@@ -41,8 +41,6 @@ void	delete_list(t_env **env)
 
 void 	delete_console(t_sh *shell)
 {
-	safe_free_term(shell->console->yank);
-	safe_free_term(shell->console->undo);
 	close(shell->debug_fd);
 	free(shell->console);
 }
@@ -79,11 +77,13 @@ void	clean_program(t_sh *shell)
 	free(shell->ps1);
 	if (shell->mock)
 		clean_program(shell->mock);
-	if (shell->buf)
-		free(shell->buf);
+	if (shell->stdin_buf)
+		free(shell->stdin_buf);
 	if (shell->console)
 		delete_console(shell);
 	if (shell->hist)
 		delete_hist(shell);
+	safe_free_term(shell->yank);
+	safe_free_term(shell->undo);
 	free(shell);
 }

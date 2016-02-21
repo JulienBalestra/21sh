@@ -7,7 +7,7 @@ void 	raw_terminal_mode(t_sh *shell)
 {
 	struct termios tattr;
 
-	tcgetattr(STDIN_FILENO, &shell->default_term);
+	tcgetattr(STDIN_FILENO, &shell->default_termios);
 	tcgetattr(STDIN_FILENO, &tattr);
 	tattr.c_lflag &= ~(ECHO | ICANON);
 	tattr.c_oflag &= (OPOST);
@@ -21,5 +21,5 @@ void 	raw_terminal_mode(t_sh *shell)
 
 void 	default_terminal_mode(t_sh *shell)
 {
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->default_term);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->default_termios);
 }

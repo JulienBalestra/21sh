@@ -8,7 +8,7 @@ void term_dup_left(t_sh *shell, t_term *term)
 
 	if (term == NULL)
 		return ;
-	safe_free_term(CONSOLE->yank);
+	safe_free_term(shell->yank);
 	prev = NULL;
 	link = NULL;
 	term = get_current_cursor(term);
@@ -26,7 +26,7 @@ void term_dup_left(t_sh *shell, t_term *term)
 		term = term->prev;
 		prev = link;
 	}
-	CONSOLE->yank = link;
+	shell->yank = link;
 }
 
 void term_dup_right(t_sh *shell, t_term *term)
@@ -36,7 +36,7 @@ void term_dup_right(t_sh *shell, t_term *term)
 
 	if (term == NULL)
 		return ;
-	safe_free_term(CONSOLE->yank);
+	safe_free_term(shell->yank);
 	prev = NULL;
 	link = NULL;
 	term = get_current_cursor(term);
@@ -54,5 +54,5 @@ void term_dup_right(t_sh *shell, t_term *term)
 		term = term->next;
 		prev = link;
 	}
-	CONSOLE->yank = link;
+	shell->yank = link;
 }

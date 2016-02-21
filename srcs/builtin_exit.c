@@ -43,5 +43,5 @@ void	builtin_exit(char **command, t_sh *shell)
 	{
 		process_return_code(command, shell);
 	}
-	shell->exit = 1;
+	shell->close_program = 1;
 }

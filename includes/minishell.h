@@ -69,13 +69,9 @@ typedef struct		s_env
 
 typedef struct		s_con
 {
-
-	t_term			*yank;
-	t_term			*undo;
 	size_t			total_lines;
 	size_t			line_position;
 	size_t 			char_position;
-
 }					t_con;
 
 typedef struct		s_hist
@@ -94,11 +90,14 @@ typedef struct		s_sh
 	char			*ps1;
 	size_t			len_ps1;
 	int				l_ret;
-	char			*buf;
-	int				exit;
-	struct termios	default_term;
+	char			*stdin_buf;
+	int				close_program;
+	struct termios	default_termios;
 	t_con			*console;
 	t_hist			*hist;
+	t_term			*yank;
+	t_term			*undo;
+	t_term			*current;
 }					t_sh;
 
 typedef struct		s_be

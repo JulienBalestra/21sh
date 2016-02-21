@@ -39,12 +39,12 @@ t_ast	**build_command(t_sh *shell)
 	char	**multi_cli;
 
 	command = NULL;
-	if ((multi_cli = ft_lz_strsplit(shell->buf, ';')))
+	if ((multi_cli = ft_lz_strsplit(shell->stdin_buf, ';')))
 	{
 		command = command_from_cli(multi_cli, shell);
 		free(multi_cli);
-		free(shell->buf);
-		shell->buf = NULL;
+		free(shell->stdin_buf);
+		shell->stdin_buf = NULL;
 	}
 	return (command);
 }

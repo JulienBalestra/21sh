@@ -76,7 +76,7 @@ int			ast_exec(t_ast *ast, t_sh *shell)
 
 	if (ast->op == -1 && dont_fork(ast->cmd, shell))
 	{
-		if (shell->exit == 1)
+		if (shell->close_program == 1)
 			return (0);
 		return (1);
 	}

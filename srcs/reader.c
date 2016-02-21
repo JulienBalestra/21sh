@@ -197,7 +197,7 @@ char	*get_line_from_pipe(t_sh *shell, int ps2)
 		free(left);
 	free(buf);
 	if (shell)
-		shell->exit = 1;
+		shell->close_program = 1;
 	return (NULL);
 }
 

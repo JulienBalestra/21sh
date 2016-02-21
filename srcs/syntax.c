@@ -50,9 +50,9 @@ int		correct_syntax(t_sh *shell)
 	int		ret;
 
 	// TODO ctrl+L (; |) -> double op
-	formatted = pre_format(shell->buf);
+	formatted = pre_format(shell->stdin_buf);
 	ret = find_exploitable(formatted);
-	ft_strdel(&shell->buf);
+	ft_strdel(&shell->stdin_buf);
 	if (ret == 1)
 		ft_putendl_fd("syntax error near unexpected token `;'", 2);
 	else if (ret == 2)
@@ -62,7 +62,7 @@ int		correct_syntax(t_sh *shell)
 	else if (ret == 4)
 		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 	else
-		shell->buf = formatted;
+		shell->stdin_buf = formatted;
 	if (ret)
 	{
 		ft_strdel(&formatted);

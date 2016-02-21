@@ -42,18 +42,18 @@ int		is_only_spaces(char *buf)
 
 int		existing_line(t_sh *shell)
 {
-	if (shell->buf == NULL)
+	if (shell->stdin_buf == NULL)
 	{
-		shell->exit = 1;
+		shell->close_program = 1;
 		return (0);
 	}
-	else if (is_only_spaces(shell->buf))
+	else if (is_only_spaces(shell->stdin_buf))
 	{
 		//DEBUG
 		ft_putstr_fd("only_spaces", shell->debug_fd);
 		//DEBUG
-		free(shell->buf);
-		shell->buf = NULL;
+		free(shell->stdin_buf);
+		shell->stdin_buf = NULL;
 		return (0);
 	}
 	return (1);

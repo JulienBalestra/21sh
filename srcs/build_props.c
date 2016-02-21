@@ -67,8 +67,6 @@ t_con		*create_console(void)
 
 	if ((console = (t_con *)malloc(sizeof(t_con))))
 	{
-		console->yank = NULL;
-		console->undo = NULL;
 		console->total_lines = 1;
 		console->line_position = 1;
 	}
@@ -90,11 +88,13 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->len_ps1 = ft_strlen(DEFAULT_PS1);
 		update_ps1(shell);
 		shell->l_ret = 0;
-		shell->buf = NULL;
-		shell->exit = 0;
+		shell->stdin_buf = NULL;
+		shell->close_program = 0;
 		shell->console = create_console();
 		shell->hist = NULL;
 		shell->debug_fd = create_debug_file();
+		shell->yank = NULL;
+		shell->undo = NULL;
 		return (shell);
 	}
 	return (NULL);
