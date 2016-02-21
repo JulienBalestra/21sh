@@ -249,7 +249,7 @@ void 	default_terminal_mode(t_sh *shell);
 
 size_t		len_prompt(t_sh *shell);
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key);
-t_term *create_link(void);
+t_term *create_term_link(void);
 void safe_free_term(t_term *term);
 void 	display_term_line(t_sh *shell, t_term *term);
 int get_total_len(t_term *term);
@@ -305,7 +305,7 @@ void	insert_yank(t_sh *shell, t_term *term);
 /*
  * tc_last.c
  */
-void term_dup(t_sh *shell, t_term *term);
+void term_dup_to_current(t_sh *shell, t_term *term);
 void restore_last(t_sh *shell, t_term *term);
 
 /*
@@ -341,6 +341,8 @@ void term_dup_right(t_sh *shell, t_term *term);
  */
 t_hist		*create_history(void);
 void	add_to_history(t_sh *shell, t_term *term);
+void 	exec_history_up(t_sh *shell, t_term *term);
+void 	exec_history_down(t_sh *shell, t_term *term);
 
 void 	erase_all_lines(t_sh *shell);
 char *tterm_to_str(t_term *term);

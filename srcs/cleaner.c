@@ -54,17 +54,17 @@ void 	delete_hist(t_sh *shell)
 	down = shell->hist->down;
 	while (down)
 	{
-		safe_free_term(down->line);
 		tmp = down;
 		down = down->down;
+		safe_free_term(tmp->line);
 		free(tmp);
 	}
 	up = shell->hist;
 	while (up)
 	{
-		safe_free_term(up->line);
 		tmp = up;
 		up = up->up;
+		safe_free_term(tmp->line);
 		free(tmp);
 	}
 }
@@ -85,5 +85,6 @@ void	clean_program(t_sh *shell)
 		delete_hist(shell);
 	safe_free_term(shell->yank);
 	safe_free_term(shell->undo);
+	safe_free_term(shell->current);
 	free(shell);
 }

@@ -95,6 +95,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->debug_fd = create_debug_file();
 		shell->yank = NULL;
 		shell->undo = NULL;
+		shell->current = NULL;
 		return (shell);
 	}
 	return (NULL);

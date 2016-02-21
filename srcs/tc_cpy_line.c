@@ -15,7 +15,7 @@ void term_dup_left(t_sh *shell, t_term *term)
 	term = term->prev;
 	while (term)
 	{
-		link = create_link();
+		link = create_term_link();
 		if (prev)
 		{
 			link->next = prev;
@@ -43,7 +43,7 @@ void term_dup_right(t_sh *shell, t_term *term)
 	//term = term->up;
 	while (term->next)
 	{
-		link = create_link();
+		link = create_term_link();
 		if (prev)
 		{
 			link->prev = prev;

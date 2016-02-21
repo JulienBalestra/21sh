@@ -13,7 +13,7 @@ void 	insert_link_before(t_term *term)
 {
 	t_term *link;
 
-	link = create_link();
+	link = create_term_link();
 	if (link)
 	{
 		link->next = term;

@@ -59,7 +59,7 @@ void	signal_callback_handler(int sig_num)
 		ft_putstr(DEFAULT_PS1);
 }
 
-t_term *create_link(void)
+t_term *create_term_link(void)
 {
 	t_term *link;
 
@@ -140,7 +140,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 
 	buf = NULL;
 	key = 0;
-	if ((end = create_link()))
+	if ((end = create_term_link()))
 	{
 		erase_all_lines(shell);
 		display_prompt(shell, ps2);

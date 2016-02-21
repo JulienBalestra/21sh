@@ -1,15 +1,18 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void term_dup(t_sh *shell, t_term *term)
+void term_dup_to_current(t_sh *shell, t_term *term)
 {
 	t_term *link;
 	t_term *prev;
 
 	if (term == NULL)
 		return ;
-	if (shell->undo)
-		safe_free_term(shell->undo);
+	if (shell->current)
+	{
+		safe_free_term(shell->current);
+		shell->current = NULL;
+	}
 	while (term->next)
 		term = term->next;
 	prev = NULL;
@@ -17,7 +20,7 @@ void term_dup(t_sh *shell, t_term *term)
 	term = term->prev;
 	while (term)
 	{
-		link = create_link();
+		link = create_term_link();
 		if (prev)
 		{
 			link->next = prev;
@@ -28,5 +31,5 @@ void term_dup(t_sh *shell, t_term *term)
 		term = term->prev;
 		prev = link;
 	}
-	shell->undo = link;
+	shell->current = link;
 }
