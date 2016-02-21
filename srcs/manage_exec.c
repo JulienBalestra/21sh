@@ -61,7 +61,6 @@ int			start_exec(const char **str, t_sh *shell,
 {
 	if (is_exec(str[0]) == 0)
 		return (0);
-	ft_str2del(shell->l_cmd);
 	do_exec(str, shell, mock_environ, mock);
 	return (1);
 }

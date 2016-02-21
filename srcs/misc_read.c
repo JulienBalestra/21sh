@@ -50,7 +50,7 @@ int		existing_line(t_sh *shell)
 	else if (is_only_spaces(shell->buf))
 	{
 		//DEBUG
-		ft_putstr_fd("only_spaces", CONSOLE->debug_fd);
+		ft_putstr_fd("only_spaces", shell->debug_fd);
 		//DEBUG
 		free(shell->buf);
 		shell->buf = NULL;

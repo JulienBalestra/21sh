@@ -69,7 +69,7 @@ typedef struct		s_env
 
 typedef struct		s_con
 {
-	int 			debug_fd;
+
 	t_term			*yank;
 	t_term			*undo;
 	size_t			total_lines;
@@ -87,13 +87,13 @@ typedef struct		s_hist
 
 typedef struct		s_sh
 {
+	int 			debug_fd;
 	t_env			*env;
 	struct s_sh		*mock;
 	char			**l_env;
 	char			*ps1;
 	size_t			len_ps1;
 	int				l_ret;
-	char			**l_cmd;
 	char			*buf;
 	int				exit;
 	struct termios	default_term;
@@ -312,7 +312,7 @@ void restore_last(t_sh *shell, t_term *term);
 /*
  * tc_debug.c
  */
-# define DEBUG_FD        shell->console->debug_fd
+# define DEBUG_FD        shell->debug_fd
 # define CONSOLE	shell->console
 int create_debug_file(void);
 void 		update_ps1(t_sh *shell);

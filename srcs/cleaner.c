@@ -43,7 +43,7 @@ void 	delete_console(t_sh *shell)
 {
 	safe_free_term(shell->console->yank);
 	safe_free_term(shell->console->undo);
-	close(shell->console->debug_fd);
+	close(shell->debug_fd);
 	free(shell->console);
 }
 
@@ -79,7 +79,6 @@ void	clean_program(t_sh *shell)
 	free(shell->ps1);
 	if (shell->mock)
 		clean_program(shell->mock);
-	ft_str2del(shell->l_cmd);
 	if (shell->buf)
 		free(shell->buf);
 	if (shell->console)
