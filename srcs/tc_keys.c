@@ -22,25 +22,25 @@ void 	erase_line(size_t len)
 
 void 	erase_all_lines(t_sh *shell)
 {
-	//DEBUG
+	/*//DEBUG
 		ft_putstr_fd("CONSOLE->cur_line=", DEBUG_FD);
 		ft_putlong_fd((long) CONSOLE->line_position, DEBUG_FD);
 		ft_putstr_fd("\nCONSOLE->total_lines=", DEBUG_FD);
 		ft_putlong_fd((long) CONSOLE->total_lines, DEBUG_FD);
 		ft_putchar_fd('\n', DEBUG_FD);
-	//DEBUG
+	//DEBUG*/
 
 	// go to the last line
 	while (CONSOLE->line_position < CONSOLE->total_lines)
 	{
-		//DEBUG
+		/*//DEBUG
 			ft_putstr_fd("CONSOLE->cur_line=", DEBUG_FD);
 			ft_putlong_fd((long) CONSOLE->line_position, DEBUG_FD);
 			ft_putstr_fd("\nCONSOLE->total_lines=", DEBUG_FD);
 			ft_putlong_fd((long) CONSOLE->total_lines, DEBUG_FD);
 			ft_putchar_fd('\n', DEBUG_FD);
 			ft_putstr_fd("{D}\n", DEBUG_FD);
-		//DEBUG
+		//DEBUG*/
 
 		ft_putstr(tgetstr("do", NULL));
 		CONSOLE->line_position++;
@@ -49,9 +49,9 @@ void 	erase_all_lines(t_sh *shell)
 	// erase all lines from the last to the second line
 	while (CONSOLE->line_position > 1)
 	{
-		//DEBUG
+		/*//DEBUG
 			ft_putstr_fd("{U}\n", DEBUG_FD);
-		//DEBUG
+		//DEBUG*/
 
 		erase_line(get_columns());
 		ft_putstr(tgetstr("up", NULL));
@@ -71,17 +71,17 @@ void 	display_term_characters(t_sh *shell, t_term *term)
 	//DEBUG*/
 	while (term->next)
 	{
-		//DEBUG
+		/*//DEBUG
 			ft_putstr_fd("char_position=", DEBUG_FD);
 			ft_putlong_fd((long) CONSOLE->char_position, DEBUG_FD);
 			ft_putstr_fd("\n", DEBUG_FD);
-		//DEBUG
+		//DEBUG*/
 
 		if (CONSOLE->char_position == get_columns())
 		{
-			//DEBUG
+			/*//DEBUG
 				ft_putstr_fd("ENDLINE\n", DEBUG_FD);
-			//DEBUG
+			//DEBUG*/
 
 			ft_putchar('\n');
 			erase_line(get_columns());
@@ -89,21 +89,21 @@ void 	display_term_characters(t_sh *shell, t_term *term)
 			CONSOLE->total_lines++;
 			CONSOLE->line_position++;
 		}
-		//DEBUG
+		/*//DEBUG
 			ft_putchar_fd('[', DEBUG_FD);
 			ft_putchar_fd((char)term->c, DEBUG_FD);
 			ft_putchar_fd(']', DEBUG_FD);
-		//DEBUG
+		//DEBUG*/
 
 		ft_putchar((char)term->c);
 		term = term->next;
 		CONSOLE->char_position++;
 	}
-	//DEBUG
+	/*//DEBUG
 		ft_putstr_fd("CONSOLE->total_lines=", DEBUG_FD);
 		ft_putlong_fd((long) CONSOLE->total_lines, DEBUG_FD);
 		ft_putchar_fd('\n', DEBUG_FD);
-	//DEBUG
+	//DEBUG*/
 }
 
 void 	cursor_position(t_sh *shell, t_term *term)
@@ -116,13 +116,13 @@ void 	cursor_position(t_sh *shell, t_term *term)
 	{
 		if (CONSOLE->char_position == 0 && term->prev)
 		{
-			//DEBUG
+			/*//DEBUG
 				ft_putstr_fd("U", DEBUG_FD);
 				ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
 				ft_putstr_fd("[", DEBUG_FD);
 				ft_putchar_fd((char)term->c, DEBUG_FD);
 				ft_putstr_fd("]\n", DEBUG_FD);
-			//DEBUG
+			//DEBUG*/
 
 			ft_putstr(tgetstr("up", NULL));
 			CONSOLE->line_position--;
@@ -136,13 +136,13 @@ void 	cursor_position(t_sh *shell, t_term *term)
 			term = term->prev;
 			continue;
 		}
-		//DEBUG
+		/*//DEBUG
 			ft_putstr_fd("<", DEBUG_FD);
 			ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
 			ft_putstr_fd("[", DEBUG_FD);
 			ft_putchar_fd((char)term->c, DEBUG_FD);
 			ft_putstr_fd("]\n", DEBUG_FD);
-		//DEBUG
+		//DEBUG*/
 
 		ft_putstr(tgetstr("le", NULL));
 		term = term->prev;
@@ -200,6 +200,10 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 	if (key == '\n' || (char)key == '\n')
 	{
 		get_top_and_left(shell);
+		safe_free_term(shell->current);
+		shell->current = NULL;
+		while (shell->hist && shell->hist->down)
+			shell->hist = shell->hist->down;
 		return (0);
 	}
 	else if (key == KEY_CTRL_D)

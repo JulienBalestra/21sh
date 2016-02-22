@@ -6,18 +6,12 @@ void term_dup_to_current(t_sh *shell, t_term *term)
 	t_term *link;
 	t_term *prev;
 
-	if (term == NULL)
+	if (term == NULL || shell->current)
 		return ;
-	if (shell->current)
-	{
-		safe_free_term(shell->current);
-		shell->current = NULL;
-	}
 	while (term->next)
 		term = term->next;
 	prev = NULL;
 	link = NULL;
-	term = term->prev;
 	while (term)
 	{
 		link = create_term_link();
@@ -31,5 +25,14 @@ void term_dup_to_current(t_sh *shell, t_term *term)
 		term = term->prev;
 		prev = link;
 	}
+	while (link && link->next)
+		link = link->next;
 	shell->current = link;
+	//DEBUG
+		char *buf = tterm_to_str(link);
+		ft_putstr_fd("current[", shell->debug_fd);
+		ft_putstr_fd(buf, shell->debug_fd);
+		ft_strdel(&buf);
+		ft_putstr_fd("]\n", shell->debug_fd);
+	//DEBUG
 }

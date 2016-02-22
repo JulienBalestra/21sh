@@ -60,13 +60,19 @@ void	add_to_history(t_sh *shell, t_term *term)
 	//DEBUG
 		ft_putstr_fd("history:\n", shell->debug_fd);
 		while (shell->hist->up)
-			shell->hist = shell->hist->up;
-		while (shell->hist->down)
 		{
+			ft_putstr_fd("u-", shell->debug_fd);
+			shell->hist = shell->hist->up;
+		}
+		while (shell->hist)
+		{
+			ft_putstr_fd("d-", shell->debug_fd);
 			char *buf = tterm_to_str(shell->hist->line);
 			ft_putstr_fd(buf, shell->debug_fd);
 			ft_strdel(&buf);
 			ft_putstr_fd("\n", shell->debug_fd);
+			if (! shell->hist->down)
+				break;
 			shell->hist = shell->hist->down;
 		}
 		ft_putstr_fd("history_end\n", shell->debug_fd);
@@ -77,13 +83,13 @@ void	add_to_history(t_sh *shell, t_term *term)
  * term == \n and free all previous links
  * dup history links and linked with term \n
  */
-void 	replace_body_from_tail(t_term *history, t_term *term)
+void 	replace_body_from_tail(t_term *hist_term, t_term *term)
 {
 	t_term *clean;
 	t_term *tmp;
 
-	while (history->next)
-		history = history->next;
+	while (hist_term->next)
+		hist_term = hist_term->next;
 	while (term->next)
 		term = term->next;
 	if (term->prev)
@@ -101,15 +107,15 @@ void 	replace_body_from_tail(t_term *history, t_term *term)
 		}
 	}
 	term->cursor = 1;
-	history = history->prev;
-	while (history)
+	hist_term = hist_term->prev;
+	while (hist_term)
 	{
 		tmp = create_term_link();
-		tmp->c = history->c;
+		tmp->c = hist_term->c;
 		term->prev = tmp;
 		tmp->next = term;
 		term = term->prev;
-		history = history->prev;
+		hist_term = hist_term->prev;
 	}
 }
 
@@ -117,14 +123,10 @@ void 	exec_history_up(t_sh *shell, t_term *term)
 {
 	if (shell->hist)
 	{
-		term_dup_to_current(shell, term); // TODO
-
-		if (shell->hist->up && compare_terms(shell->hist->up->line, term) && shell->hist->up->up)
-			shell->hist = shell->hist->up; // TODO clean this
-
-		replace_body_from_tail(shell->hist->line, term);
-		if (shell->hist->up)
+		if (shell->hist->up && shell->current)
 			shell->hist = shell->hist->up;
+		term_dup_to_current(shell, term);
+		replace_body_from_tail(shell->hist->line, term);
 	}
 }
 
@@ -133,12 +135,14 @@ void 	exec_history_down(t_sh *shell, t_term *term)
 	if (shell->hist)
 	{
 		if (shell->hist->down)
-		{
-			if (compare_terms(shell->hist->down->line, term) && shell->hist->down->down)
-				shell->hist = shell->hist->down;
-
-			replace_body_from_tail(shell->hist->down->line, term);
 			shell->hist = shell->hist->down;
+		else if (shell->current)
+		{
+			replace_body_from_tail(shell->current, term);
+			return;
 		}
+		else
+			return ;
+		replace_body_from_tail(shell->hist->line, term);
 	}
 }

@@ -164,6 +164,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		if (! buf || buf[0] == '\0')
 		{
 			ft_strdel(&buf);
+			safe_free_term(end);
 			return get_line_from_user(shell, ps2);
 		}
 	}

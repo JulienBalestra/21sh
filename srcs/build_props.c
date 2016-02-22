@@ -69,6 +69,7 @@ t_con		*create_console(void)
 	{
 		console->total_lines = 1;
 		console->line_position = 1;
+		console->char_position = 0;
 	}
 	return (console);
 }
