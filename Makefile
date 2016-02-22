@@ -92,6 +92,9 @@ tc_debug.c \
 tc_move_up_down.c \
 tc_cpy_line.c \
 tc_history.c \
+tc_term.c \
+reader_fn1.c \
+reader_fn2.c \
 update_last_environ.c
 
 

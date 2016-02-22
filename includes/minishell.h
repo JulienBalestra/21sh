@@ -347,4 +347,29 @@ void 	exec_history_down(t_sh *shell, t_term *term);
 void 	erase_all_lines(t_sh *shell);
 char *tterm_to_str(t_term *term);
 
+/*
+ * reader_fn1.c
+ */
+char	*compile(char *left, char *buf);
+void	again(char *buf);
+char	*move_and_clean(char *buf);
+void	signal_callback_handler(int sig_num);
+
+/*
+ * tc_term.c
+ */
+t_term *create_term_link(void);
+char *tterm_to_str(t_term *term);
+void safe_free_term(t_term *term);
+
+char 	*get_line_from_user(t_sh *shell, int ps2);
+
+/*
+ * reader_fn2.c
+ */
+void	init_current_console(t_sh *shell, t_term *end, int ps2);
+void 	end_of_reading(t_sh *shell, int ps2);
+char	*recurse_get_line_from_user(t_sh *shell, int ps2, char *buf, t_term *end);
+char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left);
+
 #endif
