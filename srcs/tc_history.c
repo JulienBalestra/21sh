@@ -130,19 +130,42 @@ void 	exec_history_up(t_sh *shell, t_term *term)
 	}
 }
 
+void 	nobody_from_tail(t_term *term)
+{
+	t_term *tmp;
+	t_term *clean;
+
+	while (term->next)
+		term = term->next;
+	term->cursor = 1;
+	clean = term->prev;
+	term->prev = NULL;
+	while (clean)
+	{
+		tmp = clean;
+		clean = clean->prev;
+		tmp->c = 0;
+		tmp->cursor = 0;
+		free(tmp);
+	}
+}
+
 void 	exec_history_down(t_sh *shell, t_term *term)
 {
 	if (shell->hist)
 	{
 		if (shell->hist->down)
+		{
 			shell->hist = shell->hist->down;
-		else if (shell->current)
+			replace_body_from_tail(shell->hist->line, term);
+		}
+		else if (shell->current && shell->current->prev)
 		{
 			replace_body_from_tail(shell->current, term);
-			return;
 		}
-		else
-			return ;
-		replace_body_from_tail(shell->hist->line, term);
+		else if (shell->current && ! shell->current->prev)
+		{
+			nobody_from_tail(term);
+		}
 	}
 }
