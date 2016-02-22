@@ -6,7 +6,7 @@
 
 Recode of a /bin/bash like
 
-# How to launch
+# How to launch with sudo needed
 
 
 	./setup.sh
