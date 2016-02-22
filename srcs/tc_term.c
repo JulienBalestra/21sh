@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include <stropts.h>
 #include <sys/ioctl.h>
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
