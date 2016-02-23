@@ -100,7 +100,8 @@ class TestMinishell(unittest.TestCase):
 			"cd .. ; "
 			"rm -Rf test_02_dir"
 		]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_03(self):
