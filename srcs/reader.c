@@ -28,7 +28,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	if ((end = create_term_link()))
 	{
 		init_current_console(shell, end, ps2);
-		signal(SIGINT, signal_callback_handler);
+		signal(SIGINT, signal_callback_handler); // TODO chars typed are not erased
 		while (read(0, &key, sizeof(long)))
 		{
 			if (tc_continue_process_key(shell, end, key) == 0)

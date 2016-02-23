@@ -46,7 +46,9 @@ void	signal_callback_handler(int sig_num)
 
 	(void)sig_num;
 	if (isatty(0))
+	{
 		ft_putstr("^C");
+	}
 	ft_putchar('\n');
 	if (isatty(0))
 		erase_line(get_columns());
@@ -58,8 +60,4 @@ void	signal_callback_handler(int sig_num)
 	}
 	else
 		ft_putstr(DEFAULT_PS1);
-	if (isatty(0))
-	{
-
-	}
 }
