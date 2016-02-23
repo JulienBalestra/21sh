@@ -101,7 +101,8 @@ class TestMinishell(unittest.TestCase):
 			"rm -Rf test_02_dir; "
 			"sleep 1"
 		]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_03(self):
