@@ -45,13 +45,21 @@ void	signal_callback_handler(int sig_num)
 	char	*wd;
 
 	(void)sig_num;
+	if (isatty(0))
+		ft_putstr("^C");
 	ft_putchar('\n');
+	if (isatty(0))
+		erase_line(get_columns());
 	if (USE_CWD && (wd = create_cwd(NULL)))
 	{
 		ft_putstr(wd);
 		ft_strdel(&wd);
-		write(1, "> ", 2);
+		ft_putstr(END_PROMPT);
 	}
 	else
 		ft_putstr(DEFAULT_PS1);
+	if (isatty(0))
+	{
+
+	}
 }

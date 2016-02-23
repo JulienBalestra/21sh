@@ -375,4 +375,6 @@ char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left);
 
 void process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell);
 void	process_atoi(t_ast *ast, char *str, size_t k);
+
+void 	erase_line(size_t len);
 #endif
