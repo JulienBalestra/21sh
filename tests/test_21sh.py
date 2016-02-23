@@ -122,42 +122,50 @@ class TestMinishell(unittest.TestCase):
 
 	def test_06(self):
 		command = [" /bin/ls notherefile |& cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_07(self):
 		command = [" /bin/ls notherefile . |& cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_08(self):
 		command = [" /bin/ls notherefile . 2>&1 |& cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_09(self):
 		command = [" /bin/ls notherefile . 2>&1 |& cat -e  | cat -e |& cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_10(self):
 		command = ["/bin/ls notherefile . 2>&1|&cat -e|cat -e|&cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_11(self):
 		command = ["/bin/ls notherefile 2>&1|&cat -e|cat -e|&cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_12(self):
 		command = ["/bin/ls notherefile|&cat -e|cat -e|&cat -e"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_13(self):
 		command = ["/bin/ls -l notherefile .|&cat -e|cat -e|&cat -e|rev|sort|rev"]
-		self.compare_shells(command)
+		if self.linux:
+			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_Z999Z_waiting_process(self):
