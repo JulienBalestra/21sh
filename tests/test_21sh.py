@@ -149,6 +149,16 @@ class TestMinishell(unittest.TestCase):
 		self.compare_shells(command)
 		self.valgrind(command)
 
+	def test_12(self):
+		command = ["/bin/ls notherefile|&cat -e|cat -e|&cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_13(self):
+		command = ["/bin/ls -l notherefile .|&cat -e|cat -e|&cat -e|rev|sort|rev"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
 	def test_Z999Z_waiting_process(self):
 		raising = []
 		for p in self.queue.p:
