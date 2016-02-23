@@ -372,4 +372,7 @@ void 	end_of_reading(t_sh *shell, int ps2);
 char	*recurse_get_line_from_user(t_sh *shell, int ps2, char *buf, t_term *end);
 char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left);
 
+
+void process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell);
+void	process_atoi(t_ast *ast, char *str, size_t k);
 #endif

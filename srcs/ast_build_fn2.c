@@ -33,14 +33,7 @@ void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *sh
 	}
 	else if (ast->op == 11)
 	{
-		tmp = cut[0];
-		cut[0] = ft_strjoin(cut[0], " 2>&1 ");
-		ft_strdel(&tmp);
-		if (cut[1] && cut[1][0] == '&')
-			cut[1][0] = ' ';
-		ast->op = 1;
-		ast->left = ast_build(cut[0], 0, shell);
-		ast->right = ast_build(cut[1], 0, shell);
+		process_pipe_stderr(cut, ast, shell);
 	}
 	else
 	{
@@ -75,9 +68,7 @@ int 	catch_n_process_redirection(t_ast *ast, char *str)
 		i++;
 	if (i < ft_strlen(str) || i == k )
 		return (0);
-	ast->from = ft_atoi(str);
-	ast->to = ft_atoi(&str[k]);
-	// TODO from / to are int *
+	process_atoi(ast, str, k);
 	return (1);
 }
 

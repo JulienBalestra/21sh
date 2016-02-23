@@ -41,3 +41,23 @@ int skip_eof(char *s)
 		i++;
 	return (i);
 }
+
+void process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell)
+{
+	char *tmp;
+
+	tmp = cut[0];
+	cut[0] = ft_strjoin(cut[0], " 2>&1 ");
+	ft_strdel(&tmp);
+	if (cut[1] && cut[1][0] == '&')
+		cut[1][0] = ' ';
+	ast->op = 1;
+	ast->left = ast_build(cut[0], 0, shell);
+	ast->right = ast_build(cut[1], 0, shell);
+}
+
+void	process_atoi(t_ast *ast, char *str, size_t k)
+{
+	ast->from = ft_atoi(str);
+	ast->to = ft_atoi(&str[k]);
+}
