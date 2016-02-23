@@ -49,18 +49,6 @@ void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *sh
 	}
 	free(cut);
 }
-/*
-int 	catch_n_process_pipe_stderr(t_ast *ast, char *str, int index)
-{
-	if (ft_strcmp(str, "&") == 0)
-	{
-		ast->from = 2;
-		ast->to = 1;
-		ft_putstr("\nok\n");
-		return (1);
-	}
-	return (0);
-}*/
 
 int 	catch_n_process_redirection(t_ast *ast, char *str)
 {
