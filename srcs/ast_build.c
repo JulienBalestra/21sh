@@ -14,17 +14,12 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-int			is_std_redirect(char *s, int i)
-{
-	if (s[i] == '>' && (s[i - 1] == '2' && s[i - 2] == ' '))
-		return (2);
-	return (0);
-}
-
 int			is_operand(char *s, int i)
 {
-	if (s[i] == '|')
+	if (s[i] == '|' && s[i + 1] != '&')
 		return (1);
+	if (s[i] == '|' && s[i + 1] == '&')
+		return (11);
 	if (s[i] == '>')
 	{
 		if (s[i - 1] == '>')

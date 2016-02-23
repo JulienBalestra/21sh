@@ -98,10 +98,10 @@ class TestMinishell(unittest.TestCase):
 			"ls | cat | wc -c > fifi ; "
 			"cat fifi ; "
 			"cd .. ; "
-			"rm -Rf test_02_dir"
+			"rm -Rf test_02_dir; "
+			"sleep 1"
 		]
-		if self.linux:
-			self.compare_shells(command)
+		self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_03(self):
@@ -116,6 +116,36 @@ class TestMinishell(unittest.TestCase):
 
 	def test_05(self):
 		command = [" /bin/cat test_04_nothere 2>&1 | cat -e | rev"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_06(self):
+		command = [" /bin/ls notherefile |& cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_07(self):
+		command = [" /bin/ls notherefile . |& cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_08(self):
+		command = [" /bin/ls notherefile . 2>&1 |& cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_09(self):
+		command = [" /bin/ls notherefile . 2>&1 |& cat -e  | cat -e |& cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_10(self):
+		command = ["/bin/ls notherefile . 2>&1|&cat -e|cat -e|&cat -e"]
+		self.compare_shells(command)
+		self.valgrind(command)
+
+	def test_11(self):
+		command = ["/bin/ls notherefile 2>&1|&cat -e|cat -e|&cat -e"]
 		self.compare_shells(command)
 		self.valgrind(command)
 
