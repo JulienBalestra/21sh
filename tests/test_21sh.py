@@ -81,9 +81,6 @@ class Test21sh(unittest.TestCase):
 		stdout, stderr = p_real_shell.communicate()
 		return stdout, stderr.replace("/bin/bash: line 1: ", "")  # because of bash piping
 
-	def compare_returning_code(self, command):
-		print subprocess.call(["/bin/echo"] + command + [self.minishell])
-
 	def compare_shells(self, command):
 		real_std = self.execute_real_shell(command)
 		my_std = self.execute_my_shell(command)
@@ -112,13 +109,10 @@ class Test21sh(unittest.TestCase):
 			"cd test_02_dir ; "
 			"ls -a ; "
 			"ls | cat | wc -c > fifi ; "
-			"sleep 0.2 ;"
 			"cat fifi ; "
 			"cd .. ; "
 			"rm -Rf test_02_dir; "
 		]
-		if self.linux:
-			self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_03(self):
@@ -204,6 +198,58 @@ class Test21sh(unittest.TestCase):
 		stdout, stderr = self.execute_my_shell_mock(command, ["-i"])
 		self.assertEqual("PWD=007\n007\n", stdout)
 		self.assertEqual("cd: 007: No such file or directory\n", stderr)
+
+	def test_18(self):
+		cmd_list = ["/bin/cat", "/dev/urandom"]
+		p_command = subprocess.Popen(cmd_list, stdout=subprocess.PIPE, stderr=self.dev_null)
+		runner = [self.minishell]
+		p_minishell = subprocess.Popen(
+				runner, stdin=p_command.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p_command.stdout.close()
+		stdout, stderr = p_minishell.communicate()
+		self.assertEqual('', stdout)
+		self.assertEqual('ERROR not readable characters inside the buffer\n', stderr)
+
+	def test_19(self):
+		cmd_list = ["/bin/cat", "/dev/urandom"]
+		p_command = subprocess.Popen(cmd_list, stdout=subprocess.PIPE, stderr=self.dev_null)
+		runner = ["env", "-i", self.minishell]
+		p_minishell = subprocess.Popen(
+				runner, stdin=p_command.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p_command.stdout.close()
+		stdout, stderr = p_minishell.communicate()
+		self.assertEqual('', stdout)
+		self.assertEqual('ERROR not readable characters inside the buffer\n', stderr)
+
+	def test_20(self):
+		string_data = \
+			"Pandente itaque viam fatorum sorte tristissima, " \
+			"qua praestitutum erat eum vita et imperio spoliari, " \
+			"itineribus interiectis permutatione iumentorum emensis " \
+			"venit Petobionem oppidum Noricorum, ubi reseratae sunt " \
+			"insidiarum latebrae omnes, et Barbatio repente apparuit comes, " \
+			"qui sub eo domesticis praefuit, cum Apodemio agente in rebus milites " \
+			"ducens, quos beneficiis suis oppigneratos elegerat imperator certus " \
+			"nec praemiis nec miseratione ulla posse deflecti."
+
+		fd = open("big_data", "a")
+		s = os.stat('big_data')
+
+		while s.st_size < 107374182L:
+			for i in xrange(100):
+				fd.write("%d->%s" % (i, string_data * i))
+			s = os.stat('big_data')
+		fd.close()
+		cmd_list = ["/bin/cat", "big_data"]
+		p_command = subprocess.Popen(cmd_list, stdout=subprocess.PIPE, stderr=self.dev_null)
+		runner = ["env", "-i", self.minishell]
+		p_minishell = subprocess.Popen(
+				runner, stdin=p_command.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p_command.stdout.close()
+		stdout, stderr = p_minishell.communicate()
+		os.remove("big_data")
+		self.assertEqual('', stdout)
+		self.assertEqual('ERROR max number of characters inside the buffer\n', stderr)
 
 	def test_Z999Z_waiting_process(self):
 		raising = []

@@ -12,8 +12,8 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define READ      128
-# define MAX_READ	150
+# define READ      2048
+# define MAX_READ	128
 # define CWD       2048
 # define DEFAULT_PS1 "21sh> "
 # define DEFAULT_PS2 "> "

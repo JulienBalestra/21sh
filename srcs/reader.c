@@ -87,6 +87,8 @@ char	*get_line_from_pipe(t_sh *shell)
 			break;
 	}
 	ft_strdel(&left);
+	if (limit >= MAX_READ)
+		ft_putstr_fd("ERROR max number of characters inside the buffer\n", 2);
 	return (end_of_file_recvd(shell, buf, left));
 }
 
