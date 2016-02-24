@@ -52,6 +52,21 @@ class Test21sh(unittest.TestCase):
 		stdout, stderr = p_minishell.communicate()
 		return stdout, stderr
 
+	def execute_my_shell_mock(self, command, mock):
+		"""
+		Here my minishell
+		:param command: list of command like ["/bin/ls", "-l"]
+		:return:
+		"""
+		cmd_list = ["/bin/echo"] + command
+		p_command = subprocess.Popen(cmd_list, stdout=subprocess.PIPE)
+		runner = ["env"] + mock + [self.minishell]
+		p_minishell = subprocess.Popen(
+				runner, stdin=p_command.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p_command.stdout.close()
+		stdout, stderr = p_minishell.communicate()
+		return stdout, stderr
+
 	def execute_real_shell(self, command):
 		"""
 		Here the real shell
@@ -97,10 +112,10 @@ class Test21sh(unittest.TestCase):
 			"cd test_02_dir ; "
 			"ls -a ; "
 			"ls | cat | wc -c > fifi ; "
+			"sleep 0.2 ;"
 			"cat fifi ; "
 			"cd .. ; "
 			"rm -Rf test_02_dir; "
-			"sleep 1"
 		]
 		if self.linux:
 			self.compare_shells(command)
@@ -168,6 +183,27 @@ class Test21sh(unittest.TestCase):
 		if self.linux:
 			self.compare_shells(command)
 		self.valgrind(command)
+
+	def test_14(self):
+		command = ["ls"]
+		output = self.execute_my_shell_mock(command, ["-i"])
+		self.assertEqual(('', 'ls: command not found\n'), output)
+
+	def test_15(self):
+		command = ["/bin/ls"]
+		output = self.execute_my_shell_mock(command, ["-i"])
+		self.assertEqual(('dotdot\nfile00\nfile01\nnorights\n', ''), output)
+
+	def test_16(self):
+		command = ["env ; unsetenv PWD ; env"]
+		stdout, stderr = self.execute_my_shell_mock(command, ["-i"])
+		self.assertEqual(3, len(stdout.split("PWD=")))
+
+	def test_17(self):
+		command = ["setenv PWD 007 ; env ; cd .. ; cd -"]
+		stdout, stderr = self.execute_my_shell_mock(command, ["-i"])
+		self.assertEqual("PWD=007\n007\n", stdout)
+		self.assertEqual("cd: 007: No such file or directory\n", stderr)
 
 	def test_Z999Z_waiting_process(self):
 		raising = []

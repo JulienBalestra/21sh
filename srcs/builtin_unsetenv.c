@@ -46,7 +46,8 @@ void	remove_env_link(t_sh *shell, t_env *env)
 		else
 		{
 			shell->env = env->next;
-			env->next->prev = NULL;
+			if (env->next)
+				env->next->prev = NULL;
 		}
 		destroy_env_link(env);
 	}
@@ -76,7 +77,8 @@ void	builtin_unsetenv(char **command, t_sh *shell)
 	command++;
 	while (*command)
 	{
-		find_and_destroy(*command, shell);
+		if (ft_strcmp("PWD", *command))
+			find_and_destroy(*command, shell);
 		command++;
 	}
 }
