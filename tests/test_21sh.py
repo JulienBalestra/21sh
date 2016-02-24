@@ -4,7 +4,7 @@ from minishell_tools import *
 import sys
 
 
-class TestMinishell(unittest.TestCase):
+class Test21sh(unittest.TestCase):
 	context = os.path.split(os.path.dirname(__file__))[0]
 	minishell = "%s/minishell" % context
 	testing_dir = "%s/tests/test_resources/" % context
@@ -87,7 +87,8 @@ class TestMinishell(unittest.TestCase):
 
 	def test_01(self):
 		command = ["\n"]
-		self.compare_shells(command)
+		output = self.execute_my_shell(command)
+		self.assertEqual(("", "ERROR not readable characters inside the buffer\n"), output)
 		self.valgrind(command)
 
 	def test_02(self):
