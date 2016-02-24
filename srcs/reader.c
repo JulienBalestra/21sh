@@ -45,6 +45,23 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	return (buf);
 }
 
+int 	is_print_buf(char *buf)
+{
+	int i;
+
+	i = 0;
+	while (i < READ)
+	{
+		if (! ft_isprint(buf[i]))
+		{
+			ft_putstr_fd("ERROR not readable characters inside the buffer\n", 2);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 char	*get_line_from_pipe(t_sh *shell)
 {
 	char	*buf;
@@ -55,7 +72,7 @@ char	*get_line_from_pipe(t_sh *shell)
 	buf = ft_strnew(READ);
 	left = NULL;
 	limit = 0;
-	while ((ret = read(0, buf, READ)) && limit < MAX_READ)
+	while ((ret = read(0, buf, READ)) && limit++ < MAX_READ)
 	{
 		buf[ret] = '\0';
 		if (left && buf[0])
@@ -64,11 +81,10 @@ char	*get_line_from_pipe(t_sh *shell)
 			return (buf);
 		else if (is_enter(buf))
 			again(buf);
-		else
-		{
-			limit++;
+		else if (is_print_buf(buf))
 			left = move_and_clean(buf);
-		}
+		else
+			break;
 	}
 	ft_strdel(&left);
 	return (end_of_file_recvd(shell, buf, left));
