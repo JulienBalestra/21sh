@@ -233,6 +233,7 @@ class Test21sh(unittest.TestCase):
 			"nec praemiis nec miseratione ulla posse deflecti."
 
 		fd = open("big_data", "a")
+		fd.write("echo ")
 		s = os.stat('big_data')
 
 		while s.st_size < 107374182L:
