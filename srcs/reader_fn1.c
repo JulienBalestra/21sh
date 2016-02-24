@@ -34,9 +34,15 @@ void	again(char *buf)
 char	*move_and_clean(char *buf)
 {
 	char	*left;
+	int i;
 
+	i = 0;
 	left = ft_strdup(buf);
-	ft_strclr(buf);
+	while (i < READ - 1)
+	{
+		buf[i] = '\0';
+		i++;
+	}
 	return (left);
 }
 

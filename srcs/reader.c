@@ -50,10 +50,12 @@ char	*get_line_from_pipe(t_sh *shell)
 	char	*buf;
 	char	*left;
 	ssize_t	ret;
+	int 	limit;
 
 	buf = ft_strnew(READ);
 	left = NULL;
-	while ((ret = read(0, buf, READ)))
+	limit = 0;
+	while ((ret = read(0, buf, READ)) && limit < MAX_READ)
 	{
 		buf[ret] = '\0';
 		if (left && buf[0])
@@ -63,8 +65,12 @@ char	*get_line_from_pipe(t_sh *shell)
 		else if (is_enter(buf))
 			again(buf);
 		else
+		{
+			limit++;
 			left = move_and_clean(buf);
+		}
 	}
+	ft_strdel(&left);
 	return (end_of_file_recvd(shell, buf, left));
 }
 
