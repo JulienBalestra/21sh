@@ -35,7 +35,7 @@ char *tterm_to_str(t_term *term)
 	if ((str = ft_strnew((len + 1))))
 	{
 		i = 0;
-		while (term->next)
+		while (term)
 		{
 			str[i] = (char)term->c;
 			i++;

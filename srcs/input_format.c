@@ -18,19 +18,19 @@
 t_ast	**command_from_cli(char **cli, t_sh *shell)
 {
 	int		i;
-	t_ast	**ast2;
+	t_ast	**ast;
 
 	i = 0;
-	if ((ast2 = (t_ast **)malloc(sizeof(t_ast *) * (ft_str2len(cli) + 1))))
+	if ((ast = (t_ast **)malloc(sizeof(t_ast *) * (ft_str2len(cli) + 1))))
 	{
 		while (cli[i])
 		{
-			ast2[i] = ast_build(cli[i], 0, shell);
+			ast[i] = ast_build(cli[i], 0, shell);
 			i++;
 		}
-		ast2[i] = NULL;
+		ast[i] = NULL;
 	}
-	return (ast2);
+	return (ast);
 }
 
 t_ast	**build_command(t_sh *shell)

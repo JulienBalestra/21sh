@@ -37,7 +37,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 		}
 		buf = tterm_to_str(end);
 		end_of_reading(shell, ps2);
-		ft_putendl(buf);
+		ft_putstr_fd(buf, 1);
 		if (! buf || buf[0] == '\0' || is_only_spaces(buf))
 			return (recurse_get_line_from_user(shell, ps2, buf, end));
 		add_to_history(shell, end);
