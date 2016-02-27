@@ -96,7 +96,7 @@ char	*get_line(t_sh *shell, int ps2)
 {
 	if (isatty(0) &&
 			get_env_value("TERM", shell->env) &&
-			ft_strcmp("xterm", get_env_value("TERM", shell->env)) == 0)
+			ft_strstr(get_env_value("TERM", shell->env), "xterm"))
 		return get_line_from_user(shell, ps2);
 	else
 		return get_line_from_pipe(shell);
