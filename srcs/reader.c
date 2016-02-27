@@ -52,7 +52,7 @@ int 	is_print_buf(char *buf)
 	i = 0;
 	while (i < READ)
 	{
-		if (! ft_isprint(buf[i]))
+		if (! ft_isprint(buf[i]) && buf[i] != '\n')
 		{
 			ft_putstr_fd("ERROR not readable characters inside the buffer\n", 2);
 			return (0);
