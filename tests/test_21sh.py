@@ -238,7 +238,7 @@ class Test21sh(unittest.TestCase):
 
 		while s.st_size < 107374182L:
 			for i in xrange(100):
-				fd.write("%d->%s" % (i, string_data * i))
+				fd.write("%d->%s\n" % (i, string_data * i))
 			s = os.stat('big_data')
 		fd.close()
 		cmd_list = ["/bin/cat", "big_data"]
