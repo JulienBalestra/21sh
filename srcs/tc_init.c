@@ -18,7 +18,6 @@ void 	raw_terminal_mode(t_sh *shell)
 		tcsetattr(STDIN_FILENO, TCSADRAIN, &tattr);
 		tgetent(NULL, env_term);
 	}
-	return;
 }
 
 void 	default_terminal_mode(t_sh *shell)
