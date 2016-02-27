@@ -21,11 +21,11 @@ function packages
         return 0
     fi
     echo "Updating package source..."
-    sudo apt-get update -qq || sudo brew update > /dev/null
+    apt-get update -qq || brew update > /dev/null
     for package in valgrind libncurses5-dev
     do
         echo "Installing package named ${package}"
-        sudo apt-get install ${package} -qqy > /dev/null || sudo brew install ${package} > /dev/null
+        apt-get install ${package} -qqy > /dev/null || brew install ${package} > /dev/null
         which ${package}
     done
 }
@@ -37,8 +37,6 @@ function setup_submodules
     do
         git submodule init ${module}
         git submodule update --remote ${module} || git submodule update ${module}
-        #./${module}/setup.sh
-        #./${module}/run_test.sh
     done
 }
 
@@ -48,8 +46,8 @@ function main
     # Requirements
     go_to_dirname
     path=$(pwd)
-    packages
     setup_submodules
+    packages
     return $?
 }
 
