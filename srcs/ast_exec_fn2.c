@@ -10,15 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <unistd.h>
 
-#include <sys/wait.h>
-#include <sys/stat.h>
-
-#include <fcntl.h>
-
-#include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
 void change_fd(t_ast *ast)

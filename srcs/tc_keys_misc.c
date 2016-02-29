@@ -25,20 +25,3 @@ void 	insert_link_before(t_term *term)
 		term->prev = link;
 	}
 }
-
-int get_total_len(t_term *term)
-{
-	int len;
-
-	len = 0;
-	while (term->next)
-	{
-		term = term->next;
-	}
-	while (term->prev)
-	{
-		term = term->prev;
-		len++;
-	}
-	return (len);
-}

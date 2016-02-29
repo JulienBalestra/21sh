@@ -15,34 +15,34 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-char	*compile(char *left, char *buf)
+int 	is_print_buf(char *buf)
 {
-	char	*tmp;
-
-	tmp = buf;
-	buf = ft_strjoin(left, buf);
-	free(tmp);
-	ft_strdel(&left);
-	return (buf);
-}
-
-void	again(char *buf)
-{
-	ft_strclr(buf);
-}
-
-char	*move_and_clean(char *buf)
-{
-	char	*left;
 	int i;
 
 	i = 0;
-	left = ft_strdup(buf);
-	while (i < READ - 1)
+	while (i < READ)
 	{
-		buf[i] = '\0';
+		if (! ft_isprint(buf[i]) && buf[i] != '\n')
+		{
+			ft_putstr_fd("ERROR not readable characters inside the buffer\n", 2);
+			return (0);
+		}
 		i++;
 	}
-	return (left);
+	return (1);
 }
 
+int 	process_signal(t_sh *shell, int catch_signal, t_term *end)
+{
+	if (catch_signal)
+	{
+		while (shell->console->total_lines > 1)
+		{
+			ft_putstr_fd("lines--", DEBUG_FD);
+			ft_putchar_fd('\n', 1);
+			shell->console->total_lines--;
+		}
+		nobody_from_tail(end);
+	}
+	return (0);
+}

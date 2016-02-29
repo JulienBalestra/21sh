@@ -10,27 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
 #include <unistd.h>
 
-#include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
-
-size_t		len_prompt(t_sh *shell)
-{
-	char	*pwd;
-	size_t	len;
-
-	if (USE_CWD && (pwd = create_cwd(shell)))
-	{
-		len = ft_strlen(pwd);
-		ft_strdel(&pwd);
-		return (len + 2);
-	}
-	else
-		return (shell->len_ps1);
-}
+#include "../includes/minishell.h"
 
 void		display_prompt(t_sh *shell, int ps2)
 {

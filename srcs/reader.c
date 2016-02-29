@@ -17,6 +17,21 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
+static	int g_catch_signal;
+static	char *g_prompt;
+
+void	signal_callback_handler(int sig_num)
+{
+	g_catch_signal = sig_num;
+	if (isatty(0))
+	{
+		ft_putstr("^C\n");
+		erase_line(get_columns());
+		if (g_prompt)
+			ft_putstr(g_prompt);
+	}
+}
+
 char 	*get_line_from_user(t_sh *shell, int ps2)
 {
 	char 	*buf;
@@ -24,42 +39,23 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	t_term *end;
 
 	buf = NULL;
-	key = 0;
 	if ((end = create_term_link()))
 	{
 		init_current_console(shell, end, ps2);
-		signal(SIGINT, signal_callback_handler); // TODO chars typed are not erased
-		while (read(0, &key, sizeof(long)))
+		signal(SIGINT, signal_callback_handler);
+		while (((key = 0)) || read(0, &key, sizeof(long)))
 		{
+			g_catch_signal = process_signal(shell, g_catch_signal, end);
 			if (tc_continue_process_key(shell, end, key) == 0)
 				break;
-			key = 0;
 		}
 		buf = tterm_to_str(end);
-		end_of_reading(shell, ps2);
-		ft_putstr_fd(buf, 1);
+		end_of_reading(shell, ps2, buf);
 		if (! buf || buf[0] == '\0' || is_only_spaces(buf))
-			return (recurse_get_line_from_user(shell, ps2, buf, end));
+			return (recurse_get_line(shell, ps2, buf, end));
 		add_to_history(shell, end);
 	}
 	return (buf);
-}
-
-int 	is_print_buf(char *buf)
-{
-	int i;
-
-	i = 0;
-	while (i < READ)
-	{
-		if (! ft_isprint(buf[i]) && buf[i] != '\n')
-		{
-			ft_putstr_fd("ERROR not readable characters inside the buffer\n", 2);
-			return (0);
-		}
-		i++;
-	}
-	return (1);
 }
 
 char	*get_line_from_pipe(t_sh *shell)
@@ -86,10 +82,7 @@ char	*get_line_from_pipe(t_sh *shell)
 		else
 			break;
 	}
-	ft_strdel(&left);
-	if (limit >= MAX_READ)
-		ft_putstr_fd("ERROR max number of characters inside the buffer\n", 2);
-	return (end_of_file_recvd(shell, buf, left));
+	return (end_of_file_recvd(shell, buf, left, limit));
 }
 
 char	*get_line(t_sh *shell, int ps2)
@@ -97,7 +90,11 @@ char	*get_line(t_sh *shell, int ps2)
 	if (isatty(0) &&
 			get_env_value("TERM", shell->env) &&
 			ft_strstr(get_env_value("TERM", shell->env), "xterm"))
+	{
+		g_catch_signal = 0;
+		g_prompt = shell->ps1;
 		return get_line_from_user(shell, ps2);
+	}
 	else
 		return get_line_from_pipe(shell);
 }

@@ -233,8 +233,6 @@ int syn_left(char *str);
 char *get_eof(char *s);
 char *build_eof_entry(char *eof, t_sh *shell);
 int skip_eof(char *s);
-
-t_ast		*ast_printf_with_eof(char *input);
 char **build_eof_tab(char *entry);
 char		**cut_input(char *input, int *tuple);
 void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *shell);
@@ -248,12 +246,10 @@ void change_fd(t_ast *ast);
 void raw_terminal_mode(t_sh *shell);
 void 	default_terminal_mode(t_sh *shell);
 
-size_t		len_prompt(t_sh *shell);
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key);
 t_term *create_term_link(void);
 void safe_free_term(t_term *term);
 void 	display_term_line(t_sh *shell, t_term *term);
-int get_total_len(t_term *term);
 t_term *get_current_cursor(t_term *term);
 size_t			get_columns(void);
 
@@ -369,13 +365,18 @@ char 	*get_line_from_user(t_sh *shell, int ps2);
  * reader_fn2.c
  */
 void	init_current_console(t_sh *shell, t_term *end, int ps2);
-void 	end_of_reading(t_sh *shell, int ps2);
-char	*recurse_get_line_from_user(t_sh *shell, int ps2, char *buf, t_term *end);
-char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left);
+void 	end_of_reading(t_sh *shell, int ps2, char *buf);
+char	*recurse_get_line(t_sh *shell, int ps2, char *buf, t_term *end);
+char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left, int limit);
 
 
 void process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell);
 void	process_atoi(t_ast *ast, char *str, size_t k);
 
 void 	erase_line(size_t len);
+
+void 	nobody_from_tail(t_term *term);
+int 	is_print_buf(char *buf);
+int 	process_signal(t_sh *shell, int catch_signal, t_term *end);
+
 #endif
