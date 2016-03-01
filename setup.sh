@@ -15,11 +15,11 @@ function go_to_dirname
 function packages
 {
     echo "Updating package source..."
-    apt-get update -qq || brew update > /dev/null
-    for package in build-essential python git valgrind libncurses5-dev
+    apt-get update -qq || brew update
+    for package in python git valgrind libncurses5-dev
     do
         echo "Manage package named ${package}"
-        which ${package} || apt-get install ${package} || brew install ${package}
+        apt-get install ${package} || brew install ${package}
     done
 }
 
