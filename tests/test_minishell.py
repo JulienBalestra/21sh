@@ -440,14 +440,22 @@ class TestMinishell(unittest.TestCase):
 		command = ["cd", "~/..", ";", "pwd ;"]
 		self.compare_shells(command)
 		if self.linux:
-			self.assertEqual(('/home\n', ''), self.execute_my_shell(command))
+			linux = self.execute_my_shell(command)
+			try:
+				self.assertEqual(('/home\n', ''), linux)
+			except AssertionError:
+				self.assertEqual(('/\n', ''), linux)
 		self.compare_shells(command)
 		self.valgrind(command)
 
 	def test_102_cd_home(self):
 		command = ["cd", "~/../", ";", "pwd ;"]
 		if self.linux:
-			self.assertEqual(('/home\n', ''), self.execute_my_shell(command))
+			linux = self.execute_my_shell(command)
+			try:
+				self.assertEqual(('/home\n', ''), linux)
+			except AssertionError:
+				self.assertEqual(('/\n', ''), linux)
 		self.compare_shells(command)
 		self.valgrind(command)
 
@@ -455,7 +463,11 @@ class TestMinishell(unittest.TestCase):
 		command = ["cd", "~/..////", ";", "pwd ;"]
 		self.compare_shells(command)
 		if self.linux:
-			self.assertEqual(('/home\n', ''), self.execute_my_shell(command))
+			linux = self.execute_my_shell(command)
+			try:
+				self.assertEqual(('/home\n', ''), linux)
+			except AssertionError:
+				self.assertEqual(('/\n', ''), linux)
 		self.compare_shells(command)
 		self.valgrind(command)
 
@@ -463,7 +475,11 @@ class TestMinishell(unittest.TestCase):
 		command = ["cd", "~/..////", ";", "pwd ;"]
 		self.compare_shells(command)
 		if self.linux:
-			self.assertEqual(('/home\n', ''), self.execute_my_shell(command))
+			linux = self.execute_my_shell(command)
+			try:
+				self.assertEqual(('/home\n', ''), linux)
+			except AssertionError:
+				self.assertEqual(('/\n', ''), linux)
 		self.compare_shells(command)
 		self.valgrind(command)
 

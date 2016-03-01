@@ -65,24 +65,12 @@ function makefile_rules
         echo "fail rule: make clean"
         exit 1
     fi
-    if [ -f ${TEST} ]
-    then
-        echo "fail rule: make test already here"
-        exit 1
-    fi
-    make test
-    if [ ! -f ${TEST} ]
-    then
-        echo "fail rule: make test not here"
-        exit 1
-    fi
 }
 
 function main
 {
     go_to_dirname
     makefile_rules
-
 }
 
 main

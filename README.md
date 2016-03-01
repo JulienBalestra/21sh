@@ -2,7 +2,7 @@
 
 
 [![Build Status](https://travis-ci.org/JulienBalestra/21sh.svg?branch=master)](https://travis-ci.org/JulienBalestra/21sh)
-
+[![Circle CI](https://circleci.com/gh/JulienBalestra/21sh.svg?style=svg)](https://circleci.com/gh/JulienBalestra/21sh)
 
 Recode of a /bin/bash like
 
@@ -26,4 +26,4 @@ Recode of a /bin/bash like
 
 The following command will install valgrind for leaks and errors utilities (and gdb).
 
-	./setup.sh && ./run_test.sh # include make rules testingœ
+	./setup.sh && ./run_test.sh # include make rules testing
