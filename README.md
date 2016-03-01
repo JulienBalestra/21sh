@@ -21,6 +21,20 @@ Recode of a /bin/bash like
 * >
 * >>
 * <
+* <<
+
+Termcaps with:
+
+* left
+* right
+* home
+* end
+* line up
+* line down
+* history up
+* history down
+* cut line
+* paste line
 
 # How to test
 
