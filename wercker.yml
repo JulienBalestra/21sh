@@ -2,7 +2,4 @@ build:
   box:
     id: julienbalestra/42cbox
     tag: latest
-  steps:
-    - script:
-      name: Testing
-      code: https://github.com/JulienBalestra/21sh.git
+    cmd: https://github.com/JulienBalestra/21sh.git
