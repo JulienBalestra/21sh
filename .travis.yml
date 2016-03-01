@@ -6,17 +6,12 @@ language: C
 
 sudo: required
 
-services:
-  - docker
-
 before_install:
   - sudo brew update || sudo apt-get update
   - sudo brew install valgrind || sudo apt-get install -y valgrind
 
 install:
   - ./setup.sh
-  - docker pull julienbalestra/42cbox
 
 script:
   - ./run_test.sh
-  - docker run --rm julienbalestra/42cbox $(git remote -v | grep push | awk '{print $2}')

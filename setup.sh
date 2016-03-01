@@ -14,18 +14,12 @@ function go_to_dirname
 
 function packages
 {
-    valgrind --version
-    if [ $? -eq 0 ]
-    then
-        echo "valgrind already setup"
-        return 0
-    fi
     echo "Updating package source..."
     apt-get update -qq || brew update > /dev/null
-    for package in valgrind libncurses5-dev
+    for package in build-essential python git valgrind libncurses5-dev
     do
         echo "Installing package named ${package}"
-        apt-get install ${package} -qqy > /dev/null || brew install ${package} > /dev/null
+        apt-get install ${package} || brew install ${package}
         which ${package}
     done
 }
