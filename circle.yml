@@ -8,5 +8,5 @@ dependencies:
     - docker pull julienbalestra/42cbox
 
 test:
-  post:
+  override:
     - docker run julienbalestra/42cbox https://github.com/JulienBalestra/21sh.git

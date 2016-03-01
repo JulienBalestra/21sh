@@ -18,9 +18,8 @@ function packages
     apt-get update -qq || brew update > /dev/null
     for package in build-essential python git valgrind libncurses5-dev
     do
-        echo "Installing package named ${package}"
-        apt-get install ${package} || brew install ${package}
-        which ${package}
+        echo "Manage package named ${package}"
+        which ${package} || apt-get install ${package} || brew install ${package}
     done
 }
 
@@ -37,13 +36,10 @@ function setup_submodules
 function main
 {
     uname -a
-    # Requirements
     go_to_dirname
     path=$(pwd)
-    setup_submodules
     packages
-    return $?
+    setup_submodules
 }
 
 main
-exit $?
