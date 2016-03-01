@@ -1,0 +1,12 @@
+# circle.yml
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker pull julienbalestra/42cbox
+
+test:
+  post:
+    - docker run julienbalestra/42cbox https://github.com/JulienBalestra/21sh.git
