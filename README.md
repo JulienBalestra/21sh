@@ -27,3 +27,8 @@ Recode of a /bin/bash like
 The following command will install valgrind for leaks and errors utilities (and gdb).
 
 	./setup.sh && ./run_test.sh # include make rules testing
+	
+Or if you prefer the dedicated Docker box:
+
+    docker pull julienbalestra/42cbox
+    docker run --rm julienbalestra/42cbox https://github.com/JulienBalestra/21sh/git
