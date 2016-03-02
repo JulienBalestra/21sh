@@ -87,9 +87,10 @@ char	*get_line_from_pipe(t_sh *shell)
 
 char	*get_line(t_sh *shell, int ps2)
 {
+	char term_buffer[TERM_SIZE];
+
 	if (isatty(0) &&
-			get_env_value("TERM", shell->env) &&
-			ft_strstr(get_env_value("TERM", shell->env), "xterm"))
+		tgetent(term_buffer, get_env_value("TERM", shell->env)))
 	{
 		g_catch_signal = 0;
 		g_prompt = shell->ps1;

@@ -20,6 +20,7 @@
 # define LEN_PS2 3
 # define END_PROMPT "> "
 # define USE_CWD	1
+# define TERM_SIZE    2048
 
 # define KEY_BACK        	127
 # define KEY_DEL       		2117294875
