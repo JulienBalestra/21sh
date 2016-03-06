@@ -15,10 +15,10 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void	init_current_console(t_sh *shell, t_term *end, int ps2)
+void	init_current_console(t_sh *shell, t_term *end)
 {
 	erase_all_lines(shell);
-	display_prompt(shell, ps2);
+	display_prompt(shell);
 	raw_terminal_mode(shell);
 	end->cursor = 1;
 	end->c = '\n';
@@ -26,19 +26,19 @@ void	init_current_console(t_sh *shell, t_term *end, int ps2)
 	CONSOLE->total_lines = 1;
 }
 
-void 	end_of_reading(t_sh *shell, int ps2, char *buf)
+void 	end_of_reading(t_sh *shell, char *buf)
 {
 	erase_all_lines(shell);
 	default_terminal_mode(shell);
-	display_prompt(shell, ps2);
+	display_prompt(shell);
 	ft_putstr_fd(buf, 1);
 }
 
-char	*recurse_get_line(t_sh *shell, int ps2, char *buf, t_term *end)
+char	*recurse_get_line(t_sh *shell, char *buf, t_term *end)
 {
 	ft_strdel(&buf);
 	safe_free_term(end);
-	return (get_line(shell, ps2));
+	return (get_line(shell));
 }
 
 char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left, int limit)

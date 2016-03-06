@@ -65,7 +65,7 @@ char *build_eof_entry(char *eof, t_sh *shell)
 		}
 		else
 			entry = line;
-		line = get_line(shell, 0);
+		line = get_line(shell);
 		if (line)
 			line = join_free_start(line, "\n");
 		if (is_warning_eof(line, entry, eof))

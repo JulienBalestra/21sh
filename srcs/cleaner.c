@@ -86,5 +86,6 @@ void	clean_program(t_sh *shell)
 	safe_free_term(shell->yank);
 	safe_free_term(shell->undo);
 	safe_free_term(shell->current);
+	free(shell->opened);
 	free(shell);
 }

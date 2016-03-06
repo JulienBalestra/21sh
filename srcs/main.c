@@ -50,7 +50,8 @@ int		start_engine(t_sh *shell)
 {
 	while (42)
 	{
-		shell->stdin_buf = get_line(shell, 0);
+		// TODO shell->is_ps2 = 0;
+		shell->stdin_buf = get_line(shell);
 		if (process_cli(shell) == 1)
 			return (1);
 		if (shell->close_program == 1)

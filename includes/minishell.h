@@ -76,6 +76,11 @@ typedef struct		s_con
 	size_t 			char_position;
 }					t_con;
 
+typedef struct		s_opened
+{
+	int 			double_quotes;
+}					t_opened;
+
 typedef struct		s_hist
 {
 	struct s_hist			*up;
@@ -100,6 +105,7 @@ typedef struct		s_sh
 	t_term			*yank;
 	t_term			*undo;
 	t_term			*current;
+	t_opened		*opened;
 }					t_sh;
 
 typedef struct		s_be
@@ -127,7 +133,7 @@ typedef struct      s_ast
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
 int					is_only_spaces(char *buf);
-void		display_prompt(t_sh *shell, int ps2);
+void		display_prompt(t_sh *shell);
 void				display_command_not_found(char *command);
 int					make_exploitable(char **command, char **last_environ);
 int					len_to_char(char *str, char c);
@@ -187,7 +193,7 @@ char				*replace_dollar_question(char *dollar_question,
 												t_sh *shell);
 int					is_real_line(char *buf);
 t_ast				**build_command(t_sh *shell);
-char				*get_line(t_sh *shell, int ps2);
+char				*get_line(t_sh *shell);
 int					existing_line(t_sh *shell);
 void				go_to_old_pwd(t_sh *shell, int p);
 void				go_to_home_directory(t_sh *shell);
@@ -360,14 +366,14 @@ t_term *create_term_link(void);
 char *tterm_to_str(t_term *term);
 void safe_free_term(t_term *term);
 
-char 	*get_line_from_user(t_sh *shell, int ps2);
+char 	*get_line_from_user(t_sh *shell);
 
 /*
  * reader_fn2.c
  */
-void	init_current_console(t_sh *shell, t_term *end, int ps2);
-void 	end_of_reading(t_sh *shell, int ps2, char *buf);
-char	*recurse_get_line(t_sh *shell, int ps2, char *buf, t_term *end);
+void	init_current_console(t_sh *shell, t_term *end);
+void 	end_of_reading(t_sh *shell, char *buf);
+char	*recurse_get_line(t_sh *shell, char *buf, t_term *end);
 char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left, int limit);
 
 
@@ -379,5 +385,8 @@ void 	erase_line(size_t len);
 void 	nobody_from_tail(t_term *term);
 int 	is_print_buf(char *buf);
 int 	process_signal(t_sh *shell, int catch_signal, t_term *end);
+
+t_opened *create_opened(void);
+void mock_ps1_by_ps2(t_sh *shell);
 
 #endif

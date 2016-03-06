@@ -32,7 +32,7 @@ void	signal_callback_handler(int sig_num)
 	}
 }
 
-char 	*get_line_from_user(t_sh *shell, int ps2)
+char 	*get_line_from_user(t_sh *shell)
 {
 	char 	*buf;
 	long	key;
@@ -41,7 +41,7 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 	buf = NULL;
 	if ((end = create_term_link()))
 	{
-		init_current_console(shell, end, ps2);
+		init_current_console(shell, end);
 		signal(SIGINT, signal_callback_handler);
 		while (((key = 0)) || read(0, &key, sizeof(long)))
 		{
@@ -50,9 +50,15 @@ char 	*get_line_from_user(t_sh *shell, int ps2)
 				break;
 		}
 		buf = tterm_to_str(end);
-		end_of_reading(shell, ps2, buf);
+		end_of_reading(shell, buf);
+		if (shell->opened->double_quotes)
+		{
+			mock_ps1_by_ps2(shell);
+			buf = ft_strjoin(buf, get_line(shell));
+			update_ps1(shell);
+		}
 		if (! buf || buf[0] == '\0' || is_only_spaces(buf))
-			return (recurse_get_line(shell, ps2, buf, end));
+			return (recurse_get_line(shell, buf, end));
 		add_to_history(shell, end);
 	}
 	return (buf);
@@ -85,7 +91,7 @@ char	*get_line_from_pipe(t_sh *shell)
 	return (end_of_file_recvd(shell, buf, left, limit));
 }
 
-char	*get_line(t_sh *shell, int ps2)
+char	*get_line(t_sh *shell)
 {
 	char term_buffer[TERM_SIZE];
 
@@ -94,7 +100,8 @@ char	*get_line(t_sh *shell, int ps2)
 	{
 		g_catch_signal = 0;
 		g_prompt = shell->ps1;
-		return get_line_from_user(shell, ps2);
+		//TODO manage if ps2
+		return get_line_from_user(shell);
 	}
 	else if (isatty(0) && get_env_value("SIDE_EFFECT", shell->env) &&
 			 ft_strcmp("TRUE", get_env_value("SIDE_EFFECT", shell->env)) == 0)

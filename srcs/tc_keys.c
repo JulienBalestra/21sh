@@ -153,7 +153,7 @@ void 	cursor_position(t_sh *shell, t_term *term)
 void 	display_term_line(t_sh *shell, t_term *term)
 {
 	erase_all_lines(shell);
-	display_prompt(shell, 0);
+	display_prompt(shell);
 	while (term->prev)
 		term = term->prev;
 	CONSOLE->char_position = shell->len_ps1;
@@ -197,6 +197,8 @@ int 	end_of_transmission(t_sh *shell, t_term *term)
 
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 {
+	if (key == '"' || (char)key == '"')
+		shell->opened->double_quotes ? ((shell->opened->double_quotes = 0)) : ((shell->opened->double_quotes = 1));
 	if (key == '\n' || (char)key == '\n')
 	{
 		get_top_and_left(shell);
@@ -207,9 +209,7 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 		return (0);
 	}
 	else if (key == KEY_CTRL_D)
-	{
 		return (end_of_transmission(shell, term));
-	}
 	else if (tc_action_keys(shell, term, key) == 0 && ft_isprint((char)key))
 	{
 		while (term->cursor == 0)
@@ -218,6 +218,5 @@ int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 		term->prev->c = key;
 	}
 	display_term_line(shell, term);
-	//term_dup(shell, term); TODO undo
 	return (1);
 }

@@ -96,6 +96,7 @@ t_sh		*create_shell_from(char **environ_tab)
 		shell->yank = NULL;
 		shell->undo = NULL;
 		shell->current = NULL;
+		shell->opened = create_opened();
 		return (shell);
 	}
 	return (NULL);

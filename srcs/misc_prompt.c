@@ -15,9 +15,9 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-void		display_prompt(t_sh *shell, int ps2)
+void		display_prompt(t_sh *shell)
 {
-	if (ps2 == 0)
+	if (shell->ps1)
 		ft_putstr(shell->ps1);
 	else
 		write(1, DEFAULT_PS2, LEN_PS2);
