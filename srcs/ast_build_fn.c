@@ -37,7 +37,7 @@ int is_warning_eof(char *line, char *entry, char *eof)
 {
 	if (! line)
 	{
-		ft_putstr_fd("warning: here-document at line 7 delimited by end-of-file ", 2);
+		ft_putstr_fd("warning: here-document delimited by end-of-file ", 2);
 		ft_putstr_fd("(wanted `", 2);
 		eof[ft_strlen(eof) - 1] = '\0';
 		ft_putstr_fd(eof, 2);
@@ -66,7 +66,8 @@ char *build_eof_entry(char *eof, t_sh *shell)
 		else
 			entry = line;
 		line = get_line(shell, 0);
-		line = join_free_start(line, "\n");
+		if (line)
+			line = join_free_start(line, "\n");
 		if (is_warning_eof(line, entry, eof))
 			break;
 	}
