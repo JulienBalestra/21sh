@@ -102,7 +102,7 @@ void trigger_command(t_ast *ast, char *input, int eof)
 	else
 	{
 		tmp = ft_remove_useless(input, ' ');
-		ast->cmd = ft_lz_strsplit(tmp, ' ');
+		ast->cmd = ft_esc_strsplit(tmp, ' ', '"');
 		manage_redirection(ast);
 		free(tmp);
 	}

@@ -96,6 +96,16 @@ char	*get_line(t_sh *shell, int ps2)
 		g_prompt = shell->ps1;
 		return get_line_from_user(shell, ps2);
 	}
-	else
-		return get_line_from_pipe(shell);
+	else if (isatty(0) && get_env_value("SIDE_EFFECT", shell->env) &&
+			 ft_strcmp("TRUE", get_env_value("SIDE_EFFECT", shell->env)) == 0)
+		ft_putstr_fd("WARNING TERM is in SIDE_EFFECT mode, use at your own risk\n", 2);
+	else if (isatty(0))
+	{
+		ft_putstr_fd("ERROR: TERM=", 2);
+		ft_putstr_fd(get_env_value("TERM", shell->env), 2);
+		ft_putstr_fd(" not valid and no SIDE_EFFECT=TRUE\n", 2);
+		shell->close_program = 1;
+		return (NULL);
+	}
+	return get_line_from_pipe(shell);
 }
