@@ -46,3 +46,23 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end)
 	}
 	return (0);
 }
+
+char *term_side_effect(t_sh *shell)
+{
+	char *side;
+
+	side = get_env_value("SIDE_EFFECT", shell->env);
+	if (side &&	ft_strcmp("TRUE", side) == 0)
+	{
+		ft_putstr_fd("WARNING: SIDE_EFFECT=TRUE use at your own risk\n", 2);
+		return (get_line_from_pipe(shell));
+	}
+	else
+	{
+		ft_putstr_fd("ERROR: TERM=", 2);
+		ft_putstr_fd(get_env_value("TERM", shell->env), 2);
+		ft_putstr_fd(" not valid and no SIDE_EFFECT=TRUE\n", 2);
+		shell->close_program = 1;
+		return (NULL);
+	}
+}

@@ -14,8 +14,7 @@ void exec_del_right(t_sh *shell, t_term *term)
 		if (term->prev)
 			term->prev->next = next_link;
 		next_link->prev = term->prev;
-		if (term->c == '"')
-			shell->opened->double_quotes ? ((shell->opened->double_quotes = 0)) : ((shell->opened->double_quotes = 1));
+		process_opened(shell->opened, (char)term->c);
 		free(term);
 		next_link->cursor = 1;
 		ft_putstr(tgetstr("dc", NULL));
@@ -34,8 +33,7 @@ void exec_del_and_move_left(t_sh *shell, t_term *term)
 		if (prev_link->prev)
 			prev_link->prev->next = term;
 		term->prev = prev_link->prev;
-		if (prev_link->c == '"')
-			shell->opened->double_quotes ? ((shell->opened->double_quotes = 0)) : ((shell->opened->double_quotes = 1));
+		process_opened(shell->opened, (char)term->c);
 		free(prev_link);
 		ft_putstr(tgetstr("le", NULL));
 		ft_putstr(tgetstr("dc", NULL));

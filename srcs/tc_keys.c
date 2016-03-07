@@ -177,19 +177,24 @@ void 	get_top_and_left(t_sh *shell)
 
 int 	end_of_transmission(t_sh *shell, t_term *term)
 {
-	char *exit;
+	char *ex;
 	char *ptr;
 
 	while (term->next)
 		term = term->next;
 	if (term->prev)
 		return (1);
-	exit = ft_strdup("exit");
-	ptr = exit;
-	while (*exit)
+	if (is_something_opened(shell->opened))
 	{
-		tc_continue_process_key(shell, term, (long)*exit);
-		exit++;
+		force_close_opened(shell->opened);
+		shell->close_program = 1;
+	}
+	ex = ft_strdup("exit");
+	ptr = ex;
+	while (*ex)
+	{
+		tc_continue_process_key(shell, term, (long)*ex);
+		ex++;
 	}
 	ft_strdel(&ptr);
 	return (0);
@@ -197,8 +202,7 @@ int 	end_of_transmission(t_sh *shell, t_term *term)
 
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 {
-	if (key == '"' || (char)key == '"')
-		shell->opened->double_quotes ? ((shell->opened->double_quotes = 0)) : ((shell->opened->double_quotes = 1));
+	process_opened(shell->opened, (char)key);
 	if (key == '\n' || (char)key == '\n')
 	{
 		get_top_and_left(shell);

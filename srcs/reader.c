@@ -32,6 +32,24 @@ void	signal_callback_handler(int sig_num)
 	}
 }
 
+char	*join_pses(t_sh *shell, char *buf)
+{
+	char *tmp;
+	char *buf_ps2;
+
+	if (is_something_opened(shell->opened))
+	{
+		mock_ps1_by_ps2(shell);
+		tmp = buf;
+		buf_ps2 = get_line(shell);
+		buf = ft_strjoin(buf, buf_ps2);
+		free(tmp);
+		free(buf_ps2);
+		update_ps1(shell);
+	}
+	return (buf);
+}
+
 char 	*get_line_from_user(t_sh *shell)
 {
 	char 	*buf;
@@ -51,15 +69,15 @@ char 	*get_line_from_user(t_sh *shell)
 		}
 		buf = tterm_to_str(end);
 		end_of_reading(shell, buf);
-		if (shell->opened->double_quotes)
-		{
-			mock_ps1_by_ps2(shell);
-			buf = ft_strjoin(buf, get_line(shell));
-			update_ps1(shell);
-		}
+		buf = join_pses(shell, buf);
 		if (! buf || buf[0] == '\0' || is_only_spaces(buf))
 			return (recurse_get_line(shell, buf, end));
 		add_to_history(shell, end);
+	}
+	if (shell->close_program)
+	{
+		ft_strdel(&buf);
+		buf = ft_strdup("exit");
 	}
 	return (buf);
 }
@@ -94,25 +112,17 @@ char	*get_line_from_pipe(t_sh *shell)
 char	*get_line(t_sh *shell)
 {
 	char term_buffer[TERM_SIZE];
+	int is_tgetent;
 
-	if (isatty(0) &&
-		tgetent(term_buffer, get_env_value("TERM", shell->env)))
+	is_tgetent = tgetent(term_buffer, get_env_value("TERM", shell->env));
+	if (isatty(0) && is_tgetent)
 	{
 		g_catch_signal = 0;
 		g_prompt = shell->ps1;
-		//TODO manage if ps2
-		return get_line_from_user(shell);
+		return (get_line_from_user(shell));
 	}
-	else if (isatty(0) && get_env_value("SIDE_EFFECT", shell->env) &&
-			 ft_strcmp("TRUE", get_env_value("SIDE_EFFECT", shell->env)) == 0)
-		ft_putstr_fd("WARNING TERM is in SIDE_EFFECT mode, use at your own risk\n", 2);
 	else if (isatty(0))
-	{
-		ft_putstr_fd("ERROR: TERM=", 2);
-		ft_putstr_fd(get_env_value("TERM", shell->env), 2);
-		ft_putstr_fd(" not valid and no SIDE_EFFECT=TRUE\n", 2);
-		shell->close_program = 1;
-		return (NULL);
-	}
-	return get_line_from_pipe(shell);
+		return (term_side_effect(shell));
+	else
+		return (get_line_from_pipe(shell));
 }

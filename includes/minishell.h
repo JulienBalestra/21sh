@@ -78,7 +78,12 @@ typedef struct		s_con
 
 typedef struct		s_opened
 {
-	int 			double_quotes;
+	int				double_quotes;
+	int				simple_quote;
+	int				parenthesis;
+	int				braces;
+	int				bracket;
+	int				back_quote;
 }					t_opened;
 
 typedef struct		s_hist
@@ -388,5 +393,10 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end);
 
 t_opened *create_opened(void);
 void mock_ps1_by_ps2(t_sh *shell);
+char	*get_line_from_pipe(t_sh *shell);
+char *term_side_effect(t_sh *shell);
+int 	is_something_opened(t_opened *open);
+void 	process_opened(t_opened *opn, char c);
+void 	force_close_opened(t_opened *opened);
 
 #endif

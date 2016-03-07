@@ -97,7 +97,8 @@ reader_fn1.c \
 reader_fn2.c \
 reader_fn3.c \
 update_last_environ.c \
-opened.c
+opened.c \
+tc_opened.c
 
 
 MAIN = srcs/main.c

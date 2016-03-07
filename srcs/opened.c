@@ -21,6 +21,11 @@ t_opened *create_opened(void)
 	if ((opened = (t_opened *)malloc(sizeof(t_opened))))
 	{
 		opened->double_quotes = 0;
+		opened->simple_quote = 0;
+		opened->back_quote = 0;
+		opened->parenthesis = 0;
+		opened->braces = 0;
+		opened->bracket = 0;
 	}
 	return (opened);
 }
