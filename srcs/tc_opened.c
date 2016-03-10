@@ -4,39 +4,33 @@
 int 	is_something_opened(t_opened *open)
 {
 	if (open->double_quotes)
-	{
 		return (1);
-	}
 	else if (open->simple_quote)
-	{
 		return (1);
-	}
-	else if (open->parenthesis)
-	{
-		return (1);
-	}
-	else if (open->braces)
-	{
-		return (1);
-	}
-	else if (open->bracket)
-	{
-		return (1);
-	}
 	else if (open->back_quote)
-	{
 		return (1);
-	}
+	else if (open->parenthesis > 0)
+		return (1);
+	else if (open->braces > 0)
+		return (1);
+	else if (open->bracket > 0)
+		return (1);
 	return (0);
+}
+
+int 	revert_bool(int val)
+{
+	return (val ? 0 : 1);
 }
 
 void 	process_opened(t_opened *opn, char c)
 {
-	ft_putchar('.');
 	if (c == '"')
-		opn->double_quotes ? ((opn->double_quotes = 0)) : ((opn->double_quotes = 1));
+		opn->double_quotes = revert_bool(opn->double_quotes);
 	else if (c == '\'')
-		opn->simple_quote ? ((opn->simple_quote = 0)) : ((opn->simple_quote = 1));
+		opn->simple_quote = revert_bool(opn->simple_quote);
+	else if (c == '`')
+		opn->back_quote = revert_bool(opn->back_quote);
 	else if (c == '(')
 		opn->parenthesis++;
 	else if (c == ')')
@@ -49,8 +43,6 @@ void 	process_opened(t_opened *opn, char c)
 		opn->bracket++;
 	else if (c == ']')
 		opn->bracket--;
-	else if (c == '`')
-		opn->back_quote ? ((opn->back_quote = 0)) : ((opn->back_quote = 1));
 }
 
 void 	force_close_opened(t_opened *opened)

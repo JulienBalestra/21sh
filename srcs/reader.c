@@ -36,7 +36,14 @@ char	*join_pses(t_sh *shell, char *buf)
 {
 	char *tmp;
 	char *buf_ps2;
+	int i;
 
+	i = 0;
+	while (buf && buf[i])
+	{
+		process_opened(shell->opened, buf[i]);
+		i++;
+	}
 	if (is_something_opened(shell->opened))
 	{
 		mock_ps1_by_ps2(shell);
@@ -74,12 +81,7 @@ char 	*get_line_from_user(t_sh *shell)
 			return (recurse_get_line(shell, buf, end));
 		add_to_history(shell, end);
 	}
-	if (shell->close_program)
-	{
-		ft_strdel(&buf);
-		buf = ft_strdup("exit");
-	}
-	return (buf);
+	return (process_if_exist(shell, buf));
 }
 
 char	*get_line_from_pipe(t_sh *shell)
@@ -111,8 +113,8 @@ char	*get_line_from_pipe(t_sh *shell)
 
 char	*get_line(t_sh *shell)
 {
-	char term_buffer[TERM_SIZE];
-	int is_tgetent;
+	char	term_buffer[TERM_SIZE];
+	int		is_tgetent;
 
 	is_tgetent = tgetent(term_buffer, get_env_value("TERM", shell->env));
 	if (isatty(0) && is_tgetent)
@@ -122,7 +124,7 @@ char	*get_line(t_sh *shell)
 		return (get_line_from_user(shell));
 	}
 	else if (isatty(0))
-		return (term_side_effect(shell));
+		return (get_line_side_effect(shell));
 	else
 		return (get_line_from_pipe(shell));
 }

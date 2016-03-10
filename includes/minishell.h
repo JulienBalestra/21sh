@@ -394,9 +394,10 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end);
 t_opened *create_opened(void);
 void mock_ps1_by_ps2(t_sh *shell);
 char	*get_line_from_pipe(t_sh *shell);
-char *term_side_effect(t_sh *shell);
+char *get_line_side_effect(t_sh *shell);
 int 	is_something_opened(t_opened *open);
 void 	process_opened(t_opened *opn, char c);
 void 	force_close_opened(t_opened *opened);
+char	*process_if_exist(t_sh *shell, char *buf);
 
 #endif
