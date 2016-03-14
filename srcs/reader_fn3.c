@@ -47,14 +47,14 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end)
 	return (0);
 }
 
-char *term_side_effect(t_sh *shell)
+char *get_line_side_effect(t_sh *shell)
 {
 	char *side;
 
 	side = get_env_value("SIDE_EFFECT", shell->env);
 	if (side &&	ft_strcmp("TRUE", side) == 0)
 	{
-		ft_putstr_fd("WARNING: SIDE_EFFECT=TRUE use at your own risk\n", 2);
+		ft_putstr_fd("WARNING: SIDE_EFFECT=TRUE use at your own risk (SEGV)\n", 2);
 		return (get_line_from_pipe(shell));
 	}
 	else
@@ -65,4 +65,15 @@ char *term_side_effect(t_sh *shell)
 		shell->close_program = 1;
 		return (NULL);
 	}
+}
+
+char	*process_if_exist(t_sh *shell, char *buf)
+{
+	if (shell->close_program || buf == NULL)
+	{
+		if (buf)
+			ft_strdel(&buf);
+		buf = ft_strdup("exit");
+	}
+	return (buf);
 }

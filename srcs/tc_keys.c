@@ -202,7 +202,6 @@ int 	end_of_transmission(t_sh *shell, t_term *term)
 
 int 	tc_continue_process_key(t_sh *shell, t_term *term, long key)
 {
-	process_opened(shell->opened, (char)key);
 	if (key == '\n' || (char)key == '\n')
 	{
 		get_top_and_left(shell);
