@@ -104,7 +104,7 @@ tc_opened.c
 MAIN = srcs/main.c
 
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re
 
 default: all
 
