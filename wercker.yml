@@ -1,5 +1,0 @@
-build:
-  box:
-    id: julienbalestra/42cbox
-    tag: latest
-    cmd: https://github.com/JulienBalestra/21sh.git
