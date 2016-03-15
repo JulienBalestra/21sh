@@ -55,7 +55,7 @@ void	add_to_history(t_sh *shell, t_term *term)
 		new_line->line = term;
 		shell->hist = new_line;
 	}
-	//DEBUG
+	/*//DEBUG
 		ft_putstr_fd("history:\n", shell->debug_fd);
 		while (shell->hist->up)
 		{
@@ -74,7 +74,7 @@ void	add_to_history(t_sh *shell, t_term *term)
 			shell->hist = shell->hist->down;
 		}
 		ft_putstr_fd("history_end\n", shell->debug_fd);
-	//DEBUG
+	//DEBUG*/
 }
 
 /*

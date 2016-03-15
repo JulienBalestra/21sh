@@ -18,10 +18,10 @@ int	cpycut_keys(t_sh *shell, t_term *term, long key)
 		exec_cut_line_left(shell, term);
 	else if (key == KEY_CTRL_K)
 		exec_cut_line_right(shell, term);
-	else if (key == KEY_ALT_U)
+	/*else if (key == KEY_ALT_U)
 		term_dup_left(shell, term);
 	else if (key == KEY_ALT_K)
-		term_dup_right(shell, term);
+		term_dup_right(shell, term);*/
 	else
 		return (0);
 	return (1);
@@ -29,7 +29,7 @@ int	cpycut_keys(t_sh *shell, t_term *term, long key)
 
 int last_yank_key(t_sh *shell, t_term *term, long key)
 {
-	if (key == KEY_CTRL_Y && shell->yank)
+	if (key == KEY_CTRL_MAJ_Y && shell->yank)
 		insert_yank(shell, term);
 	/*else if (key == KEY_CTRL__ && shell->last)
 		restore_last(shell, term);*/
@@ -48,13 +48,13 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 		exec_move_cursor_home(shell, term);
 	else if (key == KEY_END || key == KEY_CTRL_E)
 		exec_move_cursor_end(shell, term);
-	else if (key == KEY_CTRL_LEFT)
+	else if (key == KEY_MAJ_LEFT || key == KEY_CTRL_LEFT)
 		exec_move_cursor_left_word(shell, term);
-	else if (key == KEY_CTRL_RIGHT)
+	else if (key == KEY_MAJ_RIGHT || key == KEY_CTRL_RIGHT)
 		exec_move_cursor_right_word(shell, term);
-	else if (key == KEY_CTRL_UP)
+	else if (key == KEY_MAJ_UP || key == KEY_CTRL_UP)
 		exec_move_cursor_upline(shell, term);
-	else if (key == KEY_CTRL_DOWN)
+	else if (key == KEY_MAJ_DOWN  || key == KEY_CTRL_DOWN)
 		exec_move_cursor_downline(shell, term);
 	else if (key == KEY_UP)
 		exec_history_up(shell, term);

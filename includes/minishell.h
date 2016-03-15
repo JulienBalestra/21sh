@@ -28,16 +28,20 @@
 # define KEY_RIGHT           4414235
 # define KEY_LEFT            4479771
 
-# define KEY_HOME            4738843
+# define KEY_HOME_LINUX            4738843
+# define KEY_HOME            4741915
 # define KEY_CTRL_A            1
-# define KEY_END				4607771
+# define KEY_END_LINUX				4607771
+# define KEY_END				4610843
 # define KEY_CTRL_E            5
 
 # define KEY_UP            		4283163
 # define KEY_DOWN            4348699
 
 # define KEY_CTRL_LEFT		74995417045787
+# define KEY_MAJ_LEFT        74982532143899
 # define KEY_CTRL_RIGHT		73895905418011
+# define KEY_MAJ_RIGHT        73883020516123
 
 # define KEY_CTRL_D				4
 
@@ -47,8 +51,11 @@
 # define KEY_ALT_K				27419
 
 # define KEY_CTRL_Y				25
+# define KEY_CTRL_MAJ_Y                5921563
 # define KEY_CTRL_UP			71696882162459
+# define KEY_MAJ_UP            71683997260571
 # define KEY_CTRL_DOWN			72796393790235
+# define KEY_MAJ_DOWN            72783508888347
 
 # include <string.h>
 # include <term.h>

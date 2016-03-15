@@ -8,7 +8,7 @@ void 	erase_line(size_t len)
 	char *le;
 	char *dc;
 
-	while(len)
+	while (len)
 	{
 		le = tgetstr("le", NULL);
 		dc = tgetstr("dc", NULL);
@@ -58,7 +58,7 @@ void 	erase_all_lines(t_sh *shell)
 		CONSOLE->line_position--;
 	}
 	// erase first line
-	erase_line(get_columns());
+	erase_line(CONSOLE->char_position);
 }
 
 void 	display_term_characters(t_sh *shell, t_term *term)
