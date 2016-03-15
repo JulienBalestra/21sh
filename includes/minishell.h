@@ -399,5 +399,7 @@ int 	is_something_opened(t_opened *open);
 void 	process_opened(t_opened *opn, char c);
 void 	force_close_opened(t_opened *opened);
 char	*process_if_exist(t_sh *shell, char *buf);
+int		compare_terms(t_term *one, t_term *two);
+void	replace_body_from_tail(t_term *hist_term, t_term *term);
 
 #endif

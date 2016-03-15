@@ -14,7 +14,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-t_hist		*create_history(void)
+t_hist	*create_history(void)
 {
 	t_hist	*hist;
 
@@ -27,27 +27,13 @@ t_hist		*create_history(void)
 	return (hist);
 }
 
-int 	compare_terms(t_term *one, t_term *two)
-{
-	char *str_one;
-	char *str_two;
-	int ret;
-
-	str_one = tterm_to_str(one);
-	str_two = tterm_to_str(two);
-	ret = (ft_strcmp(str_one, str_two) == 0);
-	ft_strdel(&str_one);
-	ft_strdel(&str_two);
-	return (ret);
-}
-
 void	add_to_history(t_sh *shell, t_term *term)
 {
-	t_hist *new_line;
-	t_hist *browse;
+	t_hist	*new_line;
+	t_hist	*browse;
 
 	if (term->prev == NULL)
-		return;
+		return ;
 	if (shell->hist)
 	{
 		browse = shell->hist;
@@ -95,10 +81,10 @@ void	add_to_history(t_sh *shell, t_term *term)
  * term == \n and free all previous links
  * dup history links and linked with term \n
  */
-void 	replace_body_from_tail(t_term *hist_term, t_term *term)
+void	replace_body_from_tail(t_term *hist_term, t_term *term)
 {
-	t_term *clean;
-	t_term *tmp;
+	t_term	*clean;
+	t_term	*tmp;
 
 	while (hist_term->next)
 		hist_term = hist_term->next;
@@ -131,21 +117,10 @@ void 	replace_body_from_tail(t_term *hist_term, t_term *term)
 	}
 }
 
-void 	exec_history_up(t_sh *shell, t_term *term)
+void	nobody_from_tail(t_term *term)
 {
-	if (shell->hist)
-	{
-		if (shell->hist->up && shell->current)
-			shell->hist = shell->hist->up;
-		term_dup_to_current(shell, term);
-		replace_body_from_tail(shell->hist->line, term);
-	}
-}
-
-void 	nobody_from_tail(t_term *term)
-{
-	t_term *tmp;
-	t_term *clean;
+	t_term	*tmp;
+	t_term	*clean;
 
 	while (term->next)
 		term = term->next;
@@ -159,25 +134,5 @@ void 	nobody_from_tail(t_term *term)
 		tmp->c = 0;
 		tmp->cursor = 0;
 		free(tmp);
-	}
-}
-
-void 	exec_history_down(t_sh *shell, t_term *term)
-{
-	if (shell->hist)
-	{
-		if (shell->hist->down)
-		{
-			shell->hist = shell->hist->down;
-			replace_body_from_tail(shell->hist->line, term);
-		}
-		else if (shell->current && shell->current->prev)
-		{
-			replace_body_from_tail(shell->current, term);
-		}
-		else if (shell->current && ! shell->current->prev)
-		{
-			nobody_from_tail(term);
-		}
 	}
 }

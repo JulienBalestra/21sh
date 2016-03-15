@@ -1,10 +1,21 @@
-#include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_cpy_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/15 11:42:38 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/15 11:42:42 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void term_dup_left(t_sh *shell, t_term *term)
+#include "../includes/minishell.h"
+
+void	term_dup_left(t_sh *shell, t_term *term)
 {
-	t_term *link;
-	t_term *prev;
+	t_term	*link;
+	t_term	*prev;
 
 	if (term == NULL)
 		return ;
@@ -29,10 +40,10 @@ void term_dup_left(t_sh *shell, t_term *term)
 	shell->yank = link;
 }
 
-void term_dup_right(t_sh *shell, t_term *term)
+void	term_dup_right(t_sh *shell, t_term *term)
 {
-	t_term *link;
-	t_term *prev;
+	t_term	*link;
+	t_term	*prev;
 
 	if (term == NULL)
 		return ;
@@ -40,7 +51,6 @@ void term_dup_right(t_sh *shell, t_term *term)
 	prev = NULL;
 	link = NULL;
 	term = get_current_cursor(term);
-	//term = term->up;
 	while (term->next)
 	{
 		link = create_term_link();
