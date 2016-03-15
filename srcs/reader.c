@@ -34,9 +34,9 @@ void	signal_callback_handler(int sig_num)
 
 char	*join_pses(t_sh *shell, char *buf)
 {
-	char *tmp;
-	char *buf_ps2;
-	int i;
+	char	*tmp;
+	char	*buf_ps2;
+	int		i;
 
 	i = 0;
 	while (buf && buf[i])
@@ -57,11 +57,11 @@ char	*join_pses(t_sh *shell, char *buf)
 	return (buf);
 }
 
-char 	*get_line_from_user(t_sh *shell)
+char	*get_line_from_user(t_sh *shell)
 {
-	char 	*buf;
+	char	*buf;
 	long	key;
-	t_term *end;
+	t_term	*end;
 
 	buf = NULL;
 	if ((end = create_term_link()))
@@ -72,12 +72,12 @@ char 	*get_line_from_user(t_sh *shell)
 		{
 			g_catch_signal = process_signal(shell, g_catch_signal, end);
 			if (tc_continue_process_key(shell, end, key) == 0)
-				break;
+				break ;
 		}
 		buf = tterm_to_str(end);
 		end_of_reading(shell, buf);
 		buf = join_pses(shell, buf);
-		if (! buf || buf[0] == '\0' || is_only_spaces(buf))
+		if (!buf || buf[0] == '\0' || is_only_spaces(buf))
 			return (recurse_get_line(shell, buf, end));
 		add_to_history(shell, end);
 	}
@@ -89,7 +89,7 @@ char	*get_line_from_pipe(t_sh *shell)
 	char	*buf;
 	char	*left;
 	ssize_t	ret;
-	int 	limit;
+	int		limit;
 
 	buf = ft_strnew(READ);
 	left = NULL;
@@ -106,7 +106,7 @@ char	*get_line_from_pipe(t_sh *shell)
 		else if (is_print_buf(buf))
 			left = move_and_clean(buf);
 		else
-			break;
+			break ;
 	}
 	return (end_of_file_recvd(shell, buf, left, limit));
 }

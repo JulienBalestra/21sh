@@ -15,16 +15,17 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-int 	is_print_buf(char *buf)
+int		is_print_buf(char *buf)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < READ)
 	{
-		if (! ft_isprint(buf[i]) && buf[i] != '\n')
+		if (!ft_isprint(buf[i]) && buf[i] != '\n')
 		{
-			ft_putstr_fd("ERROR not readable characters inside the buffer\n", 2);
+			ft_putstr_fd(
+					"ERROR not readable characters inside the buffer\n", 2);
 			return (0);
 		}
 		i++;
@@ -32,7 +33,7 @@ int 	is_print_buf(char *buf)
 	return (1);
 }
 
-int 	process_signal(t_sh *shell, int catch_signal, t_term *end)
+int		process_signal(t_sh *shell, int catch_signal, t_term *end)
 {
 	if (catch_signal)
 	{
@@ -47,14 +48,15 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end)
 	return (0);
 }
 
-char *get_line_side_effect(t_sh *shell)
+char	*get_line_side_effect(t_sh *shell)
 {
-	char *side;
+	char	*side;
 
 	side = get_env_value("SIDE_EFFECT", shell->env);
-	if (side &&	ft_strcmp("TRUE", side) == 0)
+	if (side && ft_strcmp("TRUE", side) == 0)
 	{
-		ft_putstr_fd("WARNING: SIDE_EFFECT=TRUE use at your own risk (SEGV)\n", 2);
+		ft_putstr_fd(
+				"WARNING: SIDE_EFFECT=TRUE use at your own risk (SEGV)\n", 2);
 		return (get_line_from_pipe(shell));
 	}
 	else

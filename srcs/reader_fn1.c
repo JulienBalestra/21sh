@@ -34,7 +34,7 @@ void	again(char *buf)
 char	*move_and_clean(char *buf)
 {
 	char	*left;
-	int i;
+	int		i;
 
 	i = 0;
 	left = ft_strdup(buf);
@@ -45,4 +45,3 @@ char	*move_and_clean(char *buf)
 	}
 	return (left);
 }
-

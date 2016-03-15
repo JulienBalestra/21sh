@@ -49,7 +49,6 @@ int		correct_syntax(t_sh *shell)
 	char	*formatted;
 	int		ret;
 
-	// TODO ctrl+L (; |) -> double op
 	formatted = pre_format(shell->stdin_buf);
 	ret = find_exploitable(formatted);
 	ft_strdel(&shell->stdin_buf);

@@ -26,7 +26,7 @@ void	init_current_console(t_sh *shell, t_term *end)
 	CONSOLE->total_lines = 1;
 }
 
-void 	end_of_reading(t_sh *shell, char *buf)
+void	end_of_reading(t_sh *shell, char *buf)
 {
 	erase_all_lines(shell);
 	default_terminal_mode(shell);
@@ -41,7 +41,7 @@ char	*recurse_get_line(t_sh *shell, char *buf, t_term *end)
 	return (get_line(shell));
 }
 
-char 	*end_of_file_recvd(t_sh *shell, char *buf, char *left, int limit)
+char	*end_of_file_recvd(t_sh *shell, char *buf, char *left, int limit)
 {
 	if (left)
 		ft_strdel(&left);
