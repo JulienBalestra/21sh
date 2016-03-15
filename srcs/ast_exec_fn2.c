@@ -14,7 +14,7 @@
 
 #include "../includes/minishell.h"
 
-void change_fd(t_ast *ast)
+void	change_fd(t_ast *ast)
 {
 	if (ast->from != -2 && ast->to != -2)
 	{

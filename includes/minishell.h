@@ -247,7 +247,7 @@ char *build_eof_entry(char *eof, t_sh *shell);
 int skip_eof(char *s);
 char **build_eof_tab(char *entry);
 char		**cut_input(char *input, int *tuple);
-void trigger_operator_with_recurse(t_ast *ast, char *input, int *tuple, t_sh *shell);
+void trigger_op_recurse(t_ast *ast, char *input, int *tuple, t_sh *shell);
 void trigger_command(t_ast *ast, char *input, int eof);
 
 void change_fd(t_ast *ast);

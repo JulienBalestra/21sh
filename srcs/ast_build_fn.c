@@ -14,12 +14,12 @@
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-char *get_eof(char *s)
+char	*get_eof(char *s)
 {
-	char *eof;
-	char *tmp;
-	int i;
-	int k;
+	char	*eof;
+	char	*tmp;
+	int		i;
+	int		k;
 
 	i = 0;
 	while (s[i] == ' ')
@@ -33,9 +33,9 @@ char *get_eof(char *s)
 	return (eof);
 }
 
-int is_warning_eof(char *line, char *entry, char *eof)
+int		is_warning_eof(char *line, char *entry, char *eof)
 {
-	if (! line)
+	if (!line)
 	{
 		ft_putstr_fd("warning: here-document delimited by end-of-file ", 2);
 		ft_putstr_fd("(wanted `", 2);
@@ -48,15 +48,15 @@ int is_warning_eof(char *line, char *entry, char *eof)
 	return (0);
 }
 
-char *build_eof_entry(char *eof, t_sh *shell)
+char	*build_eof_entry(char *eof, t_sh *shell)
 {
-	char *line;
-	char *entry;
+	char	*line;
+	char	*entry;
 
 	line = NULL;
 	entry = NULL;
 	mock_ps1_by_ps2(shell);
-	while (! line || ft_strcmp(line, eof) != 0)
+	while (!line || ft_strcmp(line, eof) != 0)
 	{
 		if (entry)
 		{
@@ -69,7 +69,7 @@ char *build_eof_entry(char *eof, t_sh *shell)
 		if (line)
 			line = join_free_start(line, "\n");
 		if (is_warning_eof(line, entry, eof))
-			break;
+			break ;
 	}
 	ft_strdel(&line);
 	ft_strdel(&eof);
@@ -77,9 +77,9 @@ char *build_eof_entry(char *eof, t_sh *shell)
 	return (entry);
 }
 
-char **build_eof_tab(char *entry)
+char	**build_eof_tab(char *entry)
 {
-	char **eof_tab;
+	char	**eof_tab;
 
 	if ((eof_tab = (char **)malloc(sizeof(char *) * 2)))
 	{

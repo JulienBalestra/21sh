@@ -82,12 +82,12 @@ void		ensure_pwd(t_sh *shell)
 	}
 }
 
-void 		update_ps1(t_sh *shell)
+void		update_ps1(t_sh *shell)
 {
 	char	*pwd;
 	char	*tmp;
 
-	if (USE_CWD && (pwd = create_cwd(shell)) )
+	if (USE_CWD && (pwd = create_cwd(shell)))
 	{
 		ft_strdel(&shell->ps1);
 		tmp = pwd;

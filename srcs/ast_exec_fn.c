@@ -50,29 +50,33 @@ void		manage_pipe(t_ast *ast, t_sh *shell)
 	}
 }
 
+void		double_read_child(t_ast *ast, int *p)
+{
+	char	**cmd;
+
+	cmd = ast->left->cmd;
+	dup2(p[1], ast->stdout);
+	close(p[0]);
+	while (*cmd)
+	{
+		ft_putstr_fd(*cmd, ast->stdout);
+		cmd++;
+	}
+	ast_clean(ast);
+	exit(0);
+}
+
 void		manage_double_read(t_ast *ast, t_sh *shell)
 {
 	int		p[2];
 	pid_t	pid;
 	int		status;
-	char	**cmd;
 
 	if (pipe(p) == 0)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			cmd = ast->left->cmd;
-			dup2(p[1], ast->stdout);
-			close(p[0]);
-			while (*cmd)
-			{
-				ft_putstr_fd(*cmd, ast->stdout);
-				cmd++;
-			}
-			ast_clean(ast);
-			exit(0);
-		}
+			double_read_child(ast, p);
 		else
 		{
 			dup2(p[0], ast->stdin);
@@ -82,9 +86,7 @@ void		manage_double_read(t_ast *ast, t_sh *shell)
 		}
 	}
 	else
-	{
 		exit(2);
-	}
 }
 
 void		manage_write(t_ast *ast, t_sh *shell)

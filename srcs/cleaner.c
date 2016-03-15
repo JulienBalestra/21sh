@@ -39,13 +39,13 @@ void	delete_list(t_env **env)
 	}
 }
 
-void 	delete_console(t_sh *shell)
+void	delete_console(t_sh *shell)
 {
 	close(shell->debug_fd);
 	free(shell->console);
 }
 
-void 	delete_hist(t_sh *shell)
+void	delete_hist(t_sh *shell)
 {
 	t_hist *tmp;
 	t_hist *down;

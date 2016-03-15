@@ -14,9 +14,9 @@
 
 #include "../includes/minishell.h"
 
-t_opened *create_opened(void)
+t_opened	*create_opened(void)
 {
-	t_opened *opened;
+	t_opened	*opened;
 
 	if ((opened = (t_opened *)malloc(sizeof(t_opened))))
 	{

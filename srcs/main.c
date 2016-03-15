@@ -34,7 +34,7 @@ int		run_each_cli(t_ast **command, t_sh *shell)
 int		process_cli(t_sh *shell)
 {
 	t_ast	**command;
-	int 	ret;
+	int		ret;
 
 	if (existing_line(shell) && correct_syntax(shell) == 0)
 	{
@@ -50,7 +50,6 @@ int		start_engine(t_sh *shell)
 {
 	while (42)
 	{
-		// TODO shell->is_ps2 = 0;
 		shell->stdin_buf = get_line(shell);
 		if (process_cli(shell) == 1)
 			return (1);

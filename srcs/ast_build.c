@@ -43,7 +43,7 @@ void		find_operand(char *input, int *tuple)
 
 	tuple[0] = -1;
 	tuple[1] = -1;
-	if (! input)
+	if (!input)
 		return ;
 	len = ft_strlen(input) - 1;
 	while (len)
@@ -92,7 +92,7 @@ t_ast		*ast_build(char *input, int eof, t_sh *shell)
 		if (ast->op == -1)
 			trigger_command(ast, input, eof);
 		else
-			trigger_operator_with_recurse(ast, input, tuple, shell);
+			trigger_op_recurse(ast, input, tuple, shell);
 	}
 	free(input);
 	return (ast);

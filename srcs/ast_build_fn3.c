@@ -8,21 +8,21 @@
 /*   Created: 2016/01/21 18:08:12 by jubalest          #+#    #+#             */
 /*   Updated: 2016/01/21 18:08:13 by jubalest         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/includes/libft.h"
 #include "../includes/minishell.h"
 
-/* ************************************************************************** */
-
-void mock_ps1_by_ps2(t_sh *shell)
+void	mock_ps1_by_ps2(t_sh *shell)
 {
 	ft_strdel(&shell->ps1);
 	shell->ps1 = ft_strdup(DEFAULT_PS2);
 	shell->len_ps1 = LEN_PS2;
 }
 
-char *join_free_start(char *start, char *end)
+char	*join_free_start(char *start, char *end)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = start;
 	start = ft_strjoin(start, end);
@@ -30,9 +30,9 @@ char *join_free_start(char *start, char *end)
 	return (start);
 }
 
-int skip_eof(char *s)
+int		skip_eof(char *s)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (s[i] == ' ')
@@ -42,9 +42,9 @@ int skip_eof(char *s)
 	return (i);
 }
 
-void process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell)
+void	process_pipe_stderr(char **cut, t_ast *ast, t_sh *shell)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = cut[0];
 	cut[0] = ft_strjoin(cut[0], " 2>&1 ");
