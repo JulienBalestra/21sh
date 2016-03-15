@@ -42,7 +42,8 @@ int		is_warning_eof(char *line, char *entry, char *eof)
 		eof[ft_strlen(eof) - 1] = '\0';
 		ft_putstr_fd(eof, 2);
 		ft_putstr_fd("')\n", 2);
-		ft_strdel(&entry);
+		//ft_strdel(&entry);
+		(void)entry;
 		return (1);
 	}
 	return (0);
@@ -56,23 +57,23 @@ char	*build_eof_entry(char *eof, t_sh *shell)
 	line = NULL;
 	entry = NULL;
 	mock_ps1_by_ps2(shell);
+	shell->ddl_eof = 1;
 	while (!line || ft_strcmp(line, eof) != 0)
 	{
-		if (entry)
+		if (entry && line)
 		{
 			entry = join_free_start(entry, line);
 			ft_strdel(&line);
 		}
 		else
 			entry = line;
-		line = get_line(shell);
-		if (line)
-			line = join_free_start(line, "\n");
+		line = get_line_from_user_eof(shell);
 		if (is_warning_eof(line, entry, eof))
 			break ;
 	}
 	ft_strdel(&line);
 	ft_strdel(&eof);
+	shell->ddl_eof = 0;
 	update_ps1(shell);
 	return (entry);
 }

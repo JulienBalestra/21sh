@@ -189,6 +189,11 @@ int 	end_of_transmission(t_sh *shell, t_term *term)
 		force_close_opened(shell->opened);
 		shell->close_program = 1;
 	}
+	else if (shell->ddl_eof)
+	{
+		shell->close_program = 1;
+		return (0);
+	}
 	ex = ft_strdup("exit");
 	ptr = ex;
 	while (*ex)

@@ -84,6 +84,36 @@ char	*get_line_from_user(t_sh *shell)
 	return (process_if_exist(shell, buf));
 }
 
+char	*get_line_from_user_eof(t_sh *shell)
+{
+	char	*buf;
+	long	key;
+	t_term	*end;
+
+	buf = NULL;
+	if ((end = create_term_link()))
+	{
+		init_current_console(shell, end);
+		g_catch_signal = 0;
+		g_prompt = shell->ps1;
+		signal(SIGINT, signal_callback_handler);
+		while (((key = 0)) || read(0, &key, sizeof(long)))
+		{
+			g_catch_signal = process_signal(shell, g_catch_signal, end);
+			if (tc_continue_process_key(shell, end, key) == 0)
+				break ;
+		}
+		buf = tterm_to_str(end);
+		end_of_reading(shell, buf);
+	}
+	if (shell->close_program == 1)
+	{
+		shell->close_program = 0;
+		return (NULL);
+	}
+	return (buf);
+}
+
 char	*get_line_from_pipe(t_sh *shell)
 {
 	char	*buf;
@@ -121,9 +151,11 @@ char	*get_line(t_sh *shell)
 	{
 		g_catch_signal = 0;
 		g_prompt = shell->ps1;
+		if (shell->ddl_eof)
+			return (get_line_from_user_eof(shell));
 		return (get_line_from_user(shell));
 	}
-	else if (isatty(0))
+	else if (isatty(0) && shell->ddl_eof == 0)
 		return (get_line_side_effect(shell));
 	else
 		return (get_line_from_pipe(shell));

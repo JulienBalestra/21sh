@@ -111,6 +111,7 @@ typedef struct		s_sh
 	t_term			*undo;
 	t_term			*current;
 	t_opened		*opened;
+	int				ddl_eof;
 }					t_sh;
 
 typedef struct		s_be
@@ -401,5 +402,6 @@ void 	force_close_opened(t_opened *opened);
 char	*process_if_exist(t_sh *shell, char *buf);
 int		compare_terms(t_term *one, t_term *two);
 void	replace_body_from_tail(t_term *hist_term, t_term *term);
+char	*get_line_from_user_eof(t_sh *shell);
 
 #endif
