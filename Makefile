@@ -99,7 +99,11 @@ reader_fn3.c \
 update_last_environ.c \
 opened.c \
 tc_opened.c \
-tc_history_fn1.c
+tc_history_fn1.c \
+sort.c \
+sort_tools.c \
+build_props_fn1.c \
+build_map.c
 
 
 MAIN = srcs/main.c

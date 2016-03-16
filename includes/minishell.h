@@ -100,6 +100,24 @@ typedef struct		s_hist
 	t_term			*line;
 }					t_hist;
 
+typedef struct		s_bin
+{
+	char			*name;
+	struct s_bin	*next;
+	struct s_bin	*prev;
+}					t_bin;
+
+typedef struct	s_sort
+{
+	t_bin		*right;
+	t_bin		*temp;
+	t_bin		*last;
+	t_bin		*result;
+	t_bin		*next;
+	t_bin		*tail;
+}				t_sort;
+void set_merge(t_sort *merge, t_bin *list);
+int		compare_name(t_bin *one, t_bin *two);
 typedef struct		s_sh
 {
 	int 			debug_fd;
@@ -119,6 +137,8 @@ typedef struct		s_sh
 	t_term			*current;
 	t_opened		*opened;
 	int				ddl_eof;
+	int				(*compare)(t_bin *one, t_bin *two);
+	t_bin			*map;
 }					t_sh;
 
 typedef struct		s_be
@@ -142,6 +162,8 @@ typedef struct      s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }					t_ast;
+
+
 
 char				*triple_join(char *s1, char *s2, char *s3);
 void				ft_remove_endchar(char *str, char c);
@@ -410,5 +432,12 @@ char	*process_if_exist(t_sh *shell, char *buf);
 int		compare_terms(t_term *one, t_term *two);
 void	replace_body_from_tail(t_term *hist_term, t_term *term);
 char	*get_line_from_user_eof(t_sh *shell);
+
+t_con		*create_console(void);
+t_env		*build_env_list(char **environ);
+
+void 	build_map(t_sh *shell);
+
+t_bin			*merge_sort_list_recursive(t_bin *list, t_sh *shell);
 
 #endif
