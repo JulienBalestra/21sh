@@ -60,25 +60,25 @@ void 	fetch_binaries(t_sh *shell, char *dir)
 	DIR		*directory;
 	t_bin *link;
 
-	directory = opendir(dir);
-	while ((elt = readdir(directory)))
+	if ((directory = opendir(dir)))
 	{
-		if (elt->d_name[0] != '.' && is_executable(dir, elt->d_name))
+		while ((elt = readdir(directory)))
 		{
-			if (shell->map == NULL)
+			if (elt->d_name[0] != '.' && is_executable(dir, elt->d_name))
 			{
-				shell->map = create_link(elt->d_name);
-			}
-			else
-			{
-				link = create_link(elt->d_name);
-				shell->map->next = link;
-				link->prev = shell->map;
-				shell->map = link;
+				if (shell->map == NULL)
+					shell->map = create_link(elt->d_name);
+				else
+				{
+					link = create_link(elt->d_name);
+					shell->map->next = link;
+					link->prev = shell->map;
+					shell->map = link;
+				}
 			}
 		}
+		closedir(directory);
 	}
-	closedir(directory);
 }
 
 void 	build_map(t_sh *shell)
