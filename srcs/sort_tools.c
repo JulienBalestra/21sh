@@ -34,6 +34,6 @@ int		compare_name(t_bin *one, t_bin *two)
 		   (one->name[i] == two->name[i]))
 		i++;
 	if (one->name[i] - two->name[i] < 0)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }

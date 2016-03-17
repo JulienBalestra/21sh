@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
@@ -29,49 +30,55 @@ t_bin *create_link(char *name)
 	return (link);
 }
 
+int is_executable(char *dir, char *name)
+{
+	struct stat	*st;
+	char *full;
+
+	full = ft_strjoin(dir, name);
+	if (full && (st = (struct stat *)malloc(sizeof(struct stat))))
+	{
+		if (stat(full, st) == 0)
+		{
+			if (S_ISDIR(st->st_mode))
+			{
+				free(st);
+				free(full);
+				return (0);
+			}
+		}
+		free(st);
+		free(full);
+		return (1);
+	}
+	return (0);
+}
+
 void 	fetch_binaries(t_sh *shell, char *dir)
 {
 	struct dirent	*elt;
-	DIR		*fd_file;
+	DIR		*directory;
 	t_bin *link;
-	t_bin *start;
 
-	fd_file = opendir(dir);
-	//ft_putendl(dir);
-	start = NULL;
-	while ((elt = readdir(fd_file)))
+	directory = opendir(dir);
+	while ((elt = readdir(directory)))
 	{
-		if (elt->d_name && elt->d_name[0] != '.')
+		if (elt->d_name[0] != '.' && is_executable(dir, elt->d_name))
 		{
-			//ft_putendl(elt->d_name);
-			if (start == NULL)
+			if (shell->map == NULL)
 			{
-				start = create_link(elt->d_name);
+				shell->map = create_link(elt->d_name);
 			}
 			else
 			{
 				link = create_link(elt->d_name);
-				start->next = link;
-				link->prev = start;
-				start = link;
+				shell->map->next = link;
+				link->prev = shell->map;
+				shell->map = link;
 			}
 		}
-		shell->map = start;
-		/*while (start->prev)
-		{
-			start = start->prev;
-		}
-		shell->map = start;
-
-		//merge_sort_list_recursive(shell->map, shell);
-
-		while (shell->map->next)
-		{
-			ft_putendl(shell->map->name);
-			shell->map = shell->map->next;
-		}*/
 	}
-
+	closedir(directory);
 }
 
 void 	build_map(t_sh *shell)
@@ -94,5 +101,8 @@ void 	build_map(t_sh *shell)
 			else
 				break ;
 		}
+		while (shell->map->prev)
+			shell->map = shell->map->prev;
+		shell->map = merge_sort_list_recursive(shell->map, shell);
 	}
 }

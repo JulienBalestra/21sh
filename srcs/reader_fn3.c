@@ -48,25 +48,14 @@ int		process_signal(t_sh *shell, int catch_signal, t_term *end)
 	return (0);
 }
 
-char	*get_line_side_effect(t_sh *shell)
+char	*error_get_line(t_sh *shell)
 {
-	char	*side;
-
-	side = get_env_value("SIDE_EFFECT", shell->env);
-	if (side && ft_strcmp("TRUE", side) == 0)
-	{
-		ft_putstr_fd(
-				"WARNING: SIDE_EFFECT=TRUE use at your own risk (SEGV)\n", 2);
-		return (get_line_from_pipe(shell));
-	}
-	else
-	{
-		ft_putstr_fd("ERROR: TERM=", 2);
+	ft_putstr_fd("ERROR: TERM=", 2);
+	if (get_env_value("TERM", shell->env))
 		ft_putstr_fd(get_env_value("TERM", shell->env), 2);
-		ft_putstr_fd(" not valid and no SIDE_EFFECT=TRUE\n", 2);
-		shell->close_program = 1;
-		return (NULL);
-	}
+	ft_putstr_fd(" not valid\n", 2);
+	shell->close_program = 1;
+	return (NULL);
 }
 
 char	*process_if_exist(t_sh *shell, char *buf)
@@ -78,4 +67,18 @@ char	*process_if_exist(t_sh *shell, char *buf)
 		buf = ft_strdup("exit");
 	}
 	return (buf);
+}
+
+int starts_with(const char *pre, const char *str)
+{
+	size_t lenpre;
+	size_t lenstr;
+
+	if (pre && str)
+	{
+		lenpre = ft_strlen(pre);
+		lenstr = ft_strlen(str);
+		return (lenstr < lenpre ? 0 : ft_strncmp(pre, str, lenpre) == 0);
+	}
+	return (0);
 }

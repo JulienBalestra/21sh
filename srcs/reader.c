@@ -32,31 +32,6 @@ void	signal_callback_handler(int sig_num)
 	}
 }
 
-char	*join_pses(t_sh *shell, char *buf)
-{
-	char	*tmp;
-	char	*buf_ps2;
-	int		i;
-
-	i = 0;
-	while (buf && buf[i])
-	{
-		process_opened(shell->opened, buf[i]);
-		i++;
-	}
-	if (is_something_opened(shell->opened))
-	{
-		mock_ps1_by_ps2(shell);
-		tmp = buf;
-		buf_ps2 = get_line(shell);
-		buf = ft_strjoin(buf, buf_ps2);
-		free(tmp);
-		free(buf_ps2);
-		update_ps1(shell);
-	}
-	return (buf);
-}
-
 char	*get_line_from_user(t_sh *shell)
 {
 	char	*buf;
@@ -143,11 +118,7 @@ char	*get_line_from_pipe(t_sh *shell)
 
 char	*get_line(t_sh *shell)
 {
-	char	term_buffer[TERM_SIZE];
-	int		is_tgetent;
-
-	is_tgetent = tgetent(term_buffer, get_env_value("TERM", shell->env));
-	if (isatty(0) && is_tgetent)
+	if (isatty(0) && is_valid_term(shell))
 	{
 		g_catch_signal = 0;
 		g_prompt = shell->ps1;
@@ -156,7 +127,7 @@ char	*get_line(t_sh *shell)
 		return (get_line_from_user(shell));
 	}
 	else if (isatty(0) && shell->ddl_eof == 0)
-		return (get_line_side_effect(shell));
+		return (error_get_line(shell));
 	else
 		return (get_line_from_pipe(shell));
 }

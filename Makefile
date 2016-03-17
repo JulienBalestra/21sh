@@ -103,7 +103,9 @@ tc_history_fn1.c \
 sort.c \
 sort_tools.c \
 build_props_fn1.c \
-build_map.c
+build_map.c \
+cleaner_fn1.c \
+reader_fn4.c
 
 
 MAIN = srcs/main.c

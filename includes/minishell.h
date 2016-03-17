@@ -424,7 +424,7 @@ int 	process_signal(t_sh *shell, int catch_signal, t_term *end);
 t_opened *create_opened(void);
 void mock_ps1_by_ps2(t_sh *shell);
 char	*get_line_from_pipe(t_sh *shell);
-char *get_line_side_effect(t_sh *shell);
+char *error_get_line(t_sh *shell);
 int 	is_something_opened(t_opened *open);
 void 	process_opened(t_opened *opn, char c);
 void 	force_close_opened(t_opened *opened);
@@ -439,5 +439,9 @@ t_env		*build_env_list(char **environ);
 void 	build_map(t_sh *shell);
 
 t_bin			*merge_sort_list_recursive(t_bin *list, t_sh *shell);
+int starts_with(const char *pre, const char *str);
+void    delete_hashmap(t_sh *shell);
+char	*join_pses(t_sh *shell, char *buf);
+int is_valid_term(t_sh *shell);
 
 #endif
