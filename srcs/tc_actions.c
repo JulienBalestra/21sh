@@ -29,10 +29,19 @@ int	cpycut_keys(t_sh *shell, t_term *term, long key)
 
 int last_yank_key(t_sh *shell, t_term *term, long key)
 {
+	char *comp;
+
 	if (key == KEY_CTRL_MAJ_Y && shell->yank)
 		insert_yank(shell, term);
 	/*else if (key == KEY_CTRL__ && shell->last)
 		restore_last(shell, term);*/
+	else if (key == KEY_TAB)
+	{
+		comp = get_prev_chars(term);
+		ft_putendl_fd(comp, DEBUG_FD);
+		find_next(shell, term, comp);
+		ft_strdel(&comp);
+	}
 	else
 		return (0);
 	return (1);

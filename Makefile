@@ -105,7 +105,8 @@ sort_tools.c \
 build_props_fn1.c \
 build_map.c \
 cleaner_fn1.c \
-reader_fn4.c
+reader_fn4.c \
+find_bin.c
 
 
 MAIN = srcs/main.c

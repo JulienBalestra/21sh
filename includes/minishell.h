@@ -57,6 +57,9 @@
 # define KEY_CTRL_DOWN			72796393790235
 # define KEY_MAJ_DOWN            72783508888347
 
+# define KEY_TAB	            9
+
+
 # include <string.h>
 # include <term.h>
 
@@ -443,5 +446,8 @@ int starts_with(const char *pre, const char *str);
 void    delete_hashmap(t_sh *shell);
 char	*join_pses(t_sh *shell, char *buf);
 int is_valid_term(t_sh *shell);
+
+char *get_prev_chars(t_term *term);
+void    find_next(t_sh *shell, t_term *term, char *str);
 
 #endif
