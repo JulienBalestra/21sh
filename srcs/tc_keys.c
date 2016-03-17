@@ -163,9 +163,17 @@ void 	display_term_line(t_sh *shell, t_term *term)
 
 void 	get_top_and_left(t_sh *shell)
 {
+	char *le;
+
 	while (CONSOLE->char_position > 1)
 	{
-		ft_putstr(tgetstr("le", NULL));
+		le = tgetstr("le", NULL);
+		if (!le)
+		{
+			ft_putstr_fd("Env not loaded\n", 2);
+			exit(2);
+		}
+		ft_putstr(le);
 		CONSOLE->char_position--;
 	}
 	while (CONSOLE->line_position > 1)
