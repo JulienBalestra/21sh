@@ -56,8 +56,10 @@ void    play_next(t_sh *shell, t_term *term, char *str, char *map_name)
     size_t  len;
     char *end;
 
-    ft_putstr_fd("m:", DEBUG_FD);
-    ft_putendl_fd(map_name, DEBUG_FD);
+    /*//DEBUG
+        ft_putstr_fd("m:", DEBUG_FD);
+        ft_putendl_fd(map_name, DEBUG_FD);\
+    //DEBUG*/
 
     len = ft_strlen(str);
     end = &map_name[len];
