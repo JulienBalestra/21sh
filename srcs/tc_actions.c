@@ -38,7 +38,7 @@ int last_yank_key(t_sh *shell, t_term *term, long key)
 	else if (key == KEY_TAB)
 	{
 		comp = get_prev_chars(term);
-		ft_putendl_fd(comp, DEBUG_FD);
+		//ft_putendl_fd(comp, DEBUG_FD);
 		find_next(shell, term, comp);
 		ft_strdel(&comp);
 	}

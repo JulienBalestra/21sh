@@ -39,8 +39,8 @@ int		process_signal(t_sh *shell, int catch_signal, t_term *end)
 	{
 		while (shell->console->total_lines > 1)
 		{
-			ft_putstr_fd("lines--", DEBUG_FD);
-			ft_putchar_fd('\n', 1);
+			/*ft_putstr_fd("lines--", DEBUG_FD);
+			ft_putchar_fd('\n', 1);*/
 			shell->console->total_lines--;
 		}
 		nobody_from_tail(end);

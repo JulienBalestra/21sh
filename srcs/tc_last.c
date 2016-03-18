@@ -28,11 +28,11 @@ void term_dup_to_current(t_sh *shell, t_term *term)
 	while (link && link->next)
 		link = link->next;
 	shell->current = link;
-	//DEBUG
+	/*//DEBUG
 		char *buf = tterm_to_str(link);
 		ft_putstr_fd("current[", shell->debug_fd);
 		ft_putstr_fd(buf, shell->debug_fd);
 		ft_strdel(&buf);
 		ft_putstr_fd("]\n", shell->debug_fd);
-	//DEBUG
+	//DEBUG*/
 }
