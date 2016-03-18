@@ -1,5 +1,4 @@
 import unittest
-import os
 from minishell_tools import *
 import sys
 
@@ -76,7 +75,8 @@ class Test21sh(unittest.TestCase):
         stdout, stderr = p_minishell.communicate()
         return stdout, stderr
 
-    def execute_real_shell(self, command):
+    @staticmethod
+    def execute_real_shell(command):
         """
         Here the real shell
         :param command: list of command like ["/bin/ls", "-l"]
@@ -102,7 +102,14 @@ class Test21sh(unittest.TestCase):
 
     def test_00(self):
         command = [
-            "cd ..    ;   ls  test_resources | cat -e | rev | sort | cat -e > test_00_file ; cat test_00_file ; rm test_00_file"]
+            "cd ..    ;"
+            "   ls  test_resources |"
+            " cat -e |"
+            " rev |"
+            " sort |"
+            " cat -e > test_00_file ;"
+            " cat test_00_file ;"
+            " rm test_00_file"]
         self.compare_shells(command)
         self.valgrind(command)
 
