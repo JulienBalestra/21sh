@@ -34,12 +34,12 @@ char *get_prev_chars(t_term *term)
     int i;
 
     i = 0;
-    if ((buf = ft_strnew(128)))
+    if ((buf = ft_strnew(COMP_SIZE)))
     {
         term = get_current_cursor(term);
         if (term->c == ' ' && term->prev)
             term = term->prev;
-        while (term && i < 128 && term->c != ' ')
+        while (term && i < COMP_SIZE && term->c != ' ')
         {
             buf[i] = (char)term->c;
             term = term->prev;

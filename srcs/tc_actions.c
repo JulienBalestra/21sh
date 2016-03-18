@@ -31,7 +31,7 @@ int last_yank_key(t_sh *shell, t_term *term, long key)
 {
 	char *comp;
 
-	if (key == KEY_CTRL_MAJ_Y && shell->yank)
+	if ((key == KEY_CTRL_MAJ_Y || key == KEY_CTRL_Y) && shell->yank)
 		insert_yank(shell, term);
 	/*else if (key == KEY_CTRL__ && shell->last)
 		restore_last(shell, term);*/
@@ -53,9 +53,9 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 		exec_move_cursor_left(shell, term);
 	else if (key == KEY_RIGHT)
 		exec_move_cursor_right(shell, term);
-	else if (key == KEY_HOME || key == KEY_CTRL_A)
+	else if (key == KEY_HOME || key == KEY_CTRL_A || key == KEY_HOME_LINUX)
 		exec_move_cursor_home(shell, term);
-	else if (key == KEY_END || key == KEY_CTRL_E)
+	else if (key == KEY_END || key == KEY_CTRL_E || key == KEY_END_LINUX)
 		exec_move_cursor_end(shell, term);
 	else if (key == KEY_MAJ_LEFT || key == KEY_CTRL_LEFT)
 		exec_move_cursor_left_word(shell, term);
