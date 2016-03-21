@@ -76,7 +76,6 @@ t_bin			*merge_sort_list_recursive(t_bin *list, t_sh *shell)
 {
 	t_sort *merge;
 
-	merge = NULL;
 	if ((merge = (t_sort *)malloc(sizeof(t_sort))))
 	{
 		if (!(list) || !(list->next))
