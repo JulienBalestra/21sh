@@ -101,7 +101,7 @@ void 	build_map(t_sh *shell)
 			else
 				break ;
 		}
-		while (shell->map->prev)
+		while (shell->map && shell->map->prev)
 			shell->map = shell->map->prev;
 		shell->map = merge_sort_list_recursive(shell->map, shell);
 	}
