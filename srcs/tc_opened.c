@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-int 	is_something_opened(t_opened *open)
+int		is_something_opened(t_opened *open)
 {
 	if (open->double_quotes)
 		return (1);
@@ -18,12 +18,12 @@ int 	is_something_opened(t_opened *open)
 	return (0);
 }
 
-int 	revert_bool(int val)
+int		revert_bool(int val)
 {
 	return (val ? 0 : 1);
 }
 
-void 	process_opened(t_opened *opn, char c)
+void	process_opened(t_opened *opn, char c)
 {
 	if (c == '"')
 		opn->double_quotes = revert_bool(opn->double_quotes);
@@ -45,7 +45,7 @@ void 	process_opened(t_opened *opn, char c)
 		opn->bracket--;
 }
 
-void 	force_close_opened(t_opened *opened)
+void	force_close_opened(t_opened *opened)
 {
 	opened->double_quotes = 0;
 	opened->simple_quote = 0;

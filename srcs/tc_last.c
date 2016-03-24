@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void term_dup_to_current(t_sh *shell, t_term *term)
+void	term_dup_to_current(t_sh *shell, t_term *term)
 {
 	t_term *link;
 	t_term *prev;

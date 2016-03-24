@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_term *get_current_cursor(t_term *term)
+t_term	*get_current_cursor(t_term *term)
 {
 	while (term->next)
 		term = term->next;
@@ -9,9 +9,9 @@ t_term *get_current_cursor(t_term *term)
 	return (term);
 }
 
-void 	insert_link_before(t_term *term)
+void	insert_link_before(t_term *term)
 {
-	t_term *link;
+	t_term	*link;
 
 	link = create_term_link();
 	if (link)

@@ -1,11 +1,10 @@
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
-void exec_move_cursor_left_word(t_sh *shell, t_term *term)
+void	exec_move_cursor_left_word(t_sh *shell, t_term *term)
 {
-	(void)shell;
-	int i;
+	int		i;
 
+	(void)shell;
 	term = get_current_cursor(term);
 	i = (term->c == ' ' || term->c == '\n');
 	while (term->prev)
@@ -22,11 +21,11 @@ void exec_move_cursor_left_word(t_sh *shell, t_term *term)
 	}
 }
 
-void exec_move_cursor_right_word(t_sh *shell, t_term *term)
+void	exec_move_cursor_right_word(t_sh *shell, t_term *term)
 {
-	(void)shell;
-	int i;
+	int		i;
 
+	(void)shell;
 	term = get_current_cursor(term);
 	i = (term->c == ' ' || term->c == '\n');
 	while (term->next)

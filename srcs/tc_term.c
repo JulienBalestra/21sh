@@ -4,7 +4,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-t_term *create_term_link(void)
+t_term	*create_term_link(void)
 {
 	t_term *link;
 
@@ -18,11 +18,11 @@ t_term *create_term_link(void)
 	return (link);
 }
 
-char *tterm_to_str(t_term *term)
+char	*tterm_to_str(t_term *term)
 {
-	size_t len;
-	char *str;
-	int i;
+	size_t	len;
+	char	*str;
+	int		i;
 
 	len = 0;
 	while (term->next)
@@ -50,9 +50,9 @@ char *tterm_to_str(t_term *term)
 	return (str);
 }
 
-void safe_free_term(t_term *term)
+void	safe_free_term(t_term *term)
 {
-	t_term *tmp;
+	t_term	*tmp;
 
 	if (term)
 	{
@@ -69,7 +69,7 @@ void safe_free_term(t_term *term)
 	}
 }
 
-size_t			get_columns(void)
+size_t	get_columns(void)
 {
 	struct winsize	w;
 

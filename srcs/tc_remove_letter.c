@@ -2,7 +2,7 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-void exec_del_right(t_sh *shell, t_term *term)
+void	exec_del_right(t_sh *shell, t_term *term)
 {
 	t_term	*next_link;
 
@@ -20,7 +20,7 @@ void exec_del_right(t_sh *shell, t_term *term)
 	}
 }
 
-void exec_del_and_move_left(t_sh *shell, t_term *term)
+void	exec_del_and_move_left(t_sh *shell, t_term *term)
 {
 	t_term	*prev_link;
 

@@ -74,22 +74,6 @@ int	move_keys(t_sh *shell, t_term *term, long key)
 	return (1);
 }
 
-void	ft_putlong_fd(long n, int fd)
-{
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = - n;
-	}
-	if (n > 9)
-	{
-		ft_putlong_fd(n / 10, fd);
-		ft_putlong_fd(n % 10, fd);
-	}
-	else
-		ft_putchar_fd((char)(48 + n), fd);
-}
-
 int  tc_action_keys(t_sh *shell, t_term *term, long key)
 {
 	//ft_putstr_fd("keypressed:", DEBUG_FD); ft_putlong_fd(key, DEBUG_FD); ft_putchar_fd('\n', DEBUG_FD); // TODO DEBUG

@@ -450,5 +450,7 @@ int is_valid_term(t_sh *shell);
 
 char *get_prev_chars(t_term *term);
 void    find_next(t_sh *shell, t_term *term, char *str);
+void 	get_top_and_left(t_sh *shell);
+
 
 #endif

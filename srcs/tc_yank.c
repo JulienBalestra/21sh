@@ -1,8 +1,6 @@
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
-
-void insert_yank(t_sh *shell, t_term *term)
+void	insert_yank(t_sh *shell, t_term *term)
 {
 	t_term *yank;
 
