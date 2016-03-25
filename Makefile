@@ -129,7 +129,7 @@ $(TARGET): $(OBJS)
 	@echo " + sh : Creating  $(CL_GREED)$@$(CL_WHITE) $(shell sleep 0.01)"
 	@ar -rcv $(TARGET) $(OBJS) > /dev/null
 	@ranlib $(TARGET)
-	@$(CC) $(CFLAGS) $(MAIN) $(TARGET) libft/libft.a -l termcap -I $(INC_DIR) -I libft/includes  -o $(BIN)
+	@$(CC) $(CFLAGS) $(MAIN) $(TARGET) libft/libft.a -l termcap -I $(INC_DIR) -I libft/includes -o $(BIN)
 
 clean:
 	@echo " $(shell\
