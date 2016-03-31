@@ -61,7 +61,7 @@ t_env		*build_env_pwd(t_env *env)
 t_env		*build_env_list(char **environ)
 {
 	t_env	*env;
-	int 	i;
+	int		i;
 
 	env = NULL;
 	i = 0;

@@ -11,23 +11,21 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
-void    delete_hashmap(t_sh *shell)
+void	delete_hashmap(t_sh *shell)
 {
-    t_bin *bin;
+	t_bin	*bin;
 
-    while (shell->map && shell->map->prev)
-    {
-        shell->map = shell->map->prev;
-    }
-    while (shell->map)
-    {
-        free(shell->map->name);
-        bin = shell->map;
-        shell->map = shell->map->next;
-        free(bin);
-    }
+	while (shell->map && shell->map->prev)
+	{
+		shell->map = shell->map->prev;
+	}
+	while (shell->map)
+	{
+		free(shell->map->name);
+		bin = shell->map;
+		shell->map = shell->map->next;
+		free(bin);
+	}
 }

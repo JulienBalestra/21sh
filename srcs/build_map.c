@@ -17,9 +17,9 @@
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
-t_bin *create_link(char *name)
+t_bin	*create_link(char *name)
 {
-	t_bin *link;
+	t_bin	*link;
 
 	if ((link = (t_bin *)malloc(sizeof(t_bin))))
 	{
@@ -30,10 +30,10 @@ t_bin *create_link(char *name)
 	return (link);
 }
 
-int is_executable(char *dir, char *name)
+int		is_executable(char *dir, char *name)
 {
 	struct stat	*st;
-	char *full;
+	char		*full;
 
 	full = ft_strjoin(dir, name);
 	if (full && (st = (struct stat *)malloc(sizeof(struct stat))))
@@ -54,11 +54,11 @@ int is_executable(char *dir, char *name)
 	return (0);
 }
 
-void 	fetch_binaries(t_sh *shell, char *dir)
+void	fetch_binaries(t_sh *shell, char *dir)
 {
 	struct dirent	*elt;
-	DIR		*directory;
-	t_bin *link;
+	DIR				*directory;
+	t_bin			*link;
 
 	if ((directory = opendir(dir)))
 	{
@@ -81,9 +81,9 @@ void 	fetch_binaries(t_sh *shell, char *dir)
 	}
 }
 
-void 	build_map(t_sh *shell)
+void	build_map(t_sh *shell)
 {
-	char 	*path_value;
+	char	*path_value;
 	int		cur_path_len;
 	char	*directory;
 

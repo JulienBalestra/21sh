@@ -42,7 +42,6 @@ int		is_warning_eof(char *line, char *entry, char *eof)
 		eof[ft_strlen(eof) - 1] = '\0';
 		ft_putstr_fd(eof, 2);
 		ft_putstr_fd("')\n", 2);
-		//ft_strdel(&entry);
 		(void)entry;
 		return (1);
 	}
