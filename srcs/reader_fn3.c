@@ -39,8 +39,6 @@ int		process_signal(t_sh *shell, int catch_signal, t_term *end)
 	{
 		while (shell->console->total_lines > 1)
 		{
-			/*ft_putstr_fd("lines--", DEBUG_FD);
-			ft_putchar_fd('\n', 1);*/
 			shell->console->total_lines--;
 		}
 		nobody_from_tail(end);
@@ -69,10 +67,10 @@ char	*process_if_exist(t_sh *shell, char *buf)
 	return (buf);
 }
 
-int starts_with(const char *pre, const char *str)
+int		starts_with(const char *pre, const char *str)
 {
-	size_t lenpre;
-	size_t lenstr;
+	size_t	lenpre;
+	size_t	lenstr;
 
 	if (pre && str)
 	{

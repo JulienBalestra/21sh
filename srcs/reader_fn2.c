@@ -17,7 +17,6 @@
 
 void	init_current_console(t_sh *shell, t_term *end)
 {
-	//erase_all_lines(shell);
 	display_prompt(shell);
 	raw_terminal_mode(shell);
 	end->cursor = 1;
@@ -29,10 +28,7 @@ void	init_current_console(t_sh *shell, t_term *end)
 
 void	end_of_reading(t_sh *shell, char *buf)
 {
-	//erase_all_lines(shell);
 	default_terminal_mode(shell);
-	//display_prompt(shell);
-	//ft_putstr_fd(buf, 1);
 	while (CONSOLE->total_lines-- > 1)
 		ft_putchar('\n');
 	ft_putchar('\n');

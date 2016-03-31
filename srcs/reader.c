@@ -81,12 +81,7 @@ char	*get_line_from_user_eof(t_sh *shell)
 		buf = tterm_to_str(end);
 		end_of_reading(shell, buf);
 	}
-	if (shell->close_program == 1)
-	{
-		shell->close_program = 0;
-		return (NULL);
-	}
-	return (buf);
+	return (eof_read_returner(shell, buf));
 }
 
 char	*get_line_from_pipe(t_sh *shell)
