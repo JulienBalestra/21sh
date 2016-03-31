@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
 t_hist	*create_history(void)
 {
@@ -32,9 +31,7 @@ void	add_to_history(t_sh *shell, t_term *term)
 	t_hist	*new_line;
 	t_hist	*browse;
 
-	if (term->prev == NULL)
-		return ;
-	if (shell->hist)
+	if (term->prev && shell->hist)
 	{
 		browse = shell->hist;
 		while (browse->down)
@@ -49,41 +46,16 @@ void	add_to_history(t_sh *shell, t_term *term)
 		else
 			safe_free_term(term);
 	}
-	else
+	else if (term->prev)
 	{
 		new_line = create_history();
 		new_line->line = term;
 		shell->hist = new_line;
 	}
-	/*//DEBUG
-		ft_putstr_fd("history:\n", shell->debug_fd);
-		while (shell->hist->up)
-		{
-			ft_putstr_fd("u-", shell->debug_fd);
-			shell->hist = shell->hist->up;
-		}
-		while (shell->hist)
-		{
-			ft_putstr_fd("d-", shell->debug_fd);
-			char *buf = tterm_to_str(shell->hist->line);
-			ft_putstr_fd(buf, shell->debug_fd);
-			ft_strdel(&buf);
-			ft_putstr_fd("\n", shell->debug_fd);
-			if (! shell->hist->down)
-				break;
-			shell->hist = shell->hist->down;
-		}
-		ft_putstr_fd("history_end\n", shell->debug_fd);
-	//DEBUG*/
 }
 
-/*
- * term == \n and free all previous links
- * dup history links and linked with term \n
- */
 void	replace_body_from_tail(t_term *hist_term, t_term *term)
 {
-	t_term	*clean;
 	t_term	*tmp;
 
 	while (hist_term->next)
@@ -92,17 +64,7 @@ void	replace_body_from_tail(t_term *hist_term, t_term *term)
 		term = term->next;
 	if (term->prev)
 	{
-		clean = term->prev;
-		while (clean)
-		{
-			tmp = clean;
-			clean = clean->prev;
-			tmp->cursor = 0;
-			tmp->c = 0;
-			tmp->next = NULL;
-			tmp->prev = NULL;
-			free(tmp);
-		}
+		clean_current_line(term);
 	}
 	term->cursor = 1;
 	hist_term = hist_term->prev;

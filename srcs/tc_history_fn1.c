@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 
@@ -26,7 +27,7 @@ void	exec_history_down(t_sh *shell, t_term *term)
 		{
 			replace_body_from_tail(shell->current, term);
 		}
-		else if (shell->current && ! shell->current->prev)
+		else if (shell->current && !shell->current->prev)
 		{
 			nobody_from_tail(term);
 		}
@@ -56,4 +57,22 @@ int		compare_terms(t_term *one, t_term *two)
 	ft_strdel(&str_one);
 	ft_strdel(&str_two);
 	return (ret);
+}
+
+void	clean_current_line(t_term *term)
+{
+	t_term	*clean;
+	t_term	*tmp;
+
+	clean = term->prev;
+	while (clean)
+	{
+		tmp = clean;
+		clean = clean->prev;
+		tmp->cursor = 0;
+		tmp->c = 0;
+		tmp->next = NULL;
+		tmp->prev = NULL;
+		free(tmp);
+	}
 }

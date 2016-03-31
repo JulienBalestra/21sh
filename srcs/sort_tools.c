@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void set_merge(t_sort *merge, t_bin *list)
+void	set_merge(t_sort *merge, t_bin *list)
 {
 	if (merge)
 	{
@@ -27,11 +27,11 @@ void set_merge(t_sort *merge, t_bin *list)
 
 int		compare_name(t_bin *one, t_bin *two)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((one->name[i] != '\0') && (two->name[i] != '\0') &&
-		   (one->name[i] == two->name[i]))
+		(one->name[i] == two->name[i]))
 		i++;
 	if (one->name[i] - two->name[i] < 0)
 		return (1);
