@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/31 14:44:41 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/31 14:44:43 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <term.h>
 #include "../includes/minishell.h"
 #include <unistd.h>
 
-void 	raw_terminal_mode(t_sh *shell)
+void	raw_terminal_mode(t_sh *shell)
 {
-	struct termios tattr;
-	char 		*env_term;
+	struct termios	tattr;
+	char			*env_term;
 
 	tcgetattr(STDIN_FILENO, &shell->default_termios);
 	tcgetattr(STDIN_FILENO, &tattr);
@@ -20,7 +32,7 @@ void 	raw_terminal_mode(t_sh *shell)
 	}
 }
 
-void 	default_terminal_mode(t_sh *shell)
+void	default_terminal_mode(t_sh *shell)
 {
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->default_termios);
 }

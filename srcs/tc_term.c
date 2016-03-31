@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_term.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/31 14:53:35 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/31 14:53:36 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -42,11 +54,6 @@ char	*tterm_to_str(t_term *term)
 			term = term->next;
 		}
 	}
-	/*//DEBUG
-		ft_putstr_fd("[", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd("]", 2);
-	//DEBUG*/
 	return (str);
 }
 

@@ -453,6 +453,7 @@ void    find_next(t_sh *shell, t_term *term, char *str);
 void 	get_top_and_left(t_sh *shell);
 char    *eof_read_returner(t_sh *shell, char *buf);
 void	clean_current_line(t_term *term);
+void	play_exit(t_sh *shell, t_term *term);
 
 
 #endif

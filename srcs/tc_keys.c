@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_keys.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/31 14:45:59 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/31 14:46:01 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
@@ -5,46 +17,20 @@
 void	display_term_characters(t_sh *shell, t_term *term)
 {
 	CONSOLE->total_lines = 1;
-	/*//DEBUG
-		ft_putstr_fd("columns=", DEBUG_FD);
-		ft_putlong_fd((long)get_columns() - 1, DEBUG_FD);
-		ft_putstr_fd("\n", DEBUG_FD);
-	//DEBUG*/
 	while (term->next)
 	{
-		/*//DEBUG
-			ft_putstr_fd("char_position=", DEBUG_FD);
-			ft_putlong_fd((long) CONSOLE->char_position, DEBUG_FD);
-			ft_putstr_fd("\n", DEBUG_FD);
-		//DEBUG*/
-
 		if (CONSOLE->char_position == get_columns())
 		{
-			/*//DEBUG
-				ft_putstr_fd("ENDLINE\n", DEBUG_FD);
-			//DEBUG*/
-
 			ft_putchar('\n');
 			erase_line(get_columns());
 			CONSOLE->char_position = 0;
 			CONSOLE->total_lines++;
 			CONSOLE->line_position++;
 		}
-		/*//DEBUG
-			ft_putchar_fd('[', DEBUG_FD);
-			ft_putchar_fd((char)term->c, DEBUG_FD);
-			ft_putchar_fd(']', DEBUG_FD);
-		//DEBUG*/
-
 		ft_putchar((char)term->c);
 		term = term->next;
 		CONSOLE->char_position++;
 	}
-	/*//DEBUG
-		ft_putstr_fd("CONSOLE->total_lines=", DEBUG_FD);
-		ft_putlong_fd((long) CONSOLE->total_lines, DEBUG_FD);
-		ft_putchar_fd('\n', DEBUG_FD);
-	//DEBUG*/
 }
 
 void	cursor_position(t_sh *shell, t_term *term)
@@ -57,14 +43,6 @@ void	cursor_position(t_sh *shell, t_term *term)
 	{
 		if (CONSOLE->char_position == 0 && term->prev)
 		{
-			/*//DEBUG
-				ft_putstr_fd("U", DEBUG_FD);
-				ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
-				ft_putstr_fd("[", DEBUG_FD);
-				ft_putchar_fd((char)term->c, DEBUG_FD);
-				ft_putstr_fd("]\n", DEBUG_FD);
-			//DEBUG*/
-
 			ft_putstr(tgetstr("up", NULL));
 			CONSOLE->line_position--;
 			CONSOLE->char_position = get_columns() - 1;
@@ -77,14 +55,6 @@ void	cursor_position(t_sh *shell, t_term *term)
 			term = term->prev;
 			continue;
 		}
-		/*//DEBUG
-			ft_putstr_fd("<", DEBUG_FD);
-			ft_putnbr_fd((int)CONSOLE->char_position, DEBUG_FD);
-			ft_putstr_fd("[", DEBUG_FD);
-			ft_putchar_fd((char)term->c, DEBUG_FD);
-			ft_putstr_fd("]\n", DEBUG_FD);
-		//DEBUG*/
-
 		ft_putstr(tgetstr("le", NULL));
 		term = term->prev;
 		CONSOLE->char_position--;
@@ -104,9 +74,6 @@ void	display_term_line(t_sh *shell, t_term *term)
 
 int		end_of_transmission(t_sh *shell, t_term *term)
 {
-	char	*ex;
-	char	*ptr;
-
 	while (term->next)
 		term = term->next;
 	if (term->prev)
@@ -121,14 +88,7 @@ int		end_of_transmission(t_sh *shell, t_term *term)
 		shell->close_program = 1;
 		return (0);
 	}
-	ex = ft_strdup("exit");
-	ptr = ex;
-	while (*ex)
-	{
-		tc_continue_process_key(shell, term, (long)*ex);
-		ex++;
-	}
-	ft_strdel(&ptr);
+	play_exit(shell, term);
 	return (0);
 }
 

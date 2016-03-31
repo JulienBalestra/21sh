@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_last.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/31 14:49:38 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/31 14:49:39 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
 void	term_dup_to_current(t_sh *shell, t_term *term)
 {
-	t_term *link;
-	t_term *prev;
+	t_term	*link;
+	t_term	*prev;
 
 	if (term == NULL || shell->current)
 		return ;
@@ -28,11 +39,4 @@ void	term_dup_to_current(t_sh *shell, t_term *term)
 	while (link && link->next)
 		link = link->next;
 	shell->current = link;
-	/*//DEBUG
-		char *buf = tterm_to_str(link);
-		ft_putstr_fd("current[", shell->debug_fd);
-		ft_putstr_fd(buf, shell->debug_fd);
-		ft_strdel(&buf);
-		ft_putstr_fd("]\n", shell->debug_fd);
-	//DEBUG*/
 }

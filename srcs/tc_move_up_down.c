@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tc_move_up_down.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jubalest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/31 14:50:44 by jubalest          #+#    #+#             */
+/*   Updated: 2016/03/31 14:50:45 by jubalest         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include "../libft/includes/libft.h"
 
 void	exec_move_cursor_upline(t_sh *shell, t_term *term)
 {
@@ -16,6 +27,7 @@ void	exec_move_cursor_upline(t_sh *shell, t_term *term)
 		term_len--;
 	}
 }
+
 void	exec_move_cursor_downline(t_sh *shell, t_term *term)
 {
 	size_t	term_len;
