@@ -6,7 +6,7 @@ import sys
 
 class TestMinishell(unittest.TestCase):
 	context = os.path.split(os.path.dirname(__file__))[0]
-	minishell = "%s/minishell" % context
+	minishell = "%s/21sh" % context
 	testing_dir = "%s/tests/test_resources/" % context
 	dotdot = "%sdotdot" % testing_dir
 	valgrind_binary = False

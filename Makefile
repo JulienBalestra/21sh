@@ -18,7 +18,7 @@ SRC_DIR = srcs/
 OBJ_DIR = .objects/
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 TARGET = $(NAME).a
-BIN = minishell
+BIN = 21sh
 ENV = $(shell uname -s)
 
 
