@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/JulienBalestra/21sh.svg?branch=master)](https://travis-ci.org/JulienBalestra/21sh)
 [![Circle CI](https://circleci.com/gh/JulienBalestra/21sh.svg?style=svg)](https://circleci.com/gh/JulienBalestra/21sh)
 
-Recode of a /bin/bash like
+Recode of a /bin/bash like over Debian (like) and MacOSX.
 
 # How to launch with sudo needed
 
