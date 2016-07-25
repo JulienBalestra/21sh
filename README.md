@@ -45,4 +45,5 @@ The following command will install valgrind for leaks and errors utilities (and 
 Or if you prefer the dedicated Docker box:
 
     docker pull julienbalestra/42cbox
-    docker run --rm julienbalestra/42cbox https://github.com/JulienBalestra/21sh/git
+    docker run --rm julienbalestra/42cbox https://github.com/JulienBalestra/21sh.git
+
